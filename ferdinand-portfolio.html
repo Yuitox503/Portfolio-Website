@@ -215,12 +215,47 @@
   html.light .resume-option-tag.en{background:rgba(0,119,182,.12);}
   html.light .resume-option-tag.id{background:rgba(217,94,0,.12);}
 
-  .hero-right{position:relative;overflow:hidden;}
-  .hero-photo-wrap{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;}
-  .hero-photo{width:100%;height:100%;object-fit:cover;object-position:top center;filter:grayscale(15%) contrast(1.04);}
-  html.light .hero-photo{filter:grayscale(10%) contrast(1.0) brightness(1.02);}
-  .hero-photo-overlay{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 35%),linear-gradient(to top,var(--bg) 0%,transparent 28%);}
-  .hero-glow{position:absolute;top:15%;right:8%;width:320px;height:320px;background:radial-gradient(circle,rgba(61,255,160,.1) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
+  .hero-right{
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow:hidden;
+    min-height:100vh;
+  }
+  .hero-photo-wrap{
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    pointer-events:none;
+  }
+  .hero-photo{
+    height:95%;
+    width:auto;
+    max-width:none;
+    object-fit:contain;
+    object-position:bottom center;
+    display:block;
+    filter: drop-shadow(0 0 60px rgba(61,255,160,0.12))
+            drop-shadow(0 30px 60px rgba(0,0,0,0.35));
+    animation: floatPhoto 6s ease-in-out infinite;
+  }
+  @keyframes floatPhoto {
+    0%,100% { transform:translateY(0); }
+    50%      { transform:translateY(-12px); }
+  }
+  html.light .hero-photo{
+    filter: drop-shadow(0 0 50px rgba(0,149,107,0.1))
+            drop-shadow(0 24px 48px rgba(0,0,0,0.12));
+  }
+  .hero-photo-overlay{ display:none; }
+  .hero-glow{position:absolute;top:10%;right:5%;width:380px;height:380px;background:radial-gradient(circle,rgba(61,255,160,.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;}
   html.light .hero-glow{background:radial-gradient(circle,rgba(0,149,107,.1) 0%,transparent 70%);}
 
   /* STATS */
@@ -241,13 +276,19 @@
   .section-title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;}
   .section-title .c-green{color:var(--green);}.section-title .c-purple{color:var(--purple);}.section-title .c-orange{color:var(--orange);}.section-title .c-blue{color:var(--blue);}
 
-  /* SECTION BG GRADIENTS — each section gets a subtle tinted sweep */
-  #about    { background: linear-gradient(135deg, var(--surface) 60%, color-mix(in srgb, var(--surface) 92%, var(--green) 8%)); }
-  #education{ background: linear-gradient(135deg, var(--bg) 55%, color-mix(in srgb, var(--bg) 90%, var(--purple) 10%)); }
-  #experience{ background: linear-gradient(135deg, var(--surface) 55%, color-mix(in srgb, var(--surface) 90%, var(--orange) 10%)); }
-  #projects { background: linear-gradient(135deg, var(--bg) 55%, color-mix(in srgb, var(--bg) 90%, var(--blue) 10%)); }
-  #skills   { background: linear-gradient(135deg, var(--surface) 55%, color-mix(in srgb, var(--surface) 90%, var(--pink) 10%)); }
-  #contact  { background: linear-gradient(135deg, var(--bg) 55%, color-mix(in srgb, var(--bg) 90%, var(--green) 10%)); }
+  /* SECTION BG GRADIENTS */
+  #about     { background: linear-gradient(150deg, var(--surface) 60%, rgba(61,255,160,0.05) 100%); }
+  #education { background: linear-gradient(150deg, var(--bg) 55%, rgba(167,139,255,0.06) 100%); }
+  #experience{ background: linear-gradient(150deg, var(--surface) 55%, rgba(255,140,66,0.05) 100%); }
+  #projects  { background: linear-gradient(150deg, var(--bg) 55%, rgba(56,189,248,0.05) 100%); }
+  #skills    { background: linear-gradient(150deg, var(--surface) 55%, rgba(244,114,182,0.05) 100%); }
+  #contact   { background: linear-gradient(150deg, var(--bg) 55%, rgba(61,255,160,0.05) 100%); }
+  html.light #about     { background: linear-gradient(150deg, var(--surface) 60%, rgba(0,149,107,0.05) 100%); }
+  html.light #education { background: linear-gradient(150deg, var(--bg) 55%, rgba(108,63,197,0.05) 100%); }
+  html.light #experience{ background: linear-gradient(150deg, var(--surface) 55%, rgba(217,94,0,0.04) 100%); }
+  html.light #projects  { background: linear-gradient(150deg, var(--bg) 55%, rgba(0,119,182,0.05) 100%); }
+  html.light #skills    { background: linear-gradient(150deg, var(--surface) 55%, rgba(192,22,106,0.04) 100%); }
+  html.light #contact   { background: linear-gradient(150deg, var(--bg) 55%, rgba(0,149,107,0.05) 100%); }
 
   /* ABOUT */
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
@@ -409,7 +450,7 @@
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="mailto:ferdinandtbusiness@gmail.com" class="nav-cta">Get in touch →</a>
+  <a href="/cdn-cgi/l/email-protection#3f595a4d5b56515e515b4b5d4a4c56515a4c4c7f58525e5653115c5052" class="nav-cta">Get in touch →</a>
 </nav>
 
 <!-- HERO -->
@@ -425,7 +466,7 @@
     <div class="hero-meta">
       <div class="hero-meta-item">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        <a href="mailto:ferdinandtbusiness@gmail.com" style="color:inherit;text-decoration:none;">ferdinandtbusiness@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#93f5f6e1f7fafdf2fdf7e7f1e6e0fafdf6e0e0d3f4fef2faffbdf0fcfe" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="e6808394828f88878882928493958f88839595a6818b878f8ac885898b">[email&#160;protected]</span></a>
       </div>
       <div class="hero-meta-item">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -463,8 +504,12 @@
   </div>
   <div class="hero-right">
     <div class="hero-photo-wrap">
-      <img src="assets/images/photo.jpg" alt="Ferdinand Taslim" class="hero-photo" onerror="this.style.display='none'">
-      <div class="hero-photo-overlay"></div>
+      <!--
+        Save your photo as:  assets/images/photo.png
+        Make sure the background is transparent (PNG with no bg).
+        The image will float naturally over the hero with a green glow.
+      -->
+      <img src="assets/images/photo.png" alt="Ferdinand Taslim" class="hero-photo" onerror="this.style.display='none'">
     </div>
     <div class="hero-glow"></div>
   </div>
@@ -750,7 +795,7 @@
   <span>Built with <span style="color:var(--green)">♥</span></span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // CURSOR
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
   let mx=0,my=0,rx=0,ry=0;
