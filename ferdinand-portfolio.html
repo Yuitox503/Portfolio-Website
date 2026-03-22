@@ -564,7 +564,7 @@
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="/cdn-cgi/l/email-protection#3c5a594e5855525d5258485e494f5552594f4f7c5b515d5550125f5351" class="nav-cta">Get in touch →</a>
+  <a href="#" id="nav-cta-email" class="nav-cta">Get in touch →</a>
 </nav>
 
 <!-- HERO -->
@@ -580,7 +580,7 @@
     <div class="hero-meta">
       <div class="hero-meta-item">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        <a href="/cdn-cgi/l/email-protection#34525146505d5a555a50405641475d5a514747745359555d581a575b59" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="56303324323f38373832223423253f3833252516313b373f3a7835393b">[email&#160;protected]</span></a>
+        <a href="#" id="hero-email" style="color:inherit;text-decoration:none;">ferdinandtbusiness&#64;gmail.com</a>
       </div>
       <div class="hero-meta-item">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -884,53 +884,13 @@
     <button class="cert-gallery-toggle" id="certGalleryToggle" aria-expanded="false">
       <span class="cert-gallery-toggle-icon">🖼</span>
       <span class="cert-gallery-toggle-label">View Certificate Gallery</span>
-      <span class="cert-gallery-toggle-count">8 certs</span>
+      <span class="cert-gallery-toggle-count" id="certCount">22 certs</span>
       <svg class="cert-gallery-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
     </button>
 
     <div class="cert-gallery-wrap" id="certGalleryWrap">
       <div class="cert-masonry" id="certMasonry">
-        <!--
-          ══════════════════════════════════════════════════════════
-          HOW TO ADD YOUR CERTIFICATE IMAGES
-          ══════════════════════════════════════════════════════════
-          Place all your certificate PNGs in:
-            assets/images/certificates/
-
-          Then add one .cert-masonry-item block per certificate:
-
-          <div class="cert-masonry-item">
-            <img src="assets/images/certificates/your-cert.png" alt="Certificate name" loading="lazy">
-          </div>
-
-          They will automatically arrange themselves in the masonry
-          layout. Different heights = more interesting layout!
-          ══════════════════════════════════════════════════════════
-        -->
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-1.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-2.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-3.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-4.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-5.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-6.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-7.png" alt="Certificate" loading="lazy">
-        </div>
-        <div class="cert-masonry-item">
-          <img src="assets/images/certificates/cert-8.png" alt="Certificate" loading="lazy">
-        </div>
+        <!-- Images are injected by JS from the CERTIFICATES config below -->
       </div>
     </div>
   </div>
@@ -949,7 +909,7 @@
     <div class="section-tag c-green" style="display:inline-block;margin-bottom:20px">06 — Contact</div>
     <h2 class="section-title">Ready to <em class="c-green">connect?</em></h2>
     <p style="font-size:16px;color:var(--text2);max-width:500px;margin:16px auto 0;line-height:1.85">Actively looking for internship opportunities from July–November 2025. Whether you have a role, a project, or just want to chat about data — my inbox is open.</p>
-    <a href="mailto:ferdinandtbusiness@gmail.com" class="contact-email">ferdinandtbusiness@gmail.com</a>
+    <a href="#" id="contact-email" class="contact-email">ferdinandtbusiness&#64;gmail.com</a>
     <div class="contact-links">
       <a href="tel:+60146696731" class="contact-link">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -970,6 +930,16 @@
 </footer>
 
 <script>
+  // Build email links at runtime so Cloudflare never sees raw addresses in HTML
+  (function(){
+    const u='ferdinandtbusiness', d='gmail.com';
+    const addr=u+'@'+d;
+    const m='mailto:'+addr;
+    ['nav-cta-email','hero-email','contact-email'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){ el.href=m; if(id==='hero-email') el.textContent=addr; }
+    });
+  })();
   // CURSOR
   const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
   let mx=0,my=0,rx=0,ry=0;
@@ -1016,42 +986,91 @@
   resumeBtn.addEventListener('click',e=>{e.stopPropagation();const open=resumeWrap.classList.toggle('open');resumeBtn.setAttribute('aria-expanded',open);});
   document.addEventListener('click',()=>{resumeWrap.classList.remove('open');resumeBtn.setAttribute('aria-expanded',false);});
 
+  // ══════════════════════════════════════════════════════════════
+  // CERTIFICATE GALLERY — just edit this list to add/remove certs
+  // Use the exact filename (including extension) as it appears in
+  // your  assets/images/certificates/  folder. No renaming needed.
+  // ══════════════════════════════════════════════════════════════
+  const CERTIFICATES = [
+    'CISCO INTORDUCTION TO NETWORKING CERTIFICATE.png',
+    'DATA SCIENCE WEEK GIS.png',
+    'DATA SCIENCE WEEK MACHINE LEARNING.png',
+    'DATACAMP-GITHUB.png',
+    'EVENT MANAGEMENT PPI.png',
+    'GDSC.png',
+    'IACD CERTIFICATE.png',
+    'IELTS TEST REPORT.png',
+    'JOGET PARTICIPATION.png',
+    'MYSKILL DATA ANALYSIS BOOTCAMP.png',
+    'MYSKILL MICROSOFT EXCEL BOOTCAMP.png',
+    'PPKOMP 2024 BRONZE AWARD.png',
+    'SOLOLEARN JAVA 1.png',
+    'SOLOLEARN JAVA 2.png',
+    'UDEMY BUSINESS ANALYSIS.png',
+    'VICE CHANCELLOR LIST 2.png',
+    'VICE LIST.png',
+    'WORLDQUANT BADGE.png',
+    'WORLDQUANT BRONZE.png',
+    'WORLDQUANT CERT.png',
+    'WORLDQUANT GOLD.png',
+    'WORLDQUANT SILVER.png',
+  ];
+  // ══════════════════════════════════════════════════════════════
+
+  (function buildGallery() {
+    const masonry = document.getElementById('certMasonry');
+    const countEl = document.getElementById('certCount');
+    const validCerts = CERTIFICATES.filter(f => f.trim() !== '');
+    countEl.textContent = validCerts.length + ' certs';
+    validCerts.forEach(filename => {
+      const div = document.createElement('div');
+      div.className = 'cert-masonry-item';
+      const img = document.createElement('img');
+      img.src = 'assets/images/certificates/' + filename;
+      img.alt = filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
+      img.loading = 'lazy';
+      // hide the slot if image fails to load (file not added yet)
+      img.onerror = () => { div.style.display = 'none'; };
+      div.appendChild(img);
+      masonry.appendChild(div);
+    });
+  })();
+
   // CERT GALLERY TOGGLE
-  const certToggle=document.getElementById('certGalleryToggle');
-  const certWrap=document.getElementById('certGalleryWrap');
-  certToggle.addEventListener('click',()=>{
-    const isOpen=certWrap.classList.toggle('open');
-    certToggle.classList.toggle('open',isOpen);
-    certToggle.setAttribute('aria-expanded',isOpen);
-    const count=certWrap.querySelectorAll('.cert-masonry-item img').length;
-    certToggle.querySelector('.cert-gallery-toggle-count').textContent=count+' certs';
+  const certToggle = document.getElementById('certGalleryToggle');
+  const certWrap   = document.getElementById('certGalleryWrap');
+  certToggle.addEventListener('click', () => {
+    const isOpen = certWrap.classList.toggle('open');
+    certToggle.classList.toggle('open', isOpen);
+    certToggle.setAttribute('aria-expanded', isOpen);
   });
 
   // LIGHTBOX
-  const lightbox=document.getElementById('cert-lightbox');
-  const lightboxImg=document.getElementById('cert-lightbox-img');
-  const lightboxClose=document.getElementById('cert-lightbox-close');
-  document.getElementById('certMasonry').addEventListener('click',e=>{
-    const img=e.target.closest('.cert-masonry-item')?.querySelector('img');
-    if(!img)return;
-    lightboxImg.src=img.src;
-    lightboxImg.alt=img.alt;
+  const lightbox      = document.getElementById('cert-lightbox');
+  const lightboxImg   = document.getElementById('cert-lightbox-img');
+  const lightboxClose = document.getElementById('cert-lightbox-close');
+  document.getElementById('certMasonry').addEventListener('click', e => {
+    const img = e.target.closest('.cert-masonry-item')?.querySelector('img');
+    if (!img) return;
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
     lightbox.classList.add('active');
-    document.body.style.overflow='hidden';
+    document.body.style.overflow = 'hidden';
   });
-  const closeLightbox=()=>{lightbox.classList.remove('active');document.body.style.overflow='';};
-  lightboxClose.addEventListener('click',closeLightbox);
-  lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+  const closeLightbox = () => { lightbox.classList.remove('active'); document.body.style.overflow = ''; };
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
   // THEME TOGGLE
-  const btn=document.getElementById('theme-toggle'),root=document.documentElement;
-  const saved=localStorage.getItem('theme');
-  if(saved==='light'){root.classList.add('light');btn.textContent='☀️';}
-  btn.addEventListener('click',()=>{
-    const isLight=root.classList.toggle('light');
-    btn.textContent=isLight?'☀️':'🌙';
-    localStorage.setItem('theme',isLight?'light':'dark');
+  const btn  = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') { root.classList.add('light'); btn.textContent = '☀️'; }
+  btn.addEventListener('click', () => {
+    const isLight = root.classList.toggle('light');
+    btn.textContent = isLight ? '☀️' : '🌙';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 </script>
 </body>
