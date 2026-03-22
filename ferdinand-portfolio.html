@@ -15,13 +15,16 @@
   ║  ├── index.html          ← this file                         ║
   ║  ├── 📁 assets/                                              ║
   ║  │   ├── 📁 images/                                          ║
-  ║  │   │   ├── photo.jpg            ← your profile photo       ║
+  ║  │   │   ├── photo.png            ← your profile photo       ║
   ║  │   │   ├── logo-maybank.png     ← Maybank logo             ║
   ║  │   │   ├── logo-worldquant.png  ← WorldQuant logo          ║
   ║  │   │   ├── logo-ppidk.png       ← PPIDK logo               ║
   ║  │   │   ├── logo-apu.png         ← APU logo                 ║
   ║  │   │   ├── logo-dmu.png         ← De Montfort Univ logo    ║
-  ║  │   │   └── logo-stpeter.png     ← St. Peter School logo    ║
+  ║  │   │   ├── logo-stpeter.png     ← St. Peter School logo    ║
+  ║  │   │   └── 📁 certificates/     ← all cert PNGs here       ║
+  ║  │   │       ├── cert-1.png                                  ║
+  ║  │   │       ├── cert-2.png  ... and so on                   ║
   ║  │   └── 📁 resume/                                          ║
   ║  │       ├── resume-en.pdf        ← English CV               ║
   ║  │       └── resume-id.pdf        ← Indonesian CV            ║
@@ -432,7 +435,108 @@
     transition:background .35s ease,border-color .35s ease,color .35s ease,box-shadow .35s ease;
   }
 
-  @media(max-width:960px){
+  /* CERTIFICATE MASONRY GALLERY */
+  .cert-gallery-toggle {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 32px;
+    background: none; border: 1px solid var(--border-strong);
+    border-radius: 14px; padding: 16px 22px;
+    color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500;
+    cursor: none; width: 100%; text-align: left;
+    transition: all .25s;
+  }
+  .cert-gallery-toggle:hover { border-color: var(--green); color: var(--green); }
+  .cert-gallery-toggle.open { border-color: var(--green); color: var(--green); }
+  .cert-gallery-toggle-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(61,255,160,.1); display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+    font-size: 16px; transition: transform .3s;
+  }
+  html.light .cert-gallery-toggle-icon { background: rgba(0,149,107,.1); }
+  .cert-gallery-toggle.open .cert-gallery-toggle-icon { transform: rotate(45deg); }
+  .cert-gallery-toggle-label { flex: 1; }
+  .cert-gallery-toggle-count {
+    font-size: 12px; font-weight: 600; letter-spacing: .08em;
+    background: rgba(61,255,160,.1); color: var(--green);
+    border-radius: 100px; padding: 3px 12px;
+  }
+  html.light .cert-gallery-toggle-count { background: rgba(0,149,107,.1); }
+  .cert-gallery-chevron {
+    width: 18px; height: 18px; opacity: .6;
+    transition: transform .3s;
+  }
+  .cert-gallery-toggle.open .cert-gallery-chevron { transform: rotate(180deg); }
+
+  .cert-gallery-wrap {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .55s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+    opacity: 0;
+  }
+  .cert-gallery-wrap.open {
+    max-height: 4000px;
+    opacity: 1;
+  }
+
+  .cert-masonry {
+    margin-top: 24px;
+    columns: 3 280px;
+    column-gap: 16px;
+  }
+  .cert-masonry-item {
+    break-inside: avoid;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    cursor: none;
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+    display: block;
+  }
+  .cert-masonry-item:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: var(--green);
+    box-shadow: 0 12px 40px rgba(61,255,160,.08);
+  }
+  html.light .cert-masonry-item:hover {
+    border-color: var(--green);
+    box-shadow: 0 8px 32px rgba(0,149,107,.1);
+  }
+  .cert-masonry-item img {
+    width: 100%; height: auto; display: block;
+    transition: opacity .2s;
+  }
+  .cert-masonry-item:hover img { opacity: .9; }
+
+  /* lightbox */
+  #cert-lightbox {
+    position: fixed; inset: 0; z-index: 5000;
+    background: rgba(0,0,0,.88);
+    display: none; align-items: center; justify-content: center;
+    cursor: none;
+    backdrop-filter: blur(8px);
+  }
+  #cert-lightbox.active { display: flex; }
+  #cert-lightbox img {
+    max-width: 90vw; max-height: 88vh;
+    border-radius: 16px;
+    box-shadow: 0 32px 80px rgba(0,0,0,.6);
+    animation: lbIn .25s ease;
+  }
+  @keyframes lbIn { from { opacity:0; transform:scale(.93); } to { opacity:1; transform:scale(1); } }
+  #cert-lightbox-close {
+    position: absolute; top: 24px; right: 28px;
+    font-size: 28px; color: rgba(255,255,255,.7);
+    background: none; border: none; cursor: none;
+    transition: color .2s; line-height: 1;
+  }
+  #cert-lightbox-close:hover { color: #fff; }
+
+  @media(max-width:960px) {
+    .cert-masonry { columns: 2 200px; }
     #home{grid-template-columns:1fr;} .hero-right{display:none;}
     .about-grid,.skills-grid,.projects-grid,.edu-grid,.awards-list,.certs-grid{grid-template-columns:1fr;}
     nav{padding:16px 22px;} .nav-links{display:none;}
@@ -460,7 +564,7 @@
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="mailto:ferdinandtbusiness@gmail.com" class="nav-cta">Get in touch →</a>
+  <a href="/cdn-cgi/l/email-protection#3c5a594e5855525d5258485e494f5552594f4f7c5b515d5550125f5351" class="nav-cta">Get in touch →</a>
 </nav>
 
 <!-- HERO -->
@@ -476,7 +580,7 @@
     <div class="hero-meta">
       <div class="hero-meta-item">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        <a href="mailto:ferdinandtbusiness@gmail.com" style="color:inherit;text-decoration:none;">ferdinandtbusiness@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#34525146505d5a555a50405641475d5a514747745359555d581a575b59" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="56303324323f38373832223423253f3833252516313b373f3a7835393b">[email&#160;protected]</span></a>
       </div>
       <div class="hero-meta-item">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
@@ -775,8 +879,68 @@
       <div class="cert-item"><span class="cert-dot cd-green"></span>Deloitte × MySkill: Microsoft Excel Bootcamp</div>
       <div class="cert-item"><span class="cert-dot cd-purple"></span>PPIDK Asiania: Event Management Training</div>
     </div>
+
+    <!-- CERTIFICATE GALLERY DROPDOWN -->
+    <button class="cert-gallery-toggle" id="certGalleryToggle" aria-expanded="false">
+      <span class="cert-gallery-toggle-icon">🖼</span>
+      <span class="cert-gallery-toggle-label">View Certificate Gallery</span>
+      <span class="cert-gallery-toggle-count">8 certs</span>
+      <svg class="cert-gallery-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+
+    <div class="cert-gallery-wrap" id="certGalleryWrap">
+      <div class="cert-masonry" id="certMasonry">
+        <!--
+          ══════════════════════════════════════════════════════════
+          HOW TO ADD YOUR CERTIFICATE IMAGES
+          ══════════════════════════════════════════════════════════
+          Place all your certificate PNGs in:
+            assets/images/certificates/
+
+          Then add one .cert-masonry-item block per certificate:
+
+          <div class="cert-masonry-item">
+            <img src="assets/images/certificates/your-cert.png" alt="Certificate name" loading="lazy">
+          </div>
+
+          They will automatically arrange themselves in the masonry
+          layout. Different heights = more interesting layout!
+          ══════════════════════════════════════════════════════════
+        -->
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-1.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-2.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-3.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-4.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-5.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-6.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-7.png" alt="Certificate" loading="lazy">
+        </div>
+        <div class="cert-masonry-item">
+          <img src="assets/images/certificates/cert-8.png" alt="Certificate" loading="lazy">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div id="cert-lightbox">
+  <button id="cert-lightbox-close" aria-label="Close">✕</button>
+  <img id="cert-lightbox-img" src="" alt="Certificate">
+</div>
 
 <!-- CONTACT -->
 <section id="contact">
@@ -851,6 +1015,34 @@
   const resumeWrap=document.getElementById('resumeWrap'),resumeBtn=document.getElementById('resumeBtn');
   resumeBtn.addEventListener('click',e=>{e.stopPropagation();const open=resumeWrap.classList.toggle('open');resumeBtn.setAttribute('aria-expanded',open);});
   document.addEventListener('click',()=>{resumeWrap.classList.remove('open');resumeBtn.setAttribute('aria-expanded',false);});
+
+  // CERT GALLERY TOGGLE
+  const certToggle=document.getElementById('certGalleryToggle');
+  const certWrap=document.getElementById('certGalleryWrap');
+  certToggle.addEventListener('click',()=>{
+    const isOpen=certWrap.classList.toggle('open');
+    certToggle.classList.toggle('open',isOpen);
+    certToggle.setAttribute('aria-expanded',isOpen);
+    const count=certWrap.querySelectorAll('.cert-masonry-item img').length;
+    certToggle.querySelector('.cert-gallery-toggle-count').textContent=count+' certs';
+  });
+
+  // LIGHTBOX
+  const lightbox=document.getElementById('cert-lightbox');
+  const lightboxImg=document.getElementById('cert-lightbox-img');
+  const lightboxClose=document.getElementById('cert-lightbox-close');
+  document.getElementById('certMasonry').addEventListener('click',e=>{
+    const img=e.target.closest('.cert-masonry-item')?.querySelector('img');
+    if(!img)return;
+    lightboxImg.src=img.src;
+    lightboxImg.alt=img.alt;
+    lightbox.classList.add('active');
+    document.body.style.overflow='hidden';
+  });
+  const closeLightbox=()=>{lightbox.classList.remove('active');document.body.style.overflow='';};
+  lightboxClose.addEventListener('click',closeLightbox);
+  lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 
   // THEME TOGGLE
   const btn=document.getElementById('theme-toggle'),root=document.documentElement;
