@@ -4,8 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ferdinand Taslim — Data Analytics & CS</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/png" href="assets/images/logo.png">
+<link rel="apple-touch-icon" href="assets/images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  FOLDER STRUCTURE — place your files like this:              ║
+  ║                                                              ║
+  ║  📁 my-portfolio/                                            ║
+  ║  ├── index.html          ← this file                         ║
+  ║  ├── 📁 assets/                                              ║
+  ║  │   ├── 📁 images/                                          ║
+  ║  │   │   ├── photo.png            ← your profile photo       ║
+  ║  │   │   ├── logo-maybank.png     ← Maybank logo             ║
+  ║  │   │   ├── logo-worldquant.png  ← WorldQuant logo          ║
+  ║  │   │   ├── logo-ppidk.png       ← PPIDK logo               ║
+  ║  │   │   ├── logo-apu.png         ← APU logo                 ║
+  ║  │   │   ├── logo-dmu.png         ← De Montfort Univ logo    ║
+  ║  │   │   ├── logo-stpeter.png     ← St. Peter School logo    ║
+  ║  │   │   └── 📁 certificates/     ← all cert PNGs here       ║
+  ║  │   │       ├── cert-1.png                                  ║
+  ║  │   │       ├── cert-2.png  ... and so on                   ║
+  ║  │   └── 📁 resume/                                          ║
+  ║  │       ├── resume-en.pdf        ← English CV               ║
+  ║  │       └── resume-id.pdf        ← Indonesian CV            ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
 
 <style>
   :root {
@@ -64,31 +89,252 @@
     overflow-x:hidden; cursor:none;
   }
 
-  /* ── GLOBAL GRADIENT BACKGROUND ── */
-  /* A large decorative mesh that drifts slowly behind the whole page */
-  body::after {
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:
-      radial-gradient(ellipse 80% 50% at 10% 20%, var(--grad-a), transparent),
-      radial-gradient(ellipse 60% 60% at 90% 10%, var(--grad-b), transparent),
-      radial-gradient(ellipse 50% 40% at 50% 80%, var(--grad-c), transparent),
-      radial-gradient(ellipse 70% 50% at 80% 60%, var(--grad-d), transparent);
-    animation: meshDrift 20s ease-in-out infinite alternate;
+  /* ── PAGE LOADER ── */
+  #loader {
+    position: fixed; inset: 0; z-index: 99999;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 32px;
+    transition: opacity .6s ease, visibility .6s ease;
   }
-  @keyframes meshDrift {
-    0%   { opacity:1; transform:scale(1) translate(0,0); }
-    33%  { transform:scale(1.04) translate(1%,1.5%); }
-    66%  { transform:scale(0.98) translate(-1%,0.5%); }
-    100% { opacity:.85; transform:scale(1.02) translate(0.5%,-1%); }
+  #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-name {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(32px, 6vw, 64px);
+    letter-spacing: -2px; color: var(--text);
+    overflow: hidden;
   }
-  /* noise grain */
+  .loader-name span { display: inline-block; }
+  .loader-name .accent { color: var(--green); }
+  .loader-bar-wrap {
+    width: 200px; height: 2px;
+    background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .loader-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--green), var(--purple));
+    border-radius: 2px;
+    transition: width .05s linear;
+  }
+  .loader-pct {
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: var(--muted); letter-spacing: .1em;
+    font-weight: 500;
+  }
+
+  /* ── SCROLL PROGRESS BAR ── */
+  #scroll-progress {
+    position: fixed; top: 0; left: 0; z-index: 9999;
+    height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--green), var(--purple), var(--orange));
+    transition: width .1s linear;
+    pointer-events: none;
+  }
+
+  /* ── SCROLL TO TOP BUTTON ── */
+  #scroll-top {
+    position: fixed; bottom: 88px; right: 28px; z-index: 200;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--border-strong); background: var(--surface);
+    color: var(--muted); cursor: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; opacity: 0; pointer-events: none;
+    transform: translateY(10px);
+    transition: all .3s ease;
+  }
+  #scroll-top.visible { opacity: 1; pointer-events: all; transform: translateY(0); }
+  #scroll-top:hover { border-color: var(--green); color: var(--green); transform: translateY(-3px); }
+
+  /* ── MAGNETIC BUTTON WRAPPER ── */
+  .mag-wrap { display: inline-block; }
+
+  /* ── SPLIT TEXT REVEAL ── */
+  .reveal-text { overflow: hidden; display: block; }
+  .reveal-text .word {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform .7s cubic-bezier(.16,1,.3,1), opacity .5s ease;
+  }
+  .reveal-text.visible .word {
+    transform: translateY(0); opacity: 1;
+  }
+
+  /* ── SECTION ENTER ANIMATIONS ── */
+  .slide-up {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .slide-up.visible { opacity: 1; transform: translateY(0); }
+  .slide-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .slide-left.visible { opacity: 1; transform: translateX(0); }
+  .slide-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  .slide-right.visible { opacity: 1; transform: translateX(0); }
+  .scale-in {
+    opacity: 0; transform: scale(.92);
+    transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .scale-in.visible { opacity: 1; transform: scale(1); }
+
+  /* stagger children */
+  .stagger-children > * { opacity: 0; transform: translateY(30px); transition: opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  .stagger-children.visible > *:nth-child(1) { opacity:1;transform:translateY(0);transition-delay:.05s; }
+  .stagger-children.visible > *:nth-child(2) { opacity:1;transform:translateY(0);transition-delay:.15s; }
+  .stagger-children.visible > *:nth-child(3) { opacity:1;transform:translateY(0);transition-delay:.25s; }
+  .stagger-children.visible > *:nth-child(4) { opacity:1;transform:translateY(0);transition-delay:.35s; }
+  .stagger-children.visible > *:nth-child(5) { opacity:1;transform:translateY(0);transition-delay:.45s; }
+  .stagger-children.visible > *:nth-child(6) { opacity:1;transform:translateY(0);transition-delay:.55s; }
+
+  /* ── STAT NUMBER COUNT-UP ── */
+  .stat-num { transition: color .3s; }
+
+  /* ── HERO SCRAMBLE ── */
+  .scramble { display: inline; }
+
+  /* ── PARALLAX LAYER ── */
+  .parallax { will-change: transform; }
+
+  /* ── HORIZONTAL SCROLL TICKER ── */
+  .ticker-wrap {
+    overflow: hidden; background: var(--green);
+    padding: 12px 0; white-space: nowrap;
+    position: relative; z-index: 3;
+  }
+  html.light .ticker-wrap { background: var(--green); }
+  .ticker-track {
+    display: inline-flex; gap: 0;
+    animation: tickerScroll 22s linear infinite;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 0 32px;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--bg);
+  }
+  .ticker-sep { opacity: .5; font-size: 10px; }
+
+  /* ── FLOATING SKILL ORBS on hover ── */
+  .skill-tag { position: relative; }
+  .skill-tag::after {
+    content: ''; position: absolute; inset: -2px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--green), var(--purple));
+    opacity: 0; z-index: -1;
+    transition: opacity .2s;
+  }
+  .skill-tag:hover::after { opacity: .15; }
+
+  /* ── SECTION LABEL COUNTER ── */
+  .section-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(80px, 12vw, 160px);
+    color: transparent; -webkit-text-stroke: 1px var(--border-strong);
+    position: absolute; top: -20px; right: 64px;
+    line-height: 1; pointer-events: none; user-select: none;
+    letter-spacing: -6px;
+    transition: -webkit-text-stroke .3s;
+    z-index: 0;
+  }
+  section { position: relative; }
+  section:hover .section-num { -webkit-text-stroke-color: var(--border); }
+
+  /* ── CURSOR TRAIL ── */
+  .trail-dot {
+    position: fixed; width: 6px; height: 6px;
+    border-radius: 50%; pointer-events: none;
+    z-index: 9990; transform: translate(-50%,-50%);
+    mix-blend-mode: screen;
+    animation: trailFade .6s ease forwards;
+  }
+  @keyframes trailFade { from { opacity:.6; transform:translate(-50%,-50%) scale(1); } to { opacity:0; transform:translate(-50%,-50%) scale(0); } }
+
+  /* ── ACTIVE NAV PILL ANIMATION ── */
+  .nav-links a { position: relative; }
+
+  /* ── AURORA CANVAS ── */
+  #aurora-canvas {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 1;
+    transition: opacity .5s;
+  }
+
+  /* ── ANIMATED DOT GRID overlay ── */
+  #dot-grid {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background-image: radial-gradient(circle, var(--dim) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.18;
+    mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 100%);
+    animation: dotPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes dotPulse {
+    0%   { opacity: 0.18; background-size: 40px 40px; }
+    50%  { opacity: 0.10; background-size: 42px 42px; }
+    100% { opacity: 0.18; background-size: 40px 40px; }
+  }
+  html.light #dot-grid { opacity: 0.12; }
+
+  /* remove the old body::after mesh — replaced by canvas */
+  body::after { display: none; }
+
+  /* noise grain — keep */
   body::before {
     content:''; position:fixed; inset:0; pointer-events:none; z-index:1001;
     background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     opacity:var(--noise-opacity);
   }
-  /* make sure all content sits above the bg gradient */
-  nav, section, .stats-bar, footer, #cursor, #cursor-ring, #theme-toggle { position:relative; z-index:2; }
+
+  /* ── SECTION BG — richer, per-section coloured side stripe ── */
+  section { position: relative; overflow: hidden; }
+  section::before {
+    content: ''; position: absolute;
+    inset: 0; pointer-events: none; z-index: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  section.in-view::before { opacity: 1; }
+
+  #about::before    { background: linear-gradient(120deg, transparent 65%, rgba(61,255,160,0.06) 100%); }
+  #education::before{ background: linear-gradient(120deg, transparent 65%, rgba(167,139,255,0.06) 100%); }
+  #experience::before{ background: linear-gradient(120deg, transparent 65%, rgba(255,140,66,0.07) 100%); }
+  #projects::before { background: linear-gradient(120deg, transparent 65%, rgba(56,189,248,0.06) 100%); }
+  #skills::before   { background: linear-gradient(120deg, transparent 65%, rgba(244,114,182,0.06) 100%); }
+  #contact::before  { background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(61,255,160,0.08), transparent); }
+
+  html.light #about::before    { background: linear-gradient(120deg, transparent 65%, rgba(0,149,107,0.06) 100%); }
+  html.light #education::before{ background: linear-gradient(120deg, transparent 65%, rgba(108,63,197,0.06) 100%); }
+  html.light #experience::before{ background: linear-gradient(120deg, transparent 65%, rgba(217,94,0,0.05) 100%); }
+  html.light #projects::before { background: linear-gradient(120deg, transparent 65%, rgba(0,119,182,0.06) 100%); }
+  html.light #skills::before   { background: linear-gradient(120deg, transparent 65%, rgba(192,22,106,0.05) 100%); }
+  html.light #contact::before  { background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,149,107,0.07), transparent); }
+
+  /* ── SECTION LEFT ACCENT LINE ── */
+  #about::after, #experience::after, #skills::after {
+    content: ''; position: absolute;
+    left: 0; top: 10%; bottom: 10%; width: 2px;
+    border-radius: 2px; pointer-events: none; z-index: 0;
+    opacity: 0; transition: opacity 1.2s ease, height .8s ease;
+  }
+  section.in-view#about::after    { opacity: 1; background: linear-gradient(to bottom, transparent, var(--green), transparent); }
+  section.in-view#experience::after { opacity: 1; background: linear-gradient(to bottom, transparent, var(--orange), transparent); }
+  section.in-view#skills::after   { opacity: 1; background: linear-gradient(to bottom, transparent, var(--pink), transparent); }
+
+  /* make sure all content sits above the bg */
+  nav, section > *, .stats-bar, footer, #cursor, #cursor-ring, #theme-toggle { position:relative; z-index:2; }
+
 
   /* CURSOR */
   #cursor {
@@ -129,8 +375,12 @@
     background:linear-gradient(to bottom,var(--nav-bg) 0%,transparent 100%);
     backdrop-filter:blur(6px);
   }
-  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--text);text-decoration:none;letter-spacing:-.5px;}
-  .nav-logo span{color:var(--green);}
+  .nav-logo{display:flex;align-items:center;text-decoration:none;}
+  .nav-logo img{height:36px;width:auto;object-fit:contain;transition:opacity .2s;}
+  .nav-logo img:hover{opacity:.8;}
+  /* fallback text if logo image fails */
+  .nav-logo-fallback{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--text);letter-spacing:-.5px;}
+  .nav-logo-fallback span{color:var(--green);}
   .nav-links{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:100px;padding:5px;}
   .nav-links a{text-decoration:none;color:var(--muted);font-size:13px;padding:6px 16px;border-radius:100px;transition:all .2s;font-weight:500;}
   .nav-links a:hover,.nav-links a.active{color:var(--bg);background:var(--green);}
@@ -255,19 +505,8 @@
   .section-title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;}
   .section-title .c-green{color:var(--green);}.section-title .c-purple{color:var(--purple);}.section-title .c-orange{color:var(--orange);}.section-title .c-blue{color:var(--blue);}
 
-  /* SECTION BG GRADIENTS */
-  #about     { background: linear-gradient(150deg, var(--surface) 60%, rgba(61,255,160,0.05) 100%); }
-  #education { background: linear-gradient(150deg, var(--bg) 55%, rgba(167,139,255,0.06) 100%); }
-  #experience{ background: linear-gradient(150deg, var(--surface) 55%, rgba(255,140,66,0.05) 100%); }
-  #projects  { background: linear-gradient(150deg, var(--bg) 55%, rgba(56,189,248,0.05) 100%); }
-  #skills    { background: linear-gradient(150deg, var(--surface) 55%, rgba(244,114,182,0.05) 100%); }
-  #contact   { background: linear-gradient(150deg, var(--bg) 55%, rgba(61,255,160,0.05) 100%); }
-  html.light #about     { background: linear-gradient(150deg, var(--surface) 60%, rgba(0,149,107,0.05) 100%); }
-  html.light #education { background: linear-gradient(150deg, var(--bg) 55%, rgba(108,63,197,0.05) 100%); }
-  html.light #experience{ background: linear-gradient(150deg, var(--surface) 55%, rgba(217,94,0,0.04) 100%); }
-  html.light #projects  { background: linear-gradient(150deg, var(--bg) 55%, rgba(0,119,182,0.05) 100%); }
-  html.light #skills    { background: linear-gradient(150deg, var(--surface) 55%, rgba(192,22,106,0.04) 100%); }
-  html.light #contact   { background: linear-gradient(150deg, var(--bg) 55%, rgba(0,149,107,0.05) 100%); }
+  /* SECTION BG — handled by ::before pseudo-elements above */
+
 
   /* ABOUT */
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
@@ -446,22 +685,18 @@
   .cert-gallery-toggle.open .cert-gallery-chevron { transform: rotate(180deg); }
 
   .cert-gallery-wrap {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows .55s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .55s cubic-bezier(.16,1,.3,1), opacity .4s ease;
     opacity: 0;
   }
   .cert-gallery-wrap.open {
-    grid-template-rows: 1fr;
+    max-height: 4000px;
     opacity: 1;
-  }
-  .cert-gallery-wrap > * {
-    overflow: hidden;
   }
 
   .cert-masonry {
     margin-top: 24px;
-    padding-bottom: 8px;
     columns: 3 280px;
     column-gap: 16px;
   }
@@ -530,12 +765,30 @@
 </head>
 <body>
 
+<canvas id="aurora-canvas"></canvas>
+<div id="dot-grid"></div>
+
+<div id="loader">
+  <div class="loader-name">
+    <span>Ferdinand</span>&nbsp;<span class="accent">Taslim</span>
+  </div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<div id="scroll-progress"></div>
+<button id="scroll-top" aria-label="Back to top">↑</button>
+
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 <button id="theme-toggle" title="Toggle light / dark mode" aria-label="Toggle theme">🌙</button>
 
 <nav>
-  <a href="#home" class="nav-logo">FT<span>.</span></a>
+  <a href="#home" class="nav-logo">
+    <img src="assets/images/logo.png" alt="Ferdinand Taslim"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+    <span class="nav-logo-fallback" style="display:none">FT<span>.</span></span>
+  </a>
   <div class="nav-links">
     <a href="#home" class="active">Home</a>
     <a href="#about">About</a>
@@ -603,7 +856,7 @@
         Make sure the background is transparent (PNG with no bg).
         The image will float naturally over the hero with a green glow.
       -->
-      <img src="assets/images/Photo.png" alt="Ferdinand Taslim" class="hero-photo" onerror="this.style.display='none'">
+      <img src="assets/images/photo.png" alt="Ferdinand Taslim" class="hero-photo" onerror="this.style.display='none'">
     </div>
     <div class="hero-glow"></div>
   </div>
@@ -617,17 +870,43 @@
   <div class="stat-item"><span class="stat-num c-blue">6+</span><span class="stat-label">Projects Completed</span></div>
 </div>
 
-<!-- ABOUT -->
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Data Analytics <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Machine Learning <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Python <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Quantitative Finance <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">SQL <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Power BI <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">NLP <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Java <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">WorldQuant <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">APU cGPA 3.92 <span class="ticker-sep">✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Data Analytics <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Machine Learning <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Python <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Quantitative Finance <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">SQL <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Power BI <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">NLP <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Java <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">WorldQuant <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">APU cGPA 3.92 <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
 <section id="about">
-  <div class="section-header"><span class="section-tag c-green">01 — About</span><div class="section-line"></div></div>
+  <div class="section-num" aria-hidden="true">01</div>
+  <div class="section-header slide-up"><span class="section-tag c-green">01 — About</span><div class="section-line"></div></div>
   <div class="about-grid">
-    <div class="about-text fade-in">
+    <div class="about-text slide-left">
       <h2 class="section-title">Turning data into<br><em class="c-green">decisions</em></h2>
       <p>I'm an international Computer Science student at Asia Pacific University, specialising in Data Analytics. Originally from Pontianak, Indonesia, passionate about <strong>extracting meaningful patterns from complex data</strong> and building systems that solve real problems.</p>
       <p>My work spans financial modelling, web development, AI-powered applications, and competitive programming. I bring both analytical precision and creative problem-solving to everything I take on.</p>
       <p>Currently seeking an internship from <strong>July 28 – November 14, 2025</strong>, where I can apply data analytics skills to real-world challenges.</p>
     </div>
-    <div class="about-cards fade-in">
+    <div class="about-cards stagger-children slide-right">
       <div class="about-card ac-green"><div class="card-icon">📊</div><div class="card-title">Data Analytics</div><div class="card-desc">Statistical analysis, predictive modelling, and visualisation using Python, R, and Power BI.</div></div>
       <div class="about-card ac-purple"><div class="card-icon">🤖</div><div class="card-title">AI & Machine Learning</div><div class="card-desc">Building chatbots, classification models, and AI-powered apps leveraging modern APIs.</div></div>
       <div class="about-card ac-orange"><div class="card-icon">💻</div><div class="card-title">Software Development</div><div class="card-desc">Full-stack experience in Java, Python, C, JavaScript, and SQL database systems.</div></div>
@@ -638,13 +917,13 @@
 
 <!-- EDUCATION -->
 <section id="education">
-  <div class="section-header"><span class="section-tag c-purple">02 — Education</span><div class="section-line"></div></div>
-  <h2 class="section-title" style="margin-bottom:40px">Academic <em class="c-purple">background</em></h2>
-  <div class="edu-grid">
+  <div class="section-num" aria-hidden="true">02</div>
+  <div class="section-header slide-up"><span class="section-tag c-purple">02 — Education</span><div class="section-line"></div></div>
+  <h2 class="section-title slide-up" style="margin-bottom:40px">Academic <em class="c-purple">background</em></h2>
+  <div class="edu-grid stagger-children">
 
-    <div class="edu-card ec-green fade-in">
+    <div class="edu-card ec-green">
       <div class="edu-logo-wrap">
-        <!-- Place logo at: assets/images/logo-apu.png -->
         <img src="assets/images/logo-apu.png" alt="APU logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="edu-logo-placeholder" style="display:none">🎓</span>
       </div>
@@ -654,9 +933,8 @@
       <span class="edu-badge bg-green">cGPA: 3.92 · Vice Chancellor's List</span>
     </div>
 
-    <div class="edu-card ec-purple fade-in">
+    <div class="edu-card ec-purple">
       <div class="edu-logo-wrap">
-        <!-- Place logo at: assets/images/logo-dmu.png -->
         <img src="assets/images/logo-dmu.png" alt="DMU logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="edu-logo-placeholder" style="display:none">🎓</span>
       </div>
@@ -666,9 +944,8 @@
       <span class="edu-badge bg-purple">Dual Degree Program</span>
     </div>
 
-    <div class="edu-card ec-orange fade-in">
+    <div class="edu-card ec-orange">
       <div class="edu-logo-wrap">
-        <!-- Place logo at: assets/images/logo-stpeter.png -->
         <img src="assets/images/logo-stpeter.png" alt="St. Peter logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="edu-logo-placeholder" style="display:none">🏫</span>
       </div>
@@ -683,8 +960,9 @@
 
 <!-- EXPERIENCE -->
 <section id="experience">
-  <div class="section-header"><span class="section-tag c-orange">03 — Experience</span><div class="section-line"></div></div>
-  <h2 class="section-title" style="margin-bottom:60px">Where I've <em class="c-orange">contributed</em></h2>
+  <div class="section-num" aria-hidden="true">03</div>
+  <div class="section-header slide-up"><span class="section-tag c-orange">03 — Experience</span><div class="section-line"></div></div>
+  <h2 class="section-title slide-up" style="margin-bottom:60px">Where I've <em class="c-orange">contributed</em></h2>
   <div class="exp-timeline">
 
     <div class="exp-item">
@@ -753,9 +1031,10 @@
 
 <!-- PROJECTS -->
 <section id="projects">
-  <div class="section-header"><span class="section-tag c-blue">04 — Projects</span><div class="section-line"></div></div>
-  <h2 class="section-title" style="margin-bottom:40px">Things I've <em class="c-blue">built</em></h2>
-  <div class="projects-grid">
+  <div class="section-num" aria-hidden="true">04</div>
+  <div class="section-header slide-up"><span class="section-tag c-blue">04 — Projects</span><div class="section-line"></div></div>
+  <h2 class="section-title slide-up" style="margin-bottom:40px">Things I've <em class="c-blue">built</em></h2>
+  <div class="projects-grid stagger-children">
     <div class="project-card fade-in">
       <div class="project-tag pt-purple">Hackathon · 2025</div>
       <div class="project-title">Vouch AI — Merchant Recommendation</div>
@@ -797,8 +1076,9 @@
 
 <!-- SKILLS -->
 <section id="skills">
-  <div class="section-header"><span class="section-tag c-pink">05 — Skills</span><div class="section-line"></div></div>
-  <h2 class="section-title" style="margin-bottom:60px">Technical <em class="c-pink">toolkit</em></h2>
+  <div class="section-num" aria-hidden="true">05</div>
+  <div class="section-header slide-up"><span class="section-tag c-pink">05 — Skills</span><div class="section-line"></div></div>
+  <h2 class="section-title slide-up" style="margin-bottom:60px">Technical <em class="c-pink">toolkit</em></h2>
   <div class="skills-grid">
     <div>
       <div class="skill-group-title">Programming Languages</div>
@@ -909,67 +1189,262 @@
 </footer>
 
 <script>
-  // Build email links at runtime so Cloudflare never sees raw addresses in HTML
+  // ── PAGE LOADER ──────────────────────────────────────────────
+  const loaderEl  = document.getElementById('loader');
+  const loaderBar = document.getElementById('loaderBar');
+  const loaderPct = document.getElementById('loaderPct');
+  let pct = 0;
+  const loaderTimer = setInterval(() => {
+    pct += Math.random() * 18 + 4;
+    if (pct >= 100) { pct = 100; clearInterval(loaderTimer); }
+    loaderBar.style.width = pct + '%';
+    loaderPct.textContent = Math.floor(pct) + '%';
+    if (pct === 100) setTimeout(() => loaderEl.classList.add('hidden'), 300);
+  }, 80);
+
+  // ── EMAIL (anti-Cloudflare) ──────────────────────────────────
   (function(){
     const u='ferdinandtbusiness', d='gmail.com';
-    const addr=u+'@'+d;
-    const m='mailto:'+addr;
+    const addr=u+'@'+d, m='mailto:'+addr;
     ['nav-cta-email','hero-email','contact-email'].forEach(id=>{
       const el=document.getElementById(id);
       if(el){ el.href=m; if(id==='hero-email') el.textContent=addr; }
     });
   })();
-  // CURSOR
-  const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+
+  // ── AURORA CANVAS ────────────────────────────────────────────
+  (function() {
+    const canvas = document.getElementById('aurora-canvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H, t = 0;
+
+    const isLight = () => document.documentElement.classList.contains('light');
+
+    // Orb config: [relX, relY, radiusRatio, hue, saturation]
+    const ORBS = [
+      { rx:.12, ry:.18, rr:.55, h:151, s:100 },   // green top-left
+      { rx:.88, ry:.10, rr:.50, h:270, s:90  },   // purple top-right
+      { rx:.50, ry:.85, rr:.45, h:28,  s:100 },   // orange bottom-mid
+      { rx:.80, ry:.55, rr:.40, h:198, s:95  },   // blue right-mid
+      { rx:.20, ry:.65, rr:.35, h:320, s:90  },   // pink left-mid
+    ];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const alpha = isLight() ? 0.045 : 0.08;
+
+      ORBS.forEach((orb, i) => {
+        // each orb drifts on its own sine wave
+        const drift  = Math.sin(t * 0.0004 + i * 1.3) * 0.07;
+        const driftY = Math.cos(t * 0.0003 + i * 0.9) * 0.05;
+        const cx = (orb.rx + drift) * W;
+        const cy = (orb.ry + driftY) * H;
+        const r  = orb.rr * Math.min(W, H);
+
+        // pulse the radius slightly
+        const pulse = 1 + Math.sin(t * 0.0006 + i * 2.1) * 0.08;
+
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * pulse);
+        grad.addColorStop(0,   `hsla(${orb.h},${orb.s}%,60%,${alpha})`);
+        grad.addColorStop(0.5, `hsla(${orb.h},${orb.s}%,55%,${alpha * .4})`);
+        grad.addColorStop(1,   `hsla(${orb.h},${orb.s}%,50%,0)`);
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, r * pulse * 1.3, r * pulse, Math.sin(t * 0.0002 + i) * 0.4, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      t++;
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // re-draw on theme toggle so colours stay appropriate
+    document.getElementById('theme-toggle').addEventListener('click', () => {});
+  })();
+
+  // ── SECTION IN-VIEW (for accent lines + bg fade-in) ─────────
+  const sectionBgIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      e.target.classList.toggle('in-view', e.isIntersecting);
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('section[id]').forEach(s => sectionBgIO.observe(s));
+
+
+  const cursor=document.getElementById('cursor'), ring=document.getElementById('cursor-ring');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
   (function tick(){
-    cursor.style.left=mx+'px';cursor.style.top=my+'px';
-    rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
     requestAnimationFrame(tick);
   })();
 
-  // PROJECT CARD GLOW
-  document.querySelectorAll('.project-card').forEach(card=>{
-    card.addEventListener('mousemove',e=>{
-      const r=card.getBoundingClientRect();
-      card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-      card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+  // ── CURSOR TRAIL ─────────────────────────────────────────────
+  const trailColors = ['#3dffa0','#a78bff','#ff8c42','#38bdf8','#f472b6'];
+  let trailIdx = 0;
+  document.addEventListener('mousemove', e => {
+    const dot = document.createElement('div');
+    dot.className = 'trail-dot';
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+    dot.style.background = trailColors[trailIdx % trailColors.length];
+    trailIdx++;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 600);
+  });
+
+  // ── SCROLL PROGRESS ──────────────────────────────────────────
+  const progressBar = document.getElementById('scroll-progress');
+  const scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progressBar.style.width = pct + '%';
+    scrollTopBtn.classList.toggle('visible', h.scrollTop > 400);
+  });
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+  // ── PROJECT CARD GLOW ────────────────────────────────────────
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
+      card.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
     });
   });
 
-  // SCROLL FADE-IN
-  const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),+e.target.dataset.delay||0);
-    });
-  },{threshold:0.1});
-  document.querySelectorAll('.fade-in,.exp-item').forEach((el,i)=>{el.dataset.delay=(i%3)*100;io.observe(el);});
-
-  // NAV ACTIVE
-  const navLinks=document.querySelectorAll('.nav-links a');
-  const secIO=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        navLinks.forEach(l=>l.classList.remove('active'));
-        const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-        if(a)a.classList.add('active');
+  // ── INTERSECTION OBSERVER (unified) ─────────────────────────
+  const animIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const delay = +e.target.dataset.delay || 0;
+        setTimeout(() => e.target.classList.add('visible'), delay);
       }
     });
-  },{threshold:0.4});
-  document.querySelectorAll('section[id]').forEach(s=>secIO.observe(s));
+  }, { threshold: 0.12 });
 
-  // RESUME DROPDOWN
-  const resumeWrap=document.getElementById('resumeWrap'),resumeBtn=document.getElementById('resumeBtn');
-  resumeBtn.addEventListener('click',e=>{e.stopPropagation();const open=resumeWrap.classList.toggle('open');resumeBtn.setAttribute('aria-expanded',open);});
-  document.addEventListener('click',()=>{resumeWrap.classList.remove('open');resumeBtn.setAttribute('aria-expanded',false);});
+  document.querySelectorAll(
+    '.fade-in, .slide-up, .slide-left, .slide-right, .scale-in, .stagger-children, .exp-item'
+  ).forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    animIO.observe(el);
+  });
 
-  // ══════════════════════════════════════════════════════════════
-  // CERTIFICATE GALLERY — just edit this list to add/remove certs
-  // Use the exact filename (including extension) as it appears in
-  // your  assets/images/certificates/  folder. No renaming needed.
-  // ══════════════════════════════════════════════════════════════
+  // ── STAT COUNT-UP ────────────────────────────────────────────
+  function countUp(el, target, suffix, duration) {
+    const isFloat = target % 1 !== 0;
+    const start = performance.now();
+    const step = ts => {
+      const p = Math.min((ts - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 4);
+      const val = isFloat ? (ease * target).toFixed(2) : Math.floor(ease * target);
+      el.textContent = val + (suffix || '');
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const statIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        statIO.unobserve(e.target);
+        const data = [
+          { el: e.target.querySelector('.c-green'), val: 3.92, suf: '' },
+          { el: e.target.querySelector('.c-purple'), val: 3, suf: 'rd' },
+          { el: e.target.querySelector('.c-orange'), val: 100, suf: '+' },
+          { el: e.target.querySelector('.c-blue'), val: 6, suf: '+' },
+        ];
+        data.forEach(d => { if (d.el) countUp(d.el, d.val, d.suf, 1800); });
+      }
+    });
+  }, { threshold: 0.5 });
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) statIO.observe(statsBar);
+
+  // ── HERO NAME TEXT SCRAMBLE ──────────────────────────────────
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+  function scramble(el, finalText, duration) {
+    const len = finalText.length;
+    const start = performance.now();
+    const step = ts => {
+      const p = Math.min((ts - start) / duration, 1);
+      const revealed = Math.floor(p * len);
+      let out = '';
+      for (let i = 0; i < len; i++) {
+        if (finalText[i] === ' ' || finalText[i] === '\n') { out += finalText[i]; continue; }
+        out += i < revealed ? finalText[i] : chars[Math.floor(Math.random() * chars.length)];
+      }
+      el.textContent = out;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = finalText;
+    };
+    requestAnimationFrame(step);
+  }
+  // Scramble first name after loader clears
+  setTimeout(() => {
+    const nameEl = document.querySelector('.hero-name');
+    if (nameEl) scramble(nameEl, 'Ferdinand\nTaslim', 1200);
+  }, 900);
+
+  // ── MAGNETIC BUTTONS ─────────────────────────────────────────
+  document.querySelectorAll('.btn-primary, .btn-outline').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const dx = (e.clientX - cx) * 0.28, dy = (e.clientY - cy) * 0.28;
+      btn.style.transform = `translate(${dx}px,${dy}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+
+  // ── PARALLAX ORBS ────────────────────────────────────────────
+  const orbs = document.querySelectorAll('.bg-orb');
+  document.addEventListener('mousemove', e => {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    const dx = (e.clientX - cx) / cx, dy = (e.clientY - cy) / cy;
+    orbs.forEach((orb, i) => {
+      const depth = (i + 1) * 10;
+      orb.style.transform = `translate(${dx*depth}px,${dy*depth}px)`;
+    });
+  });
+
+  // ── NAV ACTIVE ───────────────────────────────────────────────
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const secIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll('section[id]').forEach(s => secIO.observe(s));
+
+  // ── RESUME DROPDOWN ──────────────────────────────────────────
+  const resumeWrap = document.getElementById('resumeWrap');
+  const resumeBtn  = document.getElementById('resumeBtn');
+  resumeBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = resumeWrap.classList.toggle('open');
+    resumeBtn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', () => {
+    resumeWrap.classList.remove('open');
+    resumeBtn.setAttribute('aria-expanded', false);
+  });
+
+  // ── CERTIFICATE GALLERY ──────────────────────────────────────
   const CERTIFICATES = [
     'WORLDQUANT CERT.png',
     'UDEMY BUSINESS ANALYSIS.png',
@@ -1001,7 +1476,6 @@
     'WORLDQUANT SILVER.png',
     'SPRINGBOARD.png'
   ];
-  // ══════════════════════════════════════════════════════════════
 
   (function buildGallery() {
     const masonry = document.getElementById('certMasonry');
@@ -1015,14 +1489,12 @@
       img.src = 'assets/images/certificates/' + filename;
       img.alt = filename.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
       img.loading = 'lazy';
-      // hide the slot if image fails to load (file not added yet)
       img.onerror = () => { div.style.display = 'none'; };
       div.appendChild(img);
       masonry.appendChild(div);
     });
   })();
 
-  // CERT GALLERY TOGGLE
   const certToggle = document.getElementById('certGalleryToggle');
   const certWrap   = document.getElementById('certGalleryWrap');
   certToggle.addEventListener('click', () => {
@@ -1031,7 +1503,7 @@
     certToggle.setAttribute('aria-expanded', isOpen);
   });
 
-  // LIGHTBOX
+  // ── LIGHTBOX ─────────────────────────────────────────────────
   const lightbox      = document.getElementById('cert-lightbox');
   const lightboxImg   = document.getElementById('cert-lightbox-img');
   const lightboxClose = document.getElementById('cert-lightbox-close');
@@ -1048,7 +1520,7 @@
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  // THEME TOGGLE
+  // ── THEME TOGGLE ─────────────────────────────────────────────
   const btn  = document.getElementById('theme-toggle');
   const root = document.documentElement;
   const saved = localStorage.getItem('theme');
@@ -1061,3 +1533,4 @@
 </script>
 </body>
 </html>
+ 
