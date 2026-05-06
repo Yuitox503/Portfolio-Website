@@ -1,0 +1,25 @@
+1.
+CS student specialising in Data Analytics with a CGPA of 3.88/4.00. Turning complex data into clear decisions through programming, statistical modelling, and visualisation. Currently seeking full-time opportunities.
+
+2.
+I’m an international Computer Science student at Asia Pacific University, specialising in Data Analytics. Originally from Pontianak, Indonesia, I’m passionate about extracting meaningful patterns from complex data and building systems that solve real-world problems.
+
+My work focuses on data analytics, including statistical modelling, data preprocessing, and insight generation, alongside building interactive dashboards and data-driven applications. I also have experience supporting audit processes with data analytics, developing IT solutions, and contributing to system design to improve efficiency and decision-making.
+
+Currently seeking a full-time position, where I can apply data analytics skills to real-world challenges.
+
+3.
+Data Analytics
+Statistical analysis, predictive modelling, and visualisation using Python, R, and Power BI.
+
+AI & Machine Learning
+Building chatbots, classification models, and AI-powered applications leveraging modern APIs.
+
+System Development & IT Solutions
+Designing and developing data-driven systems and IT solutions, including database design, process automation, and application development using Java, Python, C, JavaScript, and SQL.
+
+4. 
+
+cut the hero section
+fix the navigation bar
+add animation for masonry layout
