@@ -28,7 +28,7 @@
   ║  │   │       ├── cert-2.png  ... and so on                   ║
   ║  │   └── 📁 resume/                                          ║
   ║  │       ├── resume-en.pdf        ← English CV               ║
-  ║  │       └── resume-id.pdf        ← Indonesian CV            ║
+  ║  │       └── reference-letter.pdf ← ADA reference letter     ║
   ╚══════════════════════════════════════════════════════════════╝
 -->
 
@@ -234,16 +234,6 @@
   section { position: relative; }
   section:hover .section-num { -webkit-text-stroke-color: var(--border); }
 
-  /* ── CURSOR TRAIL ── */
-  .trail-dot {
-    position: fixed; width: 6px; height: 6px;
-    border-radius: 50%; pointer-events: none;
-    z-index: 9990; transform: translate(-50%,-50%);
-    mix-blend-mode: screen;
-    animation: trailFade .6s ease forwards;
-  }
-  @keyframes trailFade { from { opacity:.6; transform:translate(-50%,-50%) scale(1); } to { opacity:0; transform:translate(-50%,-50%) scale(0); } }
-
   /* ── ACTIVE NAV PILL ANIMATION ── */
   .nav-links a { position: relative; }
 
@@ -356,15 +346,32 @@
   nav, section > *, .stats-bar, footer, #cursor, #cursor-ring { position:relative; z-index:2; }
 
 
-  /* CURSOR — simplified single dot */
+  /* CURSOR — clean crosshair dot, no lag */
   #cursor {
-    position:fixed; width:8px; height:8px; background:var(--green);
-    border-radius:50%; pointer-events:none; z-index:9999;
-    transform:translate(-50%,-50%);
-    transition:transform .1s, width .2s, height .2s, opacity .2s;
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    width: 24px; height: 24px;
   }
-  body:has(a:hover) #cursor,body:has(button:hover) #cursor{width:14px;height:14px;opacity:.7;}
-  #cursor-ring { display:none; }
+  #cursor::before, #cursor::after {
+    content: ''; position: absolute; background: var(--green);
+    border-radius: 2px; transition: opacity .15s;
+  }
+  /* horizontal bar */
+  #cursor::before { width: 100%; height: 1.5px; top: 50%; left: 0; transform: translateY(-50%); }
+  /* vertical bar */
+  #cursor::after  { width: 1.5px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
+  /* centre dot */
+  #cursor-ring {
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green);
+  }
+  body:has(a:hover) #cursor, body:has(button:hover) #cursor { opacity: 0.5; }
+  body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring {
+    width: 10px; height: 10px; background: transparent;
+    border: 1.5px solid var(--green);
+  }
   ::-webkit-scrollbar{width:4px;}
   ::-webkit-scrollbar-track{background:var(--bg);}
   ::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px;}
@@ -559,6 +566,182 @@
   .exp-bullets li{font-size:15px;color:var(--text2);line-height:1.75;padding-left:20px;position:relative;}
   .exp-bullets li::before{content:'→';position:absolute;left:0;font-size:13px;}
 
+  /* ── FEATURED EXPERIENCE CARD ── */
+  /* sits inside exp-timeline with the same left padding as exp-item */
+  .exp-featured-wrap {
+    padding-left: 44px;
+    padding-bottom: 56px;
+    position: relative;
+  }
+  /* dot on the timeline line */
+  .exp-featured-wrap .exp-dot {
+    position: absolute; left: -5px; top: 20px;
+    width: 11px; height: 11px; border-radius: 50%;
+    border: 2px solid var(--bg);
+    background: var(--green); box-shadow: 0 0 14px rgba(61,255,160,.6);
+  }
+  .exp-featured {
+    border: 1px solid rgba(61,255,160,0.22);
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(61,255,160,0.05) 0%, rgba(167,139,255,0.03) 100%);
+    position: relative;
+    overflow: hidden;
+    /* top accent line via box-shadow so overflow:hidden doesn't clip it */
+    box-shadow: 0 2px 0 0 var(--green) inset, 0 0 0 0 transparent;
+  }
+  /* inner grid: left = text, right = photos */
+  .exp-featured-inner {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    min-height: 360px;
+  }
+  .exp-featured-content {
+    padding: 32px 36px;
+    display: flex; flex-direction: column;
+  }
+  .exp-featured-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--green);
+    background: rgba(61,255,160,0.09); border: 1px solid rgba(61,255,160,0.2);
+    border-radius: 100px; padding: 5px 14px; margin-bottom: 20px;
+    width: fit-content;
+  }
+  .exp-featured-badge span { width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;flex-shrink:0; }
+  .exp-featured-top {
+    display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px;
+  }
+  .exp-featured-logo {
+    width: 64px; height: 64px; border-radius: 14px;
+    border: 1px solid rgba(61,255,160,0.2); background: rgba(61,255,160,0.06);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; flex-shrink: 0;
+  }
+  .exp-featured-logo img { width:100%;height:100%;object-fit:contain;padding:8px; }
+  .exp-featured-logo .exp-logo-placeholder { font-size:28px;line-height:1; }
+  .exp-featured-meta { flex: 1; }
+  .exp-featured-date { font-size:12px;letter-spacing:.08em;font-weight:600;color:var(--green);margin-bottom:5px; }
+  .exp-featured-role { font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.4px;margin-bottom:3px; }
+  .exp-featured-org  { font-size:14px;color:var(--muted);font-style:italic;font-family:'Instrument Serif',serif; }
+
+  .exp-featured-bullets { list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:22px;flex:1; }
+  .exp-featured-bullets li { font-size:14px;color:var(--text2);line-height:1.7;padding-left:20px;position:relative; }
+  .exp-featured-bullets li::before { content:'→';position:absolute;left:0;font-size:12px;color:var(--green); }
+
+  .exp-featured-actions { display:flex;gap:12px;flex-wrap:wrap;margin-top:auto; }
+  .btn-ref-letter {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(61,255,160,0.08); color: var(--green);
+    border: 1px solid rgba(61,255,160,0.25);
+    padding: 10px 20px; font-family:'DM Sans',sans-serif;
+    font-size: 13px; font-weight: 600; border-radius: 100px;
+    cursor: none; transition: all .2s; text-decoration: none;
+  }
+  .btn-ref-letter svg { width:14px;height:14px;flex-shrink:0; }
+  .btn-ref-letter:hover { background:var(--green); color:var(--bg); border-color:var(--green); }
+
+  /* photo panel — right column, vertical strip of two images */
+  .exp-featured-photos {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid rgba(61,255,160,0.12);
+    border-radius: 0 24px 24px 0;
+    overflow: hidden;
+    background: #000;
+    gap: 2px;
+  }
+  .exp-photo-landscape {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .exp-photo-square {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .exp-photo-landscape img,
+  .exp-photo-square img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform .5s ease;
+  }
+  .exp-photo-landscape:hover img,
+  .exp-photo-square:hover img {
+    transform: scale(1.04);
+  }
+  /* thin colour accent on each photo's top edge */
+  .exp-photo-landscape::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--green); z-index: 1;
+  }
+  .exp-photo-square::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--purple); z-index: 1;
+  }
+  .exp-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface2); color: var(--dim);
+    font-size: 11px; font-weight: 500; text-align: center;
+    flex-direction: column; gap: 6px; padding: 12px;
+  }
+  .exp-photo-placeholder span { font-size: 22px; }
+
+  /* orange accent variant for PPIDK card */
+  .exp-featured--orange {
+    border-color: rgba(255,140,66,0.22);
+    background: linear-gradient(135deg, rgba(255,140,66,0.05) 0%, rgba(56,189,248,0.03) 100%);
+    box-shadow: 0 2px 0 0 var(--orange) inset;
+  }
+  .exp-featured-badge--orange {
+    color: var(--orange);
+    background: rgba(255,140,66,0.09);
+    border-color: rgba(255,140,66,0.22);
+  }
+  .exp-badge-dot--orange {
+    display: inline-block; width:6px; height:6px; border-radius:50%;
+    background: var(--orange); animation: blink-orange 2s infinite; flex-shrink:0;
+  }
+  @keyframes blink-orange {
+    0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,140,66,.5);}
+    50%{opacity:.7;box-shadow:0 0 0 6px rgba(255,140,66,0);}
+  }
+  .exp-featured-logo--orange {
+    border-color: rgba(255,140,66,0.25);
+    background: rgba(255,140,66,0.07);
+  }
+
+  /* dual landscape photo panel — two photos stacked vertically */
+  .exp-featured-photos--dual {
+    flex-direction: column;
+    border-left: 1px solid rgba(255,140,66,0.12);
+    background: #000;
+    gap: 2px;
+  }
+  .exp-photo-dual-a,
+  .exp-photo-dual-b {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .exp-photo-dual-a img,
+  .exp-photo-dual-b img {
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition: transform .5s ease;
+  }
+  .exp-photo-dual-a:hover img,
+  .exp-photo-dual-b:hover img { transform: scale(1.04); }
+  .exp-photo-dual-a::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: var(--orange); z-index:1;
+  }
+  .exp-photo-dual-b::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: var(--blue); z-index:1;
+  }
+  .exp-featured-photos--dual .exp-photo-label { display:none; }
+  .exp-photo-dual-a { border-right: none; }
   /* PROJECTS */
   .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .project-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all .3s;position:relative;overflow:hidden;cursor:none;}
@@ -746,6 +929,8 @@
     .hero-left{padding:0 24px 56px; max-width:100%;}
     footer{padding:18px 24px;flex-direction:column;gap:8px;text-align:center;}
     .exp-header{flex-direction:column;gap:10px;}
+    .exp-featured-inner { grid-template-columns: 1fr; }
+    .exp-featured-photos { min-height: 220px; flex-direction: row; border-left: none; border-top: 1px solid rgba(61,255,160,0.1); border-radius: 0 0 24px 24px; }
   }
 </style>
 </head>
@@ -812,7 +997,7 @@
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">View Projects</a>
       <a href="#contact" class="btn-outline">Let's Connect</a>
-      <a href="assets/resume/Resume - Ferdinand Taslim - 2026.pdf" download class="btn-resume">
+      <a href="assets/resume/resume-en.pdf" download class="btn-resume">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Download CV
       </a>
@@ -929,11 +1114,101 @@
   <h2 class="section-title slide-up" style="margin-bottom:60px">Where I've <em class="c-orange">contributed</em></h2>
   <div class="exp-timeline">
 
+    <!-- ★ FEATURED: ADA Data & AI Solutions -->
+    <div class="exp-featured-wrap">
+      <div class="exp-dot c-green"></div>
+      <div class="exp-featured slide-up">
+        <div class="exp-featured-inner">
+
+        <!-- LEFT: all text content -->
+        <div class="exp-featured-content">
+          <div class="exp-featured-badge"><span></span>Latest Experience</div>
+          <div class="exp-featured-top">
+            <div class="exp-featured-logo">
+              <img src="assets/images/logo-ada.png" alt="ADA Data & AI Solutions logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="exp-logo-placeholder" style="display:none">📊</span>
+            </div>
+            <div class="exp-featured-meta">
+              <div class="exp-featured-date">Jul 2025 – Oct 2025</div>
+              <div class="exp-featured-role">Internal Audit (Data Analytics) Intern</div>
+              <div class="exp-featured-org">ADA Data & AI Solutions</div>
+            </div>
+          </div>
+          <ul class="exp-featured-bullets">
+            <li>Applied data analytics to perform continuous audits on revenue recognition, access controls, and travel compliance — integrating, cleaning, and reconciling cross-functional datasets to surface discrepancies, control gaps, and policy violations.</li>
+            <li>Built end-to-end data pipelines and Power BI dashboards (Travel Portal, Financial Governance, General Ledger, Access Control, AP/AR) to monitor compliance, detect anomalies, and support real-time decision-making for auditors and HR.</li>
+            <li>Conducted data validation and cross-referencing across multiple sources to ensure accuracy and reliability of audit evidence, strengthening internal control assessments.</li>
+            <li>Transformed raw operational and financial data into interactive visualisations and audit-ready insights, improving efficiency in risk assessment, exception tracking, and financial oversight.</li>
+          </ul>
+          <div class="exp-featured-actions">
+            <a href="assets/resume/reference-letter.pdf" download class="btn-ref-letter">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              Download Character Reference Letter
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT: photo panel -->
+        <div class="exp-featured-photos">
+          <div class="exp-photo-landscape">
+            <img src="assets/images/ada-landscape.jpg" alt="At ADA with colleagues" onerror="this.parentElement.innerHTML='<div class=exp-photo-placeholder><span>🖼</span>ada-landscape.jpg</div>'">
+          </div>
+          <div class="exp-photo-square">
+            <img src="assets/images/ada-square.jpg" alt="At ADA office" onerror="this.parentElement.innerHTML='<div class=exp-photo-placeholder><span>📸</span>ada-square.jpg</div>'">
+          </div>
+        </div>
+
+      </div><!-- /.exp-featured-inner -->
+      </div><!-- /.exp-featured -->
+    </div><!-- /.exp-featured-wrap -->
+
+    <!-- ★ FEATURED: PPIDK Asiania -->
+    <div class="exp-featured-wrap">
+      <div class="exp-dot c-orange"></div>
+      <div class="exp-featured exp-featured--orange slide-up">
+        <div class="exp-featured-inner">
+
+          <!-- LEFT: text content -->
+          <div class="exp-featured-content">
+            <div class="exp-featured-badge exp-featured-badge--orange"><span class="exp-badge-dot--orange"></span>Current Role</div>
+            <div class="exp-featured-top">
+              <div class="exp-featured-logo exp-featured-logo--orange">
+                <img src="assets/images/logo-ppidk.png" alt="PPIDK Asiania logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <span class="exp-logo-placeholder" style="display:none">🌏</span>
+              </div>
+              <div class="exp-featured-meta">
+                <div class="exp-featured-date" style="color:var(--orange)">Oct 2024 – Present</div>
+                <div class="exp-featured-role">Staff — IT &amp; Innovation Division</div>
+                <div class="exp-featured-org">PPIDK Asiania</div>
+              </div>
+            </div>
+            <ul class="exp-featured-bullets">
+              <li>Led development of a database-driven scholarship website benefiting 100+ Indonesian students across Asia-Oceania.</li>
+              <li>Supported the organisation's official website, enhancing functionality and user experience.</li>
+              <li>Operated virtual platforms for online events and webinars for hundreds of participants.</li>
+            </ul>
+          </div>
+
+          <!-- RIGHT: two landscape photos side by side -->
+          <div class="exp-featured-photos exp-featured-photos--dual">
+            <div class="exp-photo-dual-a">
+              <img src="assets/images/ppidk-photo1.jpg" alt="PPIDK event" onerror="this.parentElement.innerHTML='<div class=exp-photo-placeholder><span>🖼</span>ppidk-photo1.jpg</div>'">
+              <div class="exp-photo-label">PPIDK event</div>
+            </div>
+            <div class="exp-photo-dual-b">
+              <img src="assets/images/ppidk-photo2.jpg" alt="PPIDK team" onerror="this.parentElement.innerHTML='<div class=exp-photo-placeholder><span>📸</span>ppidk-photo2.jpg</div>'">
+              <div class="exp-photo-label">Team</div>
+            </div>
+          </div>
+
+        </div><!-- /.exp-featured-inner -->
+      </div><!-- /.exp-featured -->
+    </div><!-- /.exp-featured-wrap -->
+
     <div class="exp-item">
       <div class="exp-dot c-green"></div>
       <div class="exp-header">
         <div class="exp-logo-wrap">
-          <!-- Place logo at: assets/images/logo-maybank.png -->
           <img src="assets/images/logo-maybank.png" alt="Maybank logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <span class="exp-logo-placeholder" style="display:none">🏦</span>
         </div>
@@ -969,26 +1244,6 @@
       </ul>
     </div>
 
-    <div class="exp-item">
-      <div class="exp-dot c-orange"></div>
-      <div class="exp-header">
-        <div class="exp-logo-wrap">
-          <!-- Place logo at: assets/images/logo-ppidk.png -->
-          <img src="assets/images/logo-ppidk.png" alt="PPIDK logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <span class="exp-logo-placeholder" style="display:none">🌏</span>
-        </div>
-        <div class="exp-header-text">
-          <div class="exp-date" style="color:var(--orange)">Oct 2024 – Present</div>
-          <div class="exp-role">Staff — IT &amp; Innovation Division</div>
-          <div class="exp-org">PPIDK Asiania</div>
-        </div>
-      </div>
-      <ul class="exp-bullets">
-        <li>Led development of a database-driven scholarship website benefiting 100+ Indonesian students across Asia-Oceania.</li>
-        <li>Supported the organisation's official website, enhancing functionality and user experience.</li>
-        <li>Operated virtual platforms for online events and webinars for hundreds of participants.</li>
-      </ul>
-    </div>
 
   </div>
 </section>
@@ -1237,27 +1492,9 @@
 
 
   const cursor=document.getElementById('cursor'), ring=document.getElementById('cursor-ring');
-  let mx=0, my=0, rx=0, ry=0;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-  (function tick(){
-    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(tick);
-  })();
-
-  // ── CURSOR TRAIL ─────────────────────────────────────────────
-  const trailColors = ['#3dffa0','#a78bff','#ff8c42','#38bdf8','#f472b6'];
-  let trailIdx = 0;
   document.addEventListener('mousemove', e => {
-    const dot = document.createElement('div');
-    dot.className = 'trail-dot';
-    dot.style.left = e.clientX + 'px';
-    dot.style.top  = e.clientY + 'px';
-    dot.style.background = trailColors[trailIdx % trailColors.length];
-    trailIdx++;
-    document.body.appendChild(dot);
-    setTimeout(() => dot.remove(), 600);
+    cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+    ring.style.left   = e.clientX + 'px'; ring.style.top  = e.clientY + 'px';
   });
 
   // ── SCROLL PROGRESS ──────────────────────────────────────────
