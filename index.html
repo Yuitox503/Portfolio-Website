@@ -300,10 +300,10 @@
   #experience {
     background: #09090f;
     color: #f0f2f8;
-    border-top: 3px solid var(--orange);
+    border-top: none;
   }
   #experience::before { display: none; }
-  #experience::after { display: none; }
+  #experience::after  { display: none; }
 
   /* Projects — pure black, full bleed */
   #projects {
@@ -692,7 +692,7 @@
   .exp-featured--orange {
     border-color: rgba(255,140,66,0.22);
     background: linear-gradient(135deg, rgba(255,140,66,0.05) 0%, rgba(56,189,248,0.03) 100%);
-    box-shadow: 0 2px 0 0 var(--orange) inset;
+    box-shadow: none;
   }
   .exp-featured-badge--orange {
     color: var(--orange);
@@ -743,22 +743,137 @@
   .exp-featured-photos--dual .exp-photo-label { display:none; }
   .exp-photo-dual-a { border-right: none; }
   /* PROJECTS */
-  .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-  .project-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all .3s;position:relative;overflow:hidden;cursor:none;}
-  .project-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),var(--card-glow) 0%,transparent 55%);opacity:0;transition:opacity .3s;}
-  .project-card:hover::after{opacity:1;}
-  .project-card:hover{border-color:var(--border-strong);transform:translateY(-5px);}
-  .project-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:100px;padding:4px 12px;margin-bottom:20px;}
-  .pt-green{background:rgba(61,255,160,.1);color:var(--green);border:1px solid rgba(61,255,160,.2);--card-glow:rgba(61,255,160,.06);}
-  .pt-purple{background:rgba(167,139,255,.1);color:var(--purple);border:1px solid rgba(167,139,255,.2);--card-glow:rgba(167,139,255,.07);}
-  .pt-orange{background:rgba(255,140,66,.1);color:var(--orange);border:1px solid rgba(255,140,66,.2);--card-glow:rgba(255,140,66,.06);}
-  .pt-blue{background:rgba(56,189,248,.1);color:var(--blue);border:1px solid rgba(56,189,248,.2);--card-glow:rgba(56,189,248,.06);}
-  .pt-pink{background:rgba(244,114,182,.1);color:var(--pink);border:1px solid rgba(244,114,182,.2);--card-glow:rgba(244,114,182,.06);}
-  .project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.4px;margin-bottom:10px;line-height:1.25;}
-  .project-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:24px;}
-  .project-tech{display:flex;flex-wrap:wrap;gap:7px;}
-  .tech-pill{font-size:11px;font-weight:500;color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:3px 9px;transition:all .2s;}
-  .project-card:hover .tech-pill{color:var(--text2);border-color:var(--border-strong);}
+  /* ── PROJECTS ── */
+  .projects-grid { display: flex; flex-direction: column; gap: 0; }
+
+  /* ── FEATURED PROJECT CARD (top 3) ── */
+  .proj-featured {
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border); border-radius: 20px;
+    overflow: hidden; margin-bottom: 20px;
+    background: var(--surface);
+    cursor: none;
+  }
+  .proj-featured:hover { border-color: var(--border-strong); }
+
+  /* ── MARQUEE STRIP — images on top, scrolls horizontally ── */
+  .proj-marquee {
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: #050508;
+    position: relative;
+    pointer-events: none !important; /* never intercepts scroll or hover */
+  }
+  /* fade left + right edges */
+  .proj-marquee::before,
+  .proj-marquee::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .proj-marquee::before { left: 0;  background: linear-gradient(to right, #050508, transparent); }
+  .proj-marquee::after  { right: 0; background: linear-gradient(to left,  #050508, transparent); }
+
+  .proj-marquee-track {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    padding: 20px 0;
+    /* horizontal scroll — NEVER paused by any hover rule */
+    animation: marqueeScrollH var(--marquee-dur, 22s) linear infinite;
+    will-change: transform;
+    width: max-content;
+  }
+
+  @keyframes marqueeScrollH {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* card 2 scrolls right-to-left reversed */
+  .proj-marquee--rtl .proj-marquee-track {
+    animation-direction: reverse;
+  }
+
+  /* images: tall enough to be impressive, 16/9 wide */
+  .proj-marquee-img {
+    flex-shrink: 0;
+    height: 350px;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .proj-marquee-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .proj-marquee-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: #111; color: var(--dim);
+    font-size: 11px; text-align: center; flex-direction: column; gap: 4px;
+  }
+  .proj-marquee-img-placeholder span { font-size: 20px; }
+
+  /* text below — fully interactive, no connection to image strip */
+  .proj-featured-content {
+    padding: 28px 32px;
+    display: flex; flex-direction: column;
+    pointer-events: auto;
+  }
+
+  /* placeholder (kept for simple cards) */
+  .proj-img-placeholder {
+    position: absolute; inset: 0;
+    display:flex; align-items:center; justify-content:center;
+    background: #0d0d18; color: var(--dim);
+    font-size:11px; text-align:center; flex-direction:column; gap:6px;
+  }
+  .proj-img-placeholder span { font-size:20px; }
+
+  /* ── SIMPLE PROJECT CARD (bottom 3) ── */
+  .proj-simple-row {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    margin-bottom: 0;
+  }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px; transition: all .3s;
+    position: relative; overflow: hidden; cursor: none;
+    display: flex; flex-direction: column;
+  }
+  .project-card::after {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), var(--card-glow) 0%, transparent 55%);
+    opacity:0; transition:opacity .3s;
+  }
+  .project-card:hover::after { opacity:1; }
+  .project-card:hover { border-color:var(--border-strong); transform:translateY(-4px); }
+
+  /* shared tag / title / desc / tech */
+  .project-tag { display:inline-block; font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; border-radius:100px; padding:4px 12px; margin-bottom:16px; }
+  .pt-green  { background:rgba(61,255,160,.1);  color:var(--green);  border:1px solid rgba(61,255,160,.2);  --card-glow:rgba(61,255,160,.06); }
+  .pt-purple { background:rgba(167,139,255,.1); color:var(--purple); border:1px solid rgba(167,139,255,.2); --card-glow:rgba(167,139,255,.07); }
+  .pt-orange { background:rgba(255,140,66,.1);  color:var(--orange); border:1px solid rgba(255,140,66,.2);  --card-glow:rgba(255,140,66,.06); }
+  .pt-blue   { background:rgba(56,189,248,.1);  color:var(--blue);   border:1px solid rgba(56,189,248,.2);  --card-glow:rgba(56,189,248,.06); }
+  .pt-pink   { background:rgba(244,114,182,.1); color:var(--pink);   border:1px solid rgba(244,114,182,.2); --card-glow:rgba(244,114,182,.06); }
+  .project-title { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; letter-spacing:-.3px; margin-bottom:10px; line-height:1.25; }
+  .project-desc  { font-size:13px; color:var(--text2); line-height:1.8; margin-bottom:20px; flex:1; }
+  .project-tech  { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+  .tech-pill { font-size:11px; font-weight:500; color:var(--muted); border:1px solid var(--border); border-radius:5px; padding:3px 9px; transition:all .2s; }
+  .project-card:hover .tech-pill,
+  .proj-featured:hover .tech-pill { color:var(--text2); border-color:var(--border-strong); }
+
+  /* github button */
+  .btn-github {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 12px; font-weight: 600; color: var(--text2);
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 8px 16px; text-decoration: none; cursor: none;
+    transition: all .2s; width: fit-content; margin-top: auto;
+  }
+  .btn-github svg { width:14px; height:14px; flex-shrink:0; }
+  .btn-github:hover { color:var(--text); border-color:var(--border-strong); background: var(--surface2); }
 
   /* SKILLS */
   .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
@@ -857,14 +972,17 @@
   .cert-gallery-toggle.open .cert-gallery-chevron { transform: rotate(180deg); }
 
   .cert-gallery-wrap {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height .55s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .55s cubic-bezier(.16,1,.3,1), opacity .4s ease;
     opacity: 0;
   }
   .cert-gallery-wrap.open {
-    max-height: 4000px;
+    grid-template-rows: 1fr;
     opacity: 1;
+  }
+  .cert-gallery-wrap > div {
+    overflow: hidden;
   }
 
   .cert-masonry {
@@ -923,6 +1041,9 @@
     #home{ min-height:100vh; }
     .hero-photo-wrap{ right:0; width:55vw; opacity:0.4; }
     .about-grid,.skills-grid,.projects-grid,.edu-grid,.awards-list,.certs-grid{grid-template-columns:1fr;}
+    .proj-featured { grid-template-columns: 1fr; min-height: auto; }
+    .proj-marquee { border-right: none; border-bottom: 1px solid var(--border); }
+    .proj-simple-row { grid-template-columns: 1fr; }
     nav{padding:16px 22px;} .nav-links{display:none;}
     section{padding:72px 24px;}
     .stats-bar{padding:22px 24px;gap:0;overflow-x:auto;}
@@ -993,7 +1114,7 @@
         Kuala Lumpur, Malaysia
       </div>
     </div>
-    <p class="hero-desc">CS student specialising in Data Analytics with a <strong>cGPA of 3.92</strong>. Turning complex data into clear decisions through programming, statistical modelling, and visualisation.</p>
+    <p class="hero-desc">CS student specialising in Data Analytics with a <strong>CGPA of 3.88/4.00</strong>. Turning complex data into clear decisions through programming, statistical modelling, and visualisation. Currently seeking full-time opportunities.</p>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">View Projects</a>
       <a href="#contact" class="btn-outline">Let's Connect</a>
@@ -1013,7 +1134,7 @@
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat-item"><span class="stat-num c-green">3.92</span><span class="stat-label">Cumulative GPA</span></div>
+  <div class="stat-item"><span class="stat-num c-green">3.88</span><span class="stat-label">Cumulative GPA</span></div>
   <div class="stat-item"><span class="stat-num c-purple">3rd</span><span class="stat-label">WorldQuant Alphathon</span></div>
   <div class="stat-item"><span class="stat-num c-orange">100+</span><span class="stat-label">Students Impacted</span></div>
   <div class="stat-item"><span class="stat-num c-blue">6+</span><span class="stat-label">Projects Completed</span></div>
@@ -1052,14 +1173,13 @@
     <div class="about-text slide-left">
       <h2 class="section-title">Turning data into<br><em class="c-green">decisions</em></h2>
       <p>I'm an international Computer Science student at Asia Pacific University, specialising in Data Analytics. Originally from Pontianak, Indonesia, passionate about <strong>extracting meaningful patterns from complex data</strong> and building systems that solve real problems.</p>
-      <p>My work spans financial modelling, web development, AI-powered applications, and competitive programming. I bring both analytical precision and creative problem-solving to everything I take on.</p>
-      <p>Currently seeking an internship from <strong>July 28 – November 14, 2025</strong>, where I can apply data analytics skills to real-world challenges.</p>
+      <p>My work focuses on data analytics, including statistical modelling, data preprocessing, and insight generation, alongside building interactive dashboards and data-driven applications. I also have experience supporting audit processes with data analytics, developing IT solutions, and contributing to system design to improve efficiency and decision-making.</p>
+      <p>Currently seeking a full-time position, where I can apply data analytics skills to real-world challenges.</p>
     </div>
     <div class="about-cards stagger-children slide-right">
       <div class="about-card ac-green"><div class="card-icon">📊</div><div class="card-title">Data Analytics</div><div class="card-desc">Statistical analysis, predictive modelling, and visualisation using Python, R, and Power BI.</div></div>
       <div class="about-card ac-purple"><div class="card-icon">🤖</div><div class="card-title">AI & Machine Learning</div><div class="card-desc">Building chatbots, classification models, and AI-powered apps leveraging modern APIs.</div></div>
-      <div class="about-card ac-orange"><div class="card-icon">💻</div><div class="card-title">Software Development</div><div class="card-desc">Full-stack experience in Java, Python, C, JavaScript, and SQL database systems.</div></div>
-      <div class="about-card ac-blue"><div class="card-icon">💹</div><div class="card-title">Quantitative Finance</div><div class="card-desc">Developing alpha models and backtesting financial strategies at WorldQuant.</div></div>
+      <div class="about-card ac-orange"><div class="card-icon">💻</div><div class="card-title">System Development & IT Solutions</div><div class="card-desc">Full-stack experience in Java, Python, C, JavaScript, and SQL database systems.</div></div>
     </div>
   </div>
 </section>
@@ -1101,7 +1221,7 @@
       <div class="edu-year" style="color:var(--orange)">Jul 2020 – Jun 2023</div>
       <div class="edu-degree">Mathematics &amp; Natural Science</div>
       <div class="edu-school">St. Peter Senior High School, Pontianak</div>
-      <span class="edu-badge bg-orange">Secondary Education</span>
+      <span class="edu-badge bg-orange">Final Mark: 93.73/100 · Secondary Education</span>
     </div>
 
   </div>
@@ -1170,14 +1290,13 @@
 
           <!-- LEFT: text content -->
           <div class="exp-featured-content">
-            <div class="exp-featured-badge exp-featured-badge--orange"><span class="exp-badge-dot--orange"></span>Current Role</div>
             <div class="exp-featured-top">
               <div class="exp-featured-logo exp-featured-logo--orange">
                 <img src="assets/images/logo-ppidk.png" alt="PPIDK Asiania logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <span class="exp-logo-placeholder" style="display:none">🌏</span>
               </div>
               <div class="exp-featured-meta">
-                <div class="exp-featured-date" style="color:var(--orange)">Oct 2024 – Present</div>
+                <div class="exp-featured-date" style="color:var(--orange)">Oct 2024 – Oct 2025</div>
                 <div class="exp-featured-role">Staff — IT &amp; Innovation Division</div>
                 <div class="exp-featured-org">PPIDK Asiania</div>
               </div>
@@ -1213,7 +1332,7 @@
           <span class="exp-logo-placeholder" style="display:none">🏦</span>
         </div>
         <div class="exp-header-text">
-          <div class="exp-date" style="color:var(--green)">Apr 2025 – Present</div>
+          <div class="exp-date" style="color:var(--green)">Apr 2025 – Nov 2025</div>
           <div class="exp-role">Maybank Global M'bassador 2025</div>
           <div class="exp-org">Maybank — Global Programme</div>
         </div>
@@ -1233,7 +1352,7 @@
           <span class="exp-logo-placeholder" style="display:none">📈</span>
         </div>
         <div class="exp-header-text">
-          <div class="exp-date" style="color:var(--purple)">Dec 2024 – Present</div>
+          <div class="exp-date" style="color:var(--purple)">Dec 2024 – Present (inactive)</div>
           <div class="exp-role">Research Consultant</div>
           <div class="exp-org">WorldQuant</div>
         </div>
@@ -1252,45 +1371,144 @@
 <section id="projects">
   <div class="section-num" aria-hidden="true">04</div>
   <div class="section-header slide-up"><span class="section-tag c-blue">04 — Projects</span><div class="section-line"></div></div>
-  <h2 class="section-title slide-up" style="margin-bottom:40px">Things I've <em class="c-blue">built</em></h2>
-  <div class="projects-grid stagger-children">
-    <div class="project-card fade-in">
-      <div class="project-tag pt-purple">Hackathon · 2025</div>
-      <div class="project-title">Vouch AI — Merchant Recommendation</div>
-      <div class="project-desc">AI-powered chatbot for business recommendations at UM Hackathon. Developed the backend and intelligent recommendation engine for merchants.</div>
-      <div class="project-tech"><span class="tech-pill">JavaScript</span><span class="tech-pill">n8n</span><span class="tech-pill">Supabase</span><span class="tech-pill">PostgreSQL</span><span class="tech-pill">OpenAI API</span></div>
+  <h2 class="section-title slide-up" style="margin-bottom:48px">Things I've <em class="c-blue">built</em></h2>
+
+  <div class="projects-grid">
+
+    <!-- ★ FEATURED 1: Customer Churn — scrolls LEFT -->
+    <div class="proj-featured slide-up">
+      <div class="proj-marquee" data-marquee>
+        <div class="proj-marquee-track">
+          <!-- original 3 images -->
+          <div class="proj-marquee-img"><img src="assets/images/proj-churn-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📊</span>proj-churn-1.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-churn-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📈</span>proj-churn-2.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-churn-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🤖</span>proj-churn-3.jpg</div>'"></div>
+          <!-- duplicated for seamless loop -->
+          <div class="proj-marquee-img"><img src="assets/images/proj-churn-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📊</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-churn-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📈</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-churn-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🤖</span></div>'"></div>
+        </div>
+      </div>
+      <div class="proj-featured-content">
+        <div class="project-tag pt-green">Machine Learning · Power BI</div>
+        <div class="project-title">Customer Churn Prediction &amp; Analytics</div>
+        <div class="project-desc">Developed and optimized Machine Learning models using Python to predict customer churn. Visualized insights and business impact using Power BI, enabling better customer retention strategies and targeted interventions.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span><span class="tech-pill">Scikit-learn</span><span class="tech-pill">Power BI</span><span class="tech-pill">Pandas</span>
+        </div>
+        <a href="https://github.com/Yuitox503/Customer-Churn-Analysis-and-Prediction" class="btn-github">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
     </div>
-    <div class="project-card fade-in">
-      <div class="project-tag pt-blue">Data Analytics</div>
-      <div class="project-title">Forex Market & Macro Impact Analysis</div>
-      <div class="project-desc">Analysed macroeconomic indicators' impact on EUR/USD and GBP/USD, identifying correlations and trends.</div>
-      <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">Jupyter</span><span class="tech-pill">Power BI</span></div>
+
+    <!-- ★ FEATURED 2: Vouch AI — scrolls RIGHT -->
+    <div class="proj-featured slide-up">
+      <div class="proj-marquee proj-marquee--rtl" data-marquee>
+        <div class="proj-marquee-track">
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>💬</span>proj-vouch-1.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🔧</span>proj-vouch-2.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🚀</span>proj-vouch-3.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-4.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🚀</span>proj-vouch-4.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-5.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🚀</span>proj-vouch-5.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>💬</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🔧</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🚀</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-4.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🚀</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-vouch-5.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🚀</span></div>'"></div>
+        </div>
+      </div>
+      <div class="proj-featured-content">
+        <div class="project-tag pt-purple">Hackathon · AI · 5-Person Team</div>
+        <div class="project-title">Vouch AI — Prototype Website for Merchants</div>
+        <div class="project-desc">Developed backend components and an AI-powered chatbot using OpenAI API, Supabase, and n8n at the UM Hackathon. Enabled automated business recommendations, improving merchant decision-making.</div>
+        <div class="project-tech">
+          <span class="tech-pill">JavaScript</span><span class="tech-pill">OpenAI API</span><span class="tech-pill">Supabase</span><span class="tech-pill">n8n</span><span class="tech-pill">PostgreSQL</span>
+        </div>
+        <a href="https://github.com/adricocorson/AmbatuWIN" class="btn-github">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
     </div>
-    <div class="project-card fade-in">
-      <div class="project-tag pt-green">Machine Learning</div>
-      <div class="project-title">Consumer Credit Risk Analysis</div>
-      <div class="project-desc">Data analysis on consumer credit risk classification, identifying key factors influencing creditworthiness.</div>
-      <div class="project-tech"><span class="tech-pill">R Programming</span><span class="tech-pill">Statistical Modelling</span><span class="tech-pill">Data Viz</span></div>
+
+    <!-- ★ FEATURED 3: BI Dashboard — scrolls LEFT -->
+    <div class="proj-featured slide-up">
+      <div class="proj-marquee" data-marquee>
+        <div class="proj-marquee-track">
+          <div class="proj-marquee-img"><img src="assets/images/proj-bi-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📉</span>proj-bi-1.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-bi-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🗺</span>proj-bi-2.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-bi-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📋</span>proj-bi-3.jpg</div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-bi-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📉</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-bi-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>🗺</span></div>'"></div>
+          <div class="proj-marquee-img"><img src="assets/images/proj-bi-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=proj-marquee-img-placeholder><span>📋</span></div>'"></div>
+        </div>
+      </div>
+      <div class="proj-featured-content">
+        <div class="project-tag pt-blue">Business Intelligence · SQL</div>
+        <div class="project-title">Business Intelligence Dashboard &amp; Analytics</div>
+        <div class="project-desc">Developed an OLAP cube and interactive Power BI dashboard for a global bicycle manufacturer using SQL Server. Analyzed global sales trends and customer demographics to deliver actionable recommendations on regional marketing and product-class prioritization.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Power BI</span><span class="tech-pill">SQL Server</span><span class="tech-pill">OLAP</span><span class="tech-pill">DAX</span>
+        </div>
+        <a href="#" class="btn-github">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
     </div>
-    <div class="project-card fade-in">
-      <div class="project-tag pt-pink">AI · NLP</div>
-      <div class="project-title">Mellodie AI Chatbot</div>
-      <div class="project-desc">AI-powered educational chatbot leveraging NLP to teach users about the mellophone instrument interactively.</div>
-      <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">NLP</span><span class="tech-pill">AI/ML</span></div>
-    </div>
-    <div class="project-card fade-in">
-      <div class="project-tag pt-orange">Systems · C</div>
-      <div class="project-title">Hospital Management System</div>
-      <div class="project-desc">Full C-based system streamlining patient records, appointments, and medical staff coordination.</div>
-      <div class="project-tech"><span class="tech-pill">C Programming</span><span class="tech-pill">Data Structures</span><span class="tech-pill">File I/O</span></div>
-    </div>
-    <div class="project-card fade-in">
-      <div class="project-tag pt-blue">Java · OOP</div>
-      <div class="project-title">Warehouse Management Software</div>
-      <div class="project-desc">Java-based system with a Swing GUI enabling efficient inventory tracking and warehouse operations.</div>
-      <div class="project-tech"><span class="tech-pill">Java</span><span class="tech-pill">Swing GUI</span><span class="tech-pill">OOP</span></div>
-    </div>
-  </div>
+
+    <!-- SIMPLE 3 -->
+    <div class="proj-simple-row stagger-children">
+
+      <div class="project-card fade-in">
+        <div class="project-tag pt-orange">Data Analytics · Python</div>
+        <div class="project-title">Forex Market Analysis &amp; Macroeconomic Impact</div>
+        <div class="project-desc">Analyzed the impact of macroeconomic indicators (inflation, GDP, interest rates) on major currency pairs (EUR/USD, GBP/USD) using Python and Jupyter Notebook. Applied data analysis techniques to identify correlations and trends.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Jupyter</span>
+          <span class="tech-pill">Power BI</span>
+        </div>
+        <a href="https://github.com/Yuitox503/Macroeconomic-Forex-Analysis" class="btn-github">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-tag pt-pink">R Programming · Statistics</div>
+        <div class="project-title">Consumer Credit Risk Analysis</div>
+        <div class="project-desc">Conducted data analysis on consumer credit risk classification using R Programming, identifying key factors influencing creditworthiness as part of the Programming for Data Analytics module.</div>
+        <div class="project-tech">
+          <span class="tech-pill">R</span>
+          <span class="tech-pill">Statistical Modelling</span>
+          <span class="tech-pill">Data Viz</span>
+        </div>
+        <a href="#" class="btn-github">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card fade-in">
+        <div class="project-tag pt-green">AI · NLP · Chatbot</div>
+        <div class="project-title">Mellodie AI Chatbot</div>
+        <div class="project-desc">Created Mellodie, an AI-powered chatbot to educate users about the mellophone instrument as part of the Artificial Intelligence module, leveraging natural language processing for interactive learning.</div>
+        <div class="project-tech">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">NLP</span>
+          <span class="tech-pill">AI/ML</span>
+        </div>
+        <a href="#" class="btn-github">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+    </div><!-- /.proj-simple-row -->
+  </div><!-- /.projects-grid -->
 </section>
 
 <!-- SKILLS -->
