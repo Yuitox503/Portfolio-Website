@@ -409,7 +409,7 @@
   .orb2{width:360px;height:360px;bottom:60px;left:-60px;background:rgba(167,139,255,0.1);}
   .orb3{width:250px;height:250px;top:40%;right:30%;background:rgba(255,140,66,0.06);}
 
-  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:130px 64px 88px;position:relative;z-index:2;}
+  .hero-left{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 64px 72px;position:relative;z-index:2;}
   .hero-status{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;font-weight:500;margin-bottom:28px;}
   .status-dot{width:9px;height:9px;background:var(--green);border-radius:50%;flex-shrink:0;animation:blink 2s infinite;}
   @keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(61,255,160,.45);}50%{opacity:.7;box-shadow:0 0 0 7px rgba(61,255,160,0);}}
@@ -640,6 +640,47 @@
   .btn-ref-letter svg { width:14px;height:14px;flex-shrink:0; }
   .btn-ref-letter:hover { background:var(--green); color:var(--bg); border-color:var(--green); }
 
+  /* transcript dropdown — fixed so it escapes edu-card overflow:hidden */
+  .transcript-wrap { position:relative; margin-top:18px; width:fit-content; }
+  .transcript-btn {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(61,255,160,0.07); color:var(--green);
+    border:1px solid rgba(61,255,160,0.22);
+    padding:9px 16px; font-family:'DM Sans',sans-serif;
+    font-size:13px; font-weight:600; border-radius:100px;
+    cursor:none; transition:all .2s; white-space:nowrap;
+  }
+  .transcript-btn:hover { background:rgba(61,255,160,0.14); border-color:rgba(61,255,160,0.4); }
+  .transcript-btn svg:first-child { width:14px;height:14px;flex-shrink:0; }
+  .transcript-chevron { width:12px!important;height:12px!important;transition:transform .2s; }
+  .transcript-wrap.open .transcript-chevron { transform:rotate(180deg); }
+  .transcript-dropdown {
+    position:absolute;
+    background:var(--surface); border:1px solid var(--border-strong);
+    border-radius:14px; padding:6px; min-width:220px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.5);
+    opacity:0; transform:translateY(-6px) scale(0.97);
+    pointer-events:none; transition:opacity .18s, transform .18s;
+    z-index:500;
+  }
+  .transcript-dropdown.open {
+    opacity:1; transform:translateY(0) scale(1); pointer-events:all;
+  }
+  .transcript-option {
+    display:flex; align-items:center; gap:10px;
+    padding:10px 14px; border-radius:9px;
+    font-size:13px; font-weight:500; color:var(--text2);
+    text-decoration:none; transition:all .15s; cursor:none;
+  }
+  .transcript-option:hover { background:var(--surface2); color:var(--text); }
+  .transcript-option svg { width:14px;height:14px;flex-shrink:0;opacity:.5; }
+  .transcript-option-label { flex:1; }
+  .transcript-option-tag {
+    font-size:10px; font-weight:600; letter-spacing:.05em;
+    text-transform:uppercase; padding:2px 8px; border-radius:4px;
+    background:rgba(61,255,160,0.1); color:var(--green);
+  }
+
   /* photo panel — right column, vertical strip of two images */
   .exp-featured-photos {
     display: flex;
@@ -846,6 +887,7 @@
     content:''; position:absolute; inset:0;
     background: radial-gradient(circle at var(--mx,50%) var(--my,50%), var(--card-glow) 0%, transparent 55%);
     opacity:0; transition:opacity .3s;
+    pointer-events: none;
   }
   .project-card:hover::after { opacity:1; }
   .project-card:hover { border-color:var(--border-strong); transform:translateY(-4px); }
@@ -874,6 +916,8 @@
   }
   .btn-github svg { width:14px; height:14px; flex-shrink:0; }
   .btn-github:hover { color:var(--text); border-color:var(--border-strong); background: var(--surface2); }
+  .btn-github--soon { color: var(--muted); }
+  .btn-github--soon:hover { color: var(--text); }
 
   /* SKILLS */
   .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
@@ -972,17 +1016,25 @@
   .cert-gallery-toggle.open .cert-gallery-chevron { transform: rotate(180deg); }
 
   .cert-gallery-wrap {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows .55s cubic-bezier(.16,1,.3,1), opacity .4s ease;
+    overflow: hidden;
     opacity: 0;
+    max-height: 0;
+    transition: opacity .4s ease;
   }
   .cert-gallery-wrap.open {
-    grid-template-rows: 1fr;
+    max-height: none;
+    overflow: visible;
     opacity: 1;
   }
-  .cert-gallery-wrap > div {
-    overflow: hidden;
+  /* stagger each item as it appears */
+  .cert-masonry-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .35s ease, transform .35s ease, border-color .25s, box-shadow .25s;
+  }
+  .cert-gallery-wrap.open .cert-masonry-item {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .cert-masonry {
@@ -1118,7 +1170,7 @@
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">View Projects</a>
       <a href="#contact" class="btn-outline">Let's Connect</a>
-      <a href="assets/resume/resume-en.pdf" download class="btn-resume">
+      <a href="assets/resume/Resume - Ferdinand Taslim - 2026.pdf" download class="btn-resume">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Download CV
       </a>
@@ -1200,6 +1252,25 @@
       <div class="edu-degree">Bachelor of Computer Science — Data Analytics</div>
       <div class="edu-school">Asia Pacific University of Technology &amp; Innovation</div>
       <span class="edu-badge bg-green">cGPA: 3.92 · Vice Chancellor's List</span>
+      <div class="transcript-wrap" id="transcriptWrap">
+        <button class="transcript-btn" id="transcriptBtn" aria-haspopup="true" aria-expanded="false">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Download Transcript
+          <svg class="transcript-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="transcript-dropdown" role="menu">
+          <a href="assets/resume/transcript-y1.pdf" download class="transcript-option">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3"/></svg>
+            <span class="transcript-option-label">Year 1 Transcript</span>
+            <span class="transcript-option-tag">2023–2024</span>
+          </a>
+          <a href="assets/resume/transcript-y2.pdf" download class="transcript-option">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3"/></svg>
+            <span class="transcript-option-label">Year 2 Transcript</span>
+            <span class="transcript-option-tag">2024–2025</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="edu-card ec-purple">
@@ -1260,8 +1331,8 @@
             <li>Conducted data validation and cross-referencing across multiple sources to ensure accuracy and reliability of audit evidence, strengthening internal control assessments.</li>
             <li>Transformed raw operational and financial data into interactive visualisations and audit-ready insights, improving efficiency in risk assessment, exception tracking, and financial oversight.</li>
           </ul>
-          <div class="project-tech">
-          <span class="tech-pill">Python</span><span class="tech-pill">Power BI</span><span class="tech-pill">excel</span>
+          <div class="project-tech" style="margin-bottom:20px">
+            <span class="tech-pill">Python</span><span class="tech-pill">Power BI</span><span class="tech-pill">SQL</span><span class="tech-pill">DAX</span><span class="tech-pill">Data Auditing</span>
           </div>
           <div class="exp-featured-actions">
             <a href="assets/resume/reference-letter.pdf" download class="btn-ref-letter">
@@ -1310,7 +1381,7 @@
               <li>Operated virtual platforms for online events and webinars for hundreds of participants.</li>
             </ul>
             <div class="project-tech">
-              <span class="tech-pill">Notion</span><span class="tech-pill">WordPress</span><span class="tech-pill">Elementor</span>
+              <span class="tech-pill">Notion</span><span class="tech-pill">WordPress</span><span class="tech-pill">Elementor</span><span class="tech-pill">IT Operations</span>
             </div>
           </div>
 
@@ -1367,6 +1438,9 @@
         <li>Develop predictive financial models (alphas) to identify trading opportunities in global markets.</li>
         <li>Optimise and backtest models using historical financial data to ensure robustness and reliability.</li>
       </ul>
+      <div class="project-tech" style="margin-top:14px">
+        <span class="tech-pill">Quantitative Finance</span><span class="tech-pill">Backtesting</span><span class="tech-pill">Alpha Research</span>
+      </div>
     </div>
 
 
@@ -1402,7 +1476,7 @@
         <div class="project-tech">
           <span class="tech-pill">Python</span><span class="tech-pill">Scikit-learn</span><span class="tech-pill">Power BI</span><span class="tech-pill">Pandas</span>
         </div>
-        <a href="https://github.com/Yuitox503/Customer-Churn-Analysis-and-Prediction" class="btn-github">
+        <a href="https://github.com/Yuitox503/Customer-Churn-Analysis-and-Prediction" target="_blank" rel="noopener" class="btn-github">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View on GitHub
         </a>
@@ -1432,7 +1506,7 @@
         <div class="project-tech">
           <span class="tech-pill">JavaScript</span><span class="tech-pill">OpenAI API</span><span class="tech-pill">Supabase</span><span class="tech-pill">n8n</span><span class="tech-pill">PostgreSQL</span>
         </div>
-        <a href="https://github.com/adricocorson/AmbatuWIN" class="btn-github">
+        <a href="https://github.com/adricocorson/AmbatuWIN" target="_blank" rel="noopener" class="btn-github">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View on GitHub
         </a>
@@ -1458,7 +1532,7 @@
         <div class="project-tech">
           <span class="tech-pill">Power BI</span><span class="tech-pill">SQL Server</span><span class="tech-pill">OLAP</span><span class="tech-pill">DAX</span>
         </div>
-        <a href="#" class="btn-github">
+        <a href="https://github.com/Yuitox503" target="_blank" rel="noopener" class="btn-github btn-github--soon">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View on GitHub
         </a>
@@ -1477,7 +1551,7 @@
           <span class="tech-pill">Jupyter</span>
           <span class="tech-pill">Power BI</span>
         </div>
-        <a href="https://github.com/Yuitox503/Macroeconomic-Forex-Analysis" class="btn-github">
+        <a href="https://github.com/Yuitox503/Macroeconomic-Forex-Analysis" target="_blank" rel="noopener" class="btn-github">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View on GitHub
         </a>
@@ -1492,7 +1566,7 @@
           <span class="tech-pill">Statistical Modelling</span>
           <span class="tech-pill">Data Viz</span>
         </div>
-        <a href="#" class="btn-github">
+        <a href="https://github.com/Yuitox503" target="_blank" rel="noopener" class="btn-github btn-github--soon">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View on GitHub
         </a>
@@ -1507,7 +1581,7 @@
           <span class="tech-pill">NLP</span>
           <span class="tech-pill">AI/ML</span>
         </div>
-        <a href="#" class="btn-github">
+        <a href="https://github.com/Yuitox503" target="_blank" rel="noopener" class="btn-github btn-github--soon">
           <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
           View on GitHub
         </a>
@@ -1631,7 +1705,7 @@
 </section>
 
 <footer>
-  <span>© 2025 Ferdinand Taslim</span>
+  <span>© 2026 Ferdinand Taslim</span>
   <span>Kuala Lumpur, Malaysia · Open to work</span>
 </footer>
 
@@ -1841,16 +1915,23 @@
 
   // ── NAV ACTIVE ───────────────────────────────────────────────
   const navLinks = document.querySelectorAll('.nav-links a');
-  const secIO = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-        if (a) a.classList.add('active');
-      }
-    });
-  }, { threshold: 0.35 });
-  document.querySelectorAll('section[id]').forEach(s => secIO.observe(s));
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  function updateNav() {
+    // if near bottom of page, force last section active
+    const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 60;
+    if (atBottom) {
+      const lastId = sections[sections.length - 1].id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + lastId));
+      return;
+    }
+    // otherwise find which section's top is closest above 40% viewport height
+    const trigger = window.scrollY + window.innerHeight * 0.4;
+    let current = sections[0].id;
+    sections.forEach(s => { if (s.offsetTop <= trigger) current = s.id; });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
 
   // ── CERTIFICATE GALLERY ──────────────────────────────────────
   const CERTIFICATES = [
@@ -1906,9 +1987,43 @@
   const certToggle = document.getElementById('certGalleryToggle');
   const certWrap   = document.getElementById('certGalleryWrap');
   certToggle.addEventListener('click', () => {
-    const isOpen = certWrap.classList.toggle('open');
+    const isOpen = !certWrap.classList.contains('open');
     certToggle.classList.toggle('open', isOpen);
     certToggle.setAttribute('aria-expanded', isOpen);
+
+    if (isOpen) {
+      // measure real height, animate to it, then free to auto
+      certWrap.style.maxHeight = '0';
+      certWrap.style.overflow  = 'hidden';
+      certWrap.classList.add('open');
+      const fullH = certWrap.scrollHeight;
+      certWrap.style.transition = 'max-height .65s cubic-bezier(.16,1,.3,1), opacity .4s ease';
+      certWrap.style.maxHeight  = fullH + 'px';
+      certWrap.style.opacity    = '1';
+      // after animation finishes remove max-height so nothing is ever clipped
+      certWrap.addEventListener('transitionend', function release(e) {
+        if (e.propertyName !== 'max-height') return;
+        certWrap.style.maxHeight = 'none';
+        certWrap.style.overflow  = 'visible';
+        certWrap.removeEventListener('transitionend', release);
+      });
+    } else {
+      // closing: snap height back from auto → measured → 0
+      certWrap.style.overflow  = 'hidden';
+      certWrap.style.maxHeight = certWrap.scrollHeight + 'px';
+      certWrap.style.opacity   = '0';
+      requestAnimationFrame(() => {
+        certWrap.style.transition = 'max-height .45s cubic-bezier(.4,0,1,1), opacity .3s ease';
+        certWrap.style.maxHeight  = '0';
+      });
+      certWrap.classList.remove('open');
+    }
+
+    // stagger each item's appearance delay
+    const items = certWrap.querySelectorAll('.cert-masonry-item');
+    items.forEach((item, i) => {
+      item.style.transitionDelay = isOpen ? `${i * 28}ms` : '0ms';
+    });
   });
 
   // ── LIGHTBOX ─────────────────────────────────────────────────
@@ -1927,6 +2042,35 @@
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  // ── TRANSCRIPT DROPDOWN ──────────────────────────────────────
+  const transcriptWrap = document.getElementById('transcriptWrap');
+  const transcriptBtn  = document.getElementById('transcriptBtn');
+  const transcriptDrop = transcriptWrap && transcriptWrap.querySelector('.transcript-dropdown');
+  if (transcriptBtn && transcriptDrop) {
+    // Move dropdown to body so parent overflow:hidden + transform cannot trap it
+    document.body.appendChild(transcriptDrop);
+
+    function positionDrop() {
+      const r = transcriptBtn.getBoundingClientRect();
+      transcriptDrop.style.top  = (r.bottom + 8 + window.scrollY) + 'px';
+      transcriptDrop.style.left = r.left + 'px';
+    }
+    transcriptBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = transcriptDrop.classList.toggle('open');
+      transcriptWrap.classList.toggle('open', isOpen);
+      transcriptBtn.setAttribute('aria-expanded', isOpen);
+      if (isOpen) positionDrop();
+    });
+    document.addEventListener('click', () => {
+      transcriptDrop.classList.remove('open');
+      transcriptWrap.classList.remove('open');
+      transcriptBtn.setAttribute('aria-expanded', false);
+    });
+    window.addEventListener('scroll', () => {
+      if (transcriptDrop.classList.contains('open')) positionDrop();
+    }, { passive: true });
+  }
 
 </script>
 </body>
