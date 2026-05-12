@@ -2,7 +2,7 @@
 
 > A handcrafted, single-file portfolio website built for a Computer Science (Data Analytics) student at Asia Pacific University. Designed to be fast, visually distinctive, and deployable with zero dependencies — just drop the folder onto any static host.
 
-
+![image alt](https://github.com/Yuitox503/Portfolio-Website/blob/main/website%20screenshots/screenshot%201.jpg?raw=true)
 
 ## Live Preview
 
@@ -47,11 +47,13 @@ This portfolio was designed and built entirely from scratch in a single `index.h
 - Floating profile photo with green glow and subtle float animation
 - Horizontal stats ticker bar (GPA, ranking, impact, projects)
 
+![image alt](https://github.com/Yuitox503/Portfolio-Website/blob/main/website%20screenshots/screenshot%202.jpg?raw=true)
 **Experience**
 - ADA Data & AI Solutions: featured card with workplace photo strip, bullet points, tech pills, and character reference letter download
 - PPIDK Asiania: featured card with dual landscape photo strip and tech pills
 - Maybank & WorldQuant: standard timeline entries with logo, bullets, and tech pills
 
+![image alt](https://github.com/Yuitox503/Portfolio-Website/blob/main/website%20screenshots/screenshot%203.jpg?raw=true)
 **Projects**
 - Top 3 projects: infinite-loop horizontal marquee image strip (alternating left/right direction per card) that pauses on hover, above a fully interactive content block
 - Bottom 3 projects: clean 3-column grid cards with tag badge, description, tech pills, and GitHub button
@@ -64,6 +66,7 @@ This portfolio was designed and built entirely from scratch in a single `index.h
 - Four grouped sections: Programming Languages, Frameworks & Libraries, Tools & Platforms, Concepts & Methods
 - Hover-lift pill tags with colour-coded dots
 
+![image alt](https://github.com/Yuitox503/Portfolio-Website/blob/main/website%20screenshots/screenshot%204.jpg?raw=true)
 **Awards & Certifications**
 - Four award cards (WorldQuant Alphathon 3rd place, CGPA Excellence, etc.)
 - Expandable masonry gallery with staggered fade-in animation — 29 certificates displayed as full images with lightbox viewer
@@ -201,6 +204,5 @@ This project is for personal portfolio use. You are welcome to study the code fo
 ## Contact
 
 **Ferdinand Taslim**
-📧 ferdinandtbusiness@gmail.com
-📍 Kuala Lumpur, Malaysia
+📧 ferdinandtbusiness@gmail.com <br>
 🔗 [LinkedIn](https://linkedin.com/in/ferdinandtslm) · [GitHub](https://github.com/Yuitox503)
