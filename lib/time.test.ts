@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeProgress } from "./progress";
+import { computeHistory, computeProgress } from "./progress";
 import {
   dateKey,
   formatHours,
@@ -87,9 +87,9 @@ describe("overlap / entries spanning midnight Sunday→Monday", () => {
 
 describe("weekly progress and score", () => {
   const cats = [
-    { id: "a", name: "Apps", type: "count" as const, weekly_target: 2, sort_order: 1 },
-    { id: "c", name: "Course", type: "hours" as const, weekly_target: 5, sort_order: 2 },
-    { id: "p", name: "Practice", type: "hours" as const, weekly_target: 3, sort_order: 3 },
+    { id: "a", name: "Apps", type: "count" as const, weekly_target: 2, sort_order: 1, is_active: true },
+    { id: "c", name: "Course", type: "hours" as const, weekly_target: 5, sort_order: 2, is_active: true },
+    { id: "p", name: "Practice", type: "hours" as const, weekly_target: 3, sort_order: 3, is_active: true },
   ];
 
   it("sums hours inside the week only and counts logs", () => {
@@ -101,7 +101,11 @@ describe("weekly progress and score", () => {
       // previous week, must not count
       { category_id: "p", started_at: "2026-11-15T10:00:00Z", ended_at: "2026-11-15T16:59:00Z" },
     ];
-    const logs = [{ category_id: "a" }, { category_id: "a" }];
+    const logs = [
+      { category_id: "a", logged_at: "2026-11-16T02:00:00Z" },
+      { category_id: "a", logged_at: "2026-11-22T16:59:00Z" }, // Sun 23:59 Bangkok: still this week
+      { category_id: "a", logged_at: "2026-11-22T17:00:00Z" }, // Mon 00:00 Bangkok: next week
+    ];
     const { progress, score, total } = computeProgress(cats, entries, logs, "2026-11-16", utc("2026-11-30T00:00:00Z"));
     const by = Object.fromEntries(progress.map((p) => [p.id, p]));
     expect(by.a.actual).toBe(2);
@@ -111,6 +115,35 @@ describe("weekly progress and score", () => {
     expect(by.p.actual).toBe(0);
     expect(by.p.hit).toBe(false);
     expect([score, total]).toEqual([2, 3]);
+  });
+
+  it("overall percent averages each category's capped completion", () => {
+    // Apps 2/2 = 100%, Course 6/5 capped at 100%, Practice 0/3 = 0% → 67%
+    const entries = [{ category_id: "c", started_at: "2026-11-17T01:00:00Z", ended_at: "2026-11-17T07:00:00Z" }];
+    const logs = [
+      { category_id: "a", logged_at: "2026-11-17T02:00:00Z" },
+      { category_id: "a", logged_at: "2026-11-17T03:00:00Z" },
+    ];
+    const s = computeProgress(cats, entries, logs, "2026-11-16", utc("2026-11-30T00:00:00Z"));
+    expect(s.percent).toBe(67);
+    // Practice 1.5/3 = 50% → (100 + 100 + 50) / 3 = 83%
+    const half = [...entries, { category_id: "p", started_at: "2026-11-18T01:00:00Z", ended_at: "2026-11-18T02:30:00Z" }];
+    expect(computeProgress(cats, half, logs, "2026-11-16", utc("2026-11-30T00:00:00Z")).percent).toBe(83);
+  });
+
+  it("archived categories only count in weeks where they have data", () => {
+    const withArchived = [...cats, { id: "x", name: "Old", type: "count" as const, weekly_target: 1, sort_order: 4, is_active: false }];
+    const logs = [{ category_id: "x", logged_at: "2026-11-10T03:00:00Z" }];
+    const now = utc("2026-11-30T00:00:00Z");
+    expect(computeProgress(withArchived, [], logs, "2026-11-09", now).total).toBe(4);
+    expect(computeProgress(withArchived, [], logs, "2026-11-16", now).total).toBe(3);
+  });
+
+  it("history lists every week from the first data week to now, newest first", () => {
+    const logs = [{ category_id: "a", logged_at: "2026-11-03T03:00:00Z" }];
+    const h = computeHistory(cats, [], logs, "2026-11-16", utc("2026-11-18T00:00:00Z"));
+    expect(h.map((w) => w.week)).toEqual(["2026-11-16", "2026-11-09", "2026-11-02"]);
+    expect(h[2].progress.find((p) => p.id === "a")?.actual).toBe(1);
   });
 
   it("a fresh week starts from zero at Monday 00:00 Bangkok", () => {
