@@ -1,3 +1,4 @@
+import { BackToSite } from "../BackToSite";
 import { LoginForm } from "./LoginForm";
 
 export default function LoginPage() {
@@ -11,6 +12,9 @@ export default function LoginPage() {
         </div>
         <div className="card p-6">
           <LoginForm />
+        </div>
+        <div className="mt-6 text-center">
+          <BackToSite label="Back to main site" />
         </div>
       </div>
     </main>

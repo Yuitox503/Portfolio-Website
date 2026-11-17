@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BackToSite } from "../../BackToSite";
 import { BookIcon, ListIcon, SlidersIcon, SunIcon } from "./icons";
 
 const ITEMS = [
@@ -18,6 +19,8 @@ export function Nav() {
     <>
       {/* Desktop / tablet: top bar */}
       <header className="mx-auto hidden max-w-2xl items-center gap-1 px-6 pt-6 sm:flex">
+        <BackToSite label="" className="-ml-1 pr-1" />
+        <span className="mx-2 h-5 w-px bg-line-strong" aria-hidden />
         <Link href="/tracker" className="mr-auto font-serif text-2xl italic text-text">
           Tracker
         </Link>
@@ -35,6 +38,12 @@ export function Nav() {
           );
         })}
       </header>
+
+      {/* Phone: slim top strip with the way back to the portfolio */}
+      <div className="mx-auto flex max-w-2xl items-center justify-between px-3 pt-3 sm:hidden">
+        <BackToSite />
+        <span className="pr-1 font-serif text-lg italic text-muted">Tracker</span>
+      </div>
 
       {/* Phone: bottom tab bar, within thumb reach */}
       <nav
