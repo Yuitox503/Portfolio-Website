@@ -2,11 +2,16 @@ import { LoginForm } from "./LoginForm";
 
 export default function LoginPage() {
   return (
-    <main className="flex min-h-dvh items-center justify-center px-4">
-      <div className="w-full max-w-sm rounded-2xl border border-line bg-surface p-6">
-        <h1 className="font-display text-2xl font-bold">Tracker</h1>
-        <p className="mb-6 mt-1 text-sm text-muted">Private. Sign in to continue.</p>
-        <LoginForm />
+    <main className="flex min-h-dvh items-center justify-center px-4 py-10">
+      <div className="w-full max-w-sm">
+        <div className="mb-8 text-center">
+          <p className="eyebrow">Private</p>
+          <h1 className="mt-2 font-serif text-5xl italic">Tracker</h1>
+          <p className="mt-2 text-sm text-muted">Small steps, every week.</p>
+        </div>
+        <div className="card p-6">
+          <LoginForm />
+        </div>
       </div>
     </main>
   );

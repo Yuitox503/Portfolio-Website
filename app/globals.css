@@ -1,31 +1,98 @@
 @import "tailwindcss";
 
-/* Palette borrowed from the portfolio (public/index.html :root). */
+/*
+ * Tracker theme: warm, low-glare dark. Cream text on charcoal, soft category
+ * colours, mint when a target is hit (a softer cousin of the portfolio green).
+ */
 @theme {
-  --color-bg: #09090f;
-  --color-surface: #111118;
-  --color-surface2: #18181f;
-  --color-line: rgba(255, 255, 255, 0.09);
-  --color-line-strong: rgba(255, 255, 255, 0.15);
-  --color-accent: #3dffa0;
-  --color-purple: #a78bff;
-  --color-orange: #ff8c42;
-  --color-danger: #ff6b6b;
-  --color-text: #f0f2f8;
-  --color-text2: #c4c8d8;
-  --color-muted: #8890a8;
-  --color-dim: #44495a;
-  --font-display: var(--font-syne), system-ui, sans-serif;
+  --color-bg: #13110f;
+  --color-surface: #1c1916;
+  --color-surface2: #25211d;
+  --color-raised: #2f2a25;
+  --color-line: rgba(255, 236, 214, 0.07);
+  --color-line-strong: rgba(255, 236, 214, 0.14);
+  --color-text: #f5eee6;
+  --color-text2: #d4cabe;
+  --color-muted: #9a8f83;
+  --color-dim: #615950;
+  --color-accent: #9ee6b8;
+  --color-amber: #f2b880;
+  --color-lavender: #bba8f0;
+  --color-sky: #8fc8ec;
+  --color-rose: #ec9f8f;
+  --color-gold: #ecd27e;
+  --color-pink: #e8a8d0;
+  --color-danger: #ef8f80;
+
+  --font-serif: var(--font-instrument), Georgia, serif;
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
   color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(120% 60% at 50% -10%, rgba(242, 184, 128, 0.09), transparent 60%),
+    radial-gradient(80% 50% at 100% 0%, rgba(187, 168, 240, 0.06), transparent 60%);
+  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Fine paper grain for a softer, cosier surface. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+::selection {
+  background: rgba(242, 184, 128, 0.3);
+}
+
+/* Native date/time pickers: match the dark theme. */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.85) sepia(0.2);
+  opacity: 0.7;
+}
+
+@layer components {
+  .card {
+    @apply rounded-3xl bg-surface/90 ring-1 ring-line;
+  }
+  .field {
+    @apply w-full rounded-2xl bg-surface2 px-4 py-3 text-base text-text ring-1 ring-line outline-none transition placeholder:text-dim focus:ring-amber/60;
+  }
+  .label {
+    @apply mb-1.5 block text-[13px] font-medium tracking-wide text-muted;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-5 py-3 font-semibold text-bg transition active:scale-[0.98] disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-text2 ring-1 ring-line transition active:bg-surface2 disabled:opacity-50;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,33 +1,44 @@
 import Link from "next/link";
 import { addDays, formatWeekLabel } from "@/lib/time";
+import { ChevronLeft, ChevronRight } from "./icons";
 
-export function WeekNav({ basePath, week, currentWeek }: { basePath: string; week: string; currentWeek: string }) {
-  const href = (w: string) => (w === currentWeek ? basePath : `${basePath}?week=${w}`);
+type Props = {
+  basePath: string;
+  week: string;
+  currentWeek: string;
+  /** Put the week in the path (/base/2026-11-16) instead of ?week= */
+  pathStyle?: boolean;
+};
+
+export function WeekNav({ basePath, week, currentWeek, pathStyle }: Props) {
+  const href = (w: string) =>
+    pathStyle ? `${basePath}/${w}` : w === currentWeek ? basePath : `${basePath}?week=${w}`;
   const isCurrent = week === currentWeek;
-  const btn = "flex size-10 items-center justify-center rounded-xl border border-line text-lg text-text2 active:bg-surface2";
+  const btn =
+    "flex size-10 shrink-0 items-center justify-center rounded-full text-text2 ring-1 ring-line transition active:bg-surface2";
 
   return (
-    <nav className="flex items-center gap-2" aria-label="Week">
+    <nav className="flex items-center gap-3" aria-label="Choose week">
       <Link href={href(addDays(week, -7))} className={btn} aria-label="Previous week">
-        ‹
+        <ChevronLeft />
       </Link>
       <div className="min-w-0 flex-1 text-center">
-        <p className="font-display font-semibold">{formatWeekLabel(week)}</p>
+        <p className="truncate text-[15px] font-medium text-text">{formatWeekLabel(week)}</p>
         {isCurrent ? (
-          <p className="text-xs text-accent">This week</p>
+          <p className="eyebrow mt-0.5 !text-amber">This week</p>
         ) : (
-          <Link href={basePath} className="text-xs text-muted underline underline-offset-2">
-            Back to this week
+          <Link href={href(currentWeek)} className="eyebrow mt-0.5 inline-block underline decoration-dim underline-offset-4">
+            Jump to this week
           </Link>
         )}
       </div>
       {isCurrent ? (
-        <span className={`${btn} opacity-30`} aria-hidden>
-          ›
+        <span className={`${btn} opacity-25`} aria-hidden>
+          <ChevronRight />
         </span>
       ) : (
         <Link href={href(addDays(week, 7))} className={btn} aria-label="Next week">
-          ›
+          <ChevronRight />
         </Link>
       )}
     </nav>

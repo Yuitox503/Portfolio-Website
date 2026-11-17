@@ -2,14 +2,16 @@
 
 import { useState, useTransition } from "react";
 import { startTimer, stopTimer } from "../actions";
+import { PlayIcon, StopIcon } from "./icons";
 
 type Props = {
   categoryId: string;
   categoryName: string;
+  color: string;
   running: { entryId: string; categoryId: string; categoryName: string } | null;
 };
 
-export function StartStopButton({ categoryId, categoryName, running }: Props) {
+export function StartStopButton({ categoryId, categoryName, color, running }: Props) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const isThisRunning = running?.categoryId === categoryId;
@@ -42,15 +44,17 @@ export function StartStopButton({ categoryId, categoryName, running }: Props) {
         type="button"
         onClick={onClick}
         disabled={pending}
-        className={
+        aria-label={isThisRunning ? `Stop ${categoryName}` : `Start ${categoryName}`}
+        className="flex size-12 items-center justify-center rounded-full transition active:scale-95 disabled:opacity-50"
+        style={
           isThisRunning
-            ? "min-w-20 rounded-xl bg-danger px-4 py-2.5 font-semibold text-bg disabled:opacity-60"
-            : "min-w-20 rounded-xl border border-accent/50 px-4 py-2.5 font-semibold text-accent active:bg-accent/10 disabled:opacity-60"
+            ? { background: "var(--color-danger)", color: "var(--color-bg)" }
+            : { background: `${color}1f`, color, boxShadow: `inset 0 0 0 1px ${color}55` }
         }
       >
-        {pending ? "…" : isThisRunning ? "Stop" : "Start"}
+        {isThisRunning ? <StopIcon /> : <PlayIcon className="translate-x-px" />}
       </button>
-      {error && <p className="mt-1 text-xs text-danger">{error}</p>}
+      {error && <p className="mt-1 max-w-40 text-right text-xs text-danger">{error}</p>}
     </div>
   );
 }
