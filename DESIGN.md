@@ -1,243 +1,289 @@
 ---
 name: Ferdinand Taslim Portfolio
-description: An Isotype wall chart in flat enamel cobalt, signal red, sun yellow, ink and white, where facts are drawn as counted units.
+description: A calm tonal portfolio drawn as soft stacked sheets in Sanzo Wada combination no. 279 (tyrian blue, cinnamon, ecru, sienna), with counted pictogram units in the stats.
 colors:
-  cobalt: "#1f4fd8"
-  signal-red: "#d62e1f"
-  sun-yellow: "#ffc61a"
-  ink: "#14110f"
-  ink-raised: "#26211d"
-  white: "#ffffff"
-  mist: "#eef1f8"
-  muted-ink: "#4a4338"
-  muted-on-ink: "#cfc9bf"
-  muted-on-cobalt: "#d4defc"
+  tyrian: "#12354e"
+  deep: "#0d2739"
+  lift: "#194560"
+  cinnamon: "#eea78c"
+  ecru: "#c2ae93"
+  sienna: "#bb7125"
+  sienna-ink: "#8f541a"
+  paper: "#f3ece2"
+  paper-2: "#fbf7f0"
+  text: "#f6efe6"
+  text-2: "#d3c6b2"
+  ink: "#12354e"
+  ink-2: "#44596a"
+  line-d: "rgba(246, 239, 230, 0.14)"
+  line-l: "rgba(18, 53, 78, 0.14)"
+  veil-d: "rgba(246, 239, 230, 0.06)"
+  veil-l: "rgba(18, 53, 78, 0.06)"
+  cinnamon-wash: "rgba(238, 167, 140, 0.45)"
+  scrim: "rgba(8, 24, 36, 0.7)"
 typography:
   display:
-    fontFamily: "League Spartan, Futura, Century Gothic, Trebuchet MS, sans-serif"
+    fontFamily: "Shippori Mincho, Hina Mincho, Yu Mincho, Hiragino Mincho ProN, Georgia, serif"
     fontSize: "6rem"
-    fontWeight: 900
-    lineHeight: 0.9
-    letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "League Spartan, Futura, Century Gothic, Trebuchet MS, sans-serif"
-    fontSize: "3.5rem"
     fontWeight: 800
-    lineHeight: 1.04
+    lineHeight: 0.98
     letterSpacing: "-0.01em"
+  headline:
+    fontFamily: "Shippori Mincho, Hina Mincho, Yu Mincho, Hiragino Mincho ProN, Georgia, serif"
+    fontSize: "3.4rem"
+    fontWeight: 700
+    lineHeight: 1.12
+    letterSpacing: "-0.005em"
   title:
-    fontFamily: "League Spartan, Futura, Century Gothic, Trebuchet MS, sans-serif"
+    fontFamily: "Shippori Mincho, Hina Mincho, Yu Mincho, Hiragino Mincho ProN, Georgia, serif"
     fontSize: "1.5rem"
-    fontWeight: 800
-    lineHeight: 1.2
+    fontWeight: 700
+    lineHeight: 1.3
   body:
-    fontFamily: "Atkinson Hyperlegible, Segoe UI, system-ui, sans-serif"
+    fontFamily: "Zen Kaku Gothic New, Hiragino Kaku Gothic ProN, Yu Gothic, system-ui, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.75
   label:
-    fontFamily: "League Spartan, Futura, Century Gothic, Trebuchet MS, sans-serif"
-    fontSize: "0.8125rem"
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: "0.08em"
+    fontFamily: "Zen Kaku Gothic New, Hiragino Kaku Gothic ProN, Yu Gothic, system-ui, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 500
+    lineHeight: 1.3
+    letterSpacing: "0.04em"
 rounded:
-  none: "0px"
+  s: "14px"
+  md: "24px"
+  l: "32px"
+  sheet: "40px"
+  pill: "999px"
   disc: "50%"
 spacing:
   xs: "8px"
-  sm: "12px"
-  md: "24px"
-  lg: "48px"
+  sm: "14px"
+  md: "28px"
+  lg: "56px"
   gutter: "clamp(20px, 4.5vw, 64px)"
   nav-height: "64px"
+  max-width: "1240px"
 components:
-  button-yellow:
-    backgroundColor: "{colors.sun-yellow}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-    padding: "14px 24px"
-  button-yellow-hover:
-    backgroundColor: "{colors.white}"
+  button-primary:
+    backgroundColor: "{colors.cinnamon}"
+    textColor: "{colors.tyrian}"
+    rounded: "{rounded.pill}"
+    padding: "14px 26px"
+  button-primary-hover:
+    backgroundColor: "{colors.paper}"
   button-line:
     backgroundColor: "transparent"
-    textColor: "{colors.white}"
-    rounded: "{rounded.none}"
-    padding: "14px 24px"
-  button-ink:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.none}"
-    padding: "14px 24px"
-  button-ink-hover:
-    backgroundColor: "{colors.cobalt}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.pill}"
+    padding: "14px 26px"
+  button-dark:
+    backgroundColor: "{colors.tyrian}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.pill}"
+    padding: "14px 26px"
+  button-dark-hover:
+    backgroundColor: "{colors.lift}"
   nav-bar:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.white}"
+    backgroundColor: "{colors.deep}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.pill}"
     height: "64px"
   nav-link-active:
-    backgroundColor: "{colors.sun-yellow}"
+    backgroundColor: "{colors.cinnamon}"
+    textColor: "{colors.tyrian}"
+    rounded: "{rounded.pill}"
+    padding: "8px 14px"
+  nav-cta:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.tyrian}"
+    rounded: "{rounded.pill}"
+    padding: "8px 16px"
+  sheet-paper:
+    backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
-  skill-tag-red:
-    backgroundColor: "{colors.signal-red}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.none}"
-    padding: "10px 16px"
+    rounded: "{rounded.sheet}"
+  sheet-tyrian:
+    backgroundColor: "{colors.tyrian}"
+    textColor: "{colors.text}"
+    rounded: "{rounded.sheet}"
+  skill-tag-tyrian:
+    backgroundColor: "{colors.tyrian}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.pill}"
+    padding: "8px 18px"
+  skill-tag-cinnamon:
+    backgroundColor: "{colors.cinnamon}"
+    textColor: "{colors.tyrian}"
+    rounded: "{rounded.pill}"
+    padding: "8px 18px"
+  skill-tag-ecru:
+    backgroundColor: "{colors.ecru}"
+    textColor: "{colors.tyrian}"
+    rounded: "{rounded.pill}"
+    padding: "8px 18px"
   tech-pill:
-    backgroundColor: "{colors.mist}"
+    backgroundColor: "{colors.veil-l}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-    padding: "4px 12px"
+    rounded: "{rounded.pill}"
+    padding: "4px 14px"
   project-card:
-    backgroundColor: "{colors.white}"
+    backgroundColor: "#153d58"
+    textColor: "{colors.text}"
+    rounded: "{rounded.l}"
+  experience-card:
+    backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-  project-card-small:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.none}"
+    rounded: "{rounded.l}"
   award-card:
-    backgroundColor: "{colors.mist}"
+    backgroundColor: "{colors.paper-2}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
+    rounded: "{rounded.md}"
     padding: "26px"
   cert-chip:
-    backgroundColor: "{colors.white}"
+    backgroundColor: "{colors.paper-2}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-    padding: "14px 18px"
+    rounded: "{rounded.pill}"
+    padding: "13px 24px"
+  palette-box:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.l}"
 ---
 
 # Design System: Ferdinand Taslim Portfolio
 
 ## Overview
 
-**Creative North Star: "The Isotype Wall Chart"**
+**Creative North Star: "The Stacked Paper Sheets"**
 
-The page is a wall of flat enamel colour fields, each section a full-bleed panel of cobalt, red, yellow, ink or white. Facts about Ferdinand are drawn as counted units (figures, crates, stacked bars, a podium) with ghost units for the unfilled remainder, so a number reads as a quantity before it reads as a numeral. The world refuses the dark-neon portfolio default: there are no shadows, no gradients, no glows and no rounded cards.
+The page is a deck of soft sheets laid over one another. Each section is a full-width sheet with rounded 40px shoulders that rises over the one before it, alternating deep blue, tyrian, lifted blue and warm paper. The palette is a single Sanzo Wada combination (no. 279 in A Dictionary of Color Combinations): dark tyrian blue carries the page, vinaceous cinnamon is the one accent, ecru and raw sienna play quiet supporting roles. The mood is calm, tonal and tactile rather than loud; the world refuses multi-colour fields, hard blocks and the dark-neon portfolio default.
 
-Density is generous and structured: wide gutters, heavy uppercase display type, and square blocks of colour that stack like a printed chart. Bars and rows vary in width (100%, 90%, 80%) to suggest a bar chart rather than a list. Colour carries meaning by position and contrast, not by decoration; each field pairs one text colour with one background and a single focus colour chosen for that field.
+The Isotype idea survives only in the stats band, where facts are drawn as counted pictogram units with dashed ghost units for the unfilled remainder, so a number reads as a quantity before it reads as a numeral. Everywhere else form is soft: pill buttons and tags, 24 to 32px card radii, a floating pill nav, and a wavy cinnamon underline that marks the key word of a heading. Everything is flat colour with no shadows; depth comes from stacking, tone and overlap.
+
+Density is generous. Wide gutters, a Mincho display voice over a clean Kaku Gothic text face, and motion limited to reveals that remove themselves, slow drifting circles and compositor-only marquee galleries.
 
 **Key Characteristics:**
-- Five flat fields (cobalt, signal red, sun yellow, ink, white) with square corners and zero shadows.
-- Heavy League Spartan caps for display; Atkinson Hyperlegible for everything read at length.
-- One pictogram sprite in a single weight (figure, sheet, crate, podium, medal) used as counted units.
-- A segmented section-progress rail across the top replaces the browser scroll bar.
-- Circle discs and quarter-discs are the only curves; everything else is a rectangle.
+- Stacked rounded sheets (40px top radius, negative margin overlap) in deep, tyrian, lift and paper.
+- Cinnamon as the single accent; ecru for quiet lines and fills; sienna only as small marks.
+- Shippori Mincho for display and titles, Zen Kaku Gothic New for all reading text.
+- A floating pill nav and pill buttons, tags and chips; no sharp-cornered containers.
+- One pictogram sprite in a single stroke weight with round joins, used as counted units.
+- Project galleries flow as a looping marquee that pauses on hover, focus or by button.
 
 ## Colors
 
-A primary-colour enamel palette: three saturated fields, one near-black, one clean white, and a pale blue-grey for quiet containers.
+A tonal blue field with one warm accent and a warm paper counterpart, all from the Wada 279 set.
 
 ### Primary
-- **Cobalt** (#1f4fd8): the hero field, filled crate units, the podium's third step, ink-button hover and technical project tags.
-- **Signal Red** (#d62e1f): section fields, GPA bar fills, date labels on white cards and the leading About bar.
-- **Sun Yellow** (#ffc61a): the stats chart field, primary buttons, the active nav link, highlight marks on key phrases and the hero disc.
+- **Dark Tyrian Blue** (tyrian, #12354e): the stats sheet and the tyrian sections, dark pill buttons, ink text on paper, and one of the three tag fills.
+- **Vinaceous Cinnamon** (cinnamon, #eea78c): the single accent. Primary button, active nav link, the second hero name line, selection, focus ring on dark sheets, timeline fill, unit fills, wavy underline, and the scroll-to-top button.
+
+### Secondary
+- **Ecru** (ecru, #c2ae93): quiet outlines (units, ghost circles, line buttons), hero subtitle, the middle About bar, and the third tag fill.
+- **Raw Sienna** (sienna, #bb7125): small marks only: the wavy underline and hover borders on paper, one station, one certificate dot. On paper, small text uses **Sienna Ink** (sienna-ink, #8f541a), which is dark enough to read.
 
 ### Neutral
-- **Ink** (#14110f): the page background, nav bar, footer, tab blocks on light fields, outlines and rules (3px borders, chart dividers).
-- **Ink Raised** (#26211d): secondary experience rows on ink so they separate from the page.
-- **White** (#ffffff): content cards, the white section, button hover state and text on coloured fields.
-- **Mist** (#eef1f8): logo wells, tech pills, award cards and the scrollbar track.
-- **Muted Ink** (#4a4338): secondary text on white and yellow.
-- **Muted on Ink** (#cfc9bf): secondary text on ink.
-- **Muted on Cobalt** (#d4defc): secondary text on cobalt.
+- **Deep** (deep, #0d2739): page background, hero, nav bar and footer; the darkest tyrian.
+- **Lift** (lift, #194560): lighter tyrian for the portrait disc, hover on dark buttons, the lifted section and scrollbar thumb.
+- **Paper** (paper, #f3ece2) and **Paper 2** (paper-2, #fbf7f0): the light sheets and the cards that sit on them (award cards, cert chips, the fourth tag).
+- **Text** (text, #f6efe6) and **Text 2** (text-2, #d3c6b2): primary and secondary copy on dark sheets.
+- **Ink** (ink, #12354e) and **Ink 2** (ink-2, #44596a): primary and secondary copy on paper.
+- **Hairlines and veils**: line-d / line-l (14% light or tyrian) for borders and dividers; veil-d / veil-l (6%) for quiet fills such as the section tab, education rows and tech pills; cinnamon-wash (cinnamon at 45%) for the highlighted phrase in About copy and the selected palette row; scrim (rgba(8,24,36,.7)) behind the jump palette, with a .94 variant behind the lightbox.
 
 ### Named Rules
-**The Field Pairing Rule.** Every field sets its own text colour and focus colour: white text on cobalt, red and ink (focus yellow on cobalt and ink, white on red); ink text on yellow and white (focus cobalt). Text never moves to a new field without taking that field's pairing.
+**The One Warm Voice Rule.** Cinnamon is the only accent. Ecru and sienna support it in small amounts; no other hue is introduced.
 
-**The Flat Enamel Rule.** Colour is applied as solid blocks only. Depth is never simulated with shadow, blur or gradient.
+**The Sheet Pairing Rule.** Each sheet sets its own text colour and focus colour: text and cinnamon focus on deep, tyrian and lift; ink and tyrian focus on paper. Content that moves to a new sheet takes that sheet's pairing and its secondary token, never opacity.
 
 ## Typography
 
-**Display Font:** League Spartan (with Futura, Century Gothic, Trebuchet MS, sans-serif)
-**Body Font:** Atkinson Hyperlegible (with Segoe UI, system-ui, sans-serif)
+**Display Font:** Shippori Mincho (with Hina Mincho, Yu Mincho, Hiragino Mincho ProN, Georgia, serif)
+**Body Font:** Zen Kaku Gothic New (with Hiragino Kaku Gothic ProN, Yu Gothic, system-ui, sans-serif)
 
-**Character:** A geometric, heavy, uppercase poster voice paired with a typeface designed for legibility. Display type announces; body type is for reading.
+**Character:** A literary Mincho serif, warm and bookish, over a rounded, even Gothic that reads cleanly at length. Display announces; text reads.
 
 ### Hierarchy
-- **Display** (900, clamp(3.25rem, 8.4vw, 6rem), 0.9): the stacked hero name in uppercase, second line in yellow.
-- **Headline** (800, clamp(2rem, 4.6vw, 3.5rem), 1.04): section headings (`.h2`), uppercase, balanced wrap, -0.01em tracking.
-- **Title** (800, clamp(1.15rem, 2vw, 1.55rem), 1.2): degree, role and project titles; the lead project scales to clamp(1.5rem, 3vw, 2.4rem).
-- **Stat** (800, clamp(2.25rem, 4vw, 3.25rem), 1): chart numerals with tabular figures.
-- **Body** (400, 1.0625rem, 1.65): running text, capped at 52 to 68ch.
-- **Label** (700, 0.8125rem, 0.08em tracking, uppercase, League Spartan): nav links, buttons in the nav, small block labels.
+- **Display** (800, clamp(3.25rem, 8.4vw, 6rem), 0.98): the stacked hero name, second line in cinnamon.
+- **Headline** (700, clamp(2rem, 4.4vw, 3.4rem), 1.12): section headings, balanced wrap, with one phrase marked by colour or the wavy underline.
+- **Title** (700, clamp(1.15rem, 2vw, 1.55rem), 1.3): degree, role and project titles; the lead project scales to clamp(1.5rem, 3vw, 2.3rem).
+- **Stat** (700, clamp(2.25rem, 4vw, 3.25rem), 1.05): chart numerals with tabular figures.
+- **Body** (400, 1.0625rem, 1.75): running text, capped at 52 to 68ch.
+- **Label** (500, 0.875rem, 0.04em tracking, sentence case): nav links, dates, tags and pills in Zen Kaku Gothic New.
 
 ### Named Rules
-**The Heavy Caps Rule.** Display and headline text is always uppercase League Spartan at weight 800 or 900. Mixed-case display type does not appear.
-
-**The Readable Text Rule.** Anything longer than a label is Atkinson Hyperlegible at 1rem or larger; secondary copy uses the paired muted token, never opacity.
+**The Mincho Voice Rule.** Headings, titles, names and numerals are Shippori Mincho at 700 to 800; everything read as a sentence is Zen Kaku Gothic New at 1rem or larger.
 
 ## Layout
 
-A 1280px maximum content width inside a fluid gutter (`clamp(20px, 4.5vw, 64px)`). Sections are full-bleed fields with vertical padding between 88px and 140px at the top and 72px and 120px at the bottom. The hero is a two-column grid (1.2fr copy, 0.8fr portrait) that collapses to one column at 900px. The stats chart is four columns separated by 3px ink rules, collapsing to two at 1100px and one at 600px. Project cards sit on a two-column grid with a full-width lead card and a three-column row of small cards. Spacing rhythm is multiples of 4 and 12 (12px gaps in lists, 16px to 32px in card grids, 24px internal padding). Breakpoints: 1180, 1100, 900 and 600px. The fixed nav is 64px (58px at 600px) beneath a 6px progress rail.
-
-Rows in the education and About lists narrow in steps (100%, 92%, 84% or 100%, 90%, 80%) to read as bars of a chart; they return to full width below 900px.
+A 1240px maximum content width inside a fluid gutter (clamp(20px, 4.5vw, 64px)). Sections are full-bleed sheets with vertical padding of 64px to 104px (plus the 40px sheet overlap) above and 72px to 120px below. The hero fills the viewport and is a two-column grid (1.2fr copy, 0.8fr portrait) that collapses at 900px. The stats chart is four columns with hairline dividers, two columns at 1100px and one at 600px. Projects sit on a two-column grid with a full-width lead card (text split into two columns) and a three-column row of small cards, all collapsing to one column at 900px. Gaps run 12 to 32px in fluid steps; internal card padding is 22 to 40px. Breakpoints: 1180, 1100, 900 and 600px. The sheet overlap shrinks from 40px to 30px at 900px and 26px at 600px. The nav is a 64px floating pill (58px at 600px), 14px from the top, under a 4px segmented section-progress rail.
 
 ## Elevation & Depth
 
-There are no shadows, gradients or blurs in the stylesheet. Depth is conveyed by stacking opaque fields against each other, by 3px ink borders and by overlap (the portrait stands on a yellow disc; a hanging tab sits on the section edge). Overlays (lightbox, jump palette) use a translucent ink scrim, not a blur. Hover movement is a small 3px to 4px translate or a colour swap, never a lift shadow.
+There are no shadows, gradients (apart from the edge fades that mask the marquee) or blurs. Depth is stacked tone: each sheet overlaps the previous one by its own corner radius, so the curved shoulder reads as a layer edge. Cards separate with 1px hairlines (line-d or line-l) and a contrasting fill. Overlays use a translucent blue scrim, not a blur. Hover movement is a 3px to 4px translate or a colour swap.
 
 ### Named Rules
-**The No Shadow Rule.** Nothing casts a shadow. Separation comes from a contrasting field, a 3px ink rule or a dashed outline.
+**The No Shadow Rule.** Nothing casts a shadow. Separation comes from tone, a hairline, or overlap.
 
 ## Shapes
 
-Square corners everywhere (radius 0). The only curves are circle discs (the hero yellow disc, 50%) and a single quarter-disc in red. Borders are heavy and flat: 3px solid ink on cert chips, masonry items and the scroll-to-top button; 2px outlines on tag and button borders; a dashed 4px square on the hero as a ghost unit. Focus rings are 3px solid outlines with a 3px offset in the field's own focus colour. Selection inverts to ink with yellow text.
+Every container is rounded. The scale is 14px (menu items, palette rows), 24px (award cards, transcript menu, gallery toggle), 32px (cards, bars, rows, palette box), 40px sheet tops (30px at 900px, 26px at 600px) and 999px pills for every button, tag, chip, pill and the nav. Circles (50%) are used for the hero discs, the brand mark, station dots, round icon buttons and units' dots. Logos sit in 22 to 28px rounded wells. Pictograms use a 1.6px stroke with round joins and caps, so no corner is sharp. Focus is a 3px solid outline with 3px offset in the sheet's focus colour. Selection is cinnamon with tyrian text.
 
 ## Components
 
 ### Buttons
-- **Shape:** Square, 3px border, 14px 24px padding (10px 18px small), Atkinson Hyperlegible 700 at 0.9375rem.
-- **Primary (yellow):** Sun yellow fill, ink text; hover swaps to white fill.
-- **Line:** Currentcolor 3px outline, transparent fill; hover fills white with ink text.
-- **Ink:** Ink fill and white text; hover swaps to cobalt. Inside ink cards it inverts to yellow.
-- **Nav buttons:** Spartan caps 0.8125rem with a 2px translucent white outline; the call to action is solid yellow.
+- **Shape:** Pill (999px), 1.5px border, 14px 26px padding (10px 20px small), Zen Kaku Gothic New 700 at 0.9375rem.
+- **Primary:** Cinnamon fill, tyrian text; hover swaps to paper.
+- **Line:** Ecru outline, inherits text colour; hover fills text colour with tyrian text.
+- **Dark:** Tyrian fill, paper text; hover lifts to lift blue. Inside project cards and the transcript wrap it inverts to paper, hovering to cinnamon.
 
 ### Navigation
-- **Style:** Fixed ink bar, 64px high, under a 6px segmented progress rail whose seven segments fill left to right in yellow, red, white, cobalt, yellow, red, white.
-- **Links:** Spartan caps with 0.08em tracking; hover is a 14% white wash; the active link is a solid yellow block with ink text.
-- **Mobile:** Below 900px the links collapse into a full-width ink panel opened by a bordered Menu toggle whose three bars animate to a cross.
+- **Style:** A floating pill (deep at 96%, 1px line-d border) holding a 40px round paper brand mark, centred links, a Jump button with a kbd hint, a Tracker link and a paper call-to-action.
+- **Links:** 15px, text-2; hover adds a veil wash; the active link is a cinnamon pill with tyrian text.
+- **Mobile:** Below 900px the links fold into a rounded 28px panel under the nav, opened by a pill Menu toggle whose bars animate to a cross.
+- **Progress rail:** Segments at the top edge fill left to right in cinnamon and ecru alternately.
 
 ### Section Tab
-A solid block (ink on light fields, yellow on ink and cobalt, white on red) that hangs from the section's top edge, aligned to the content column. It carries a numbered section name and mirrors the nav order. It is a wayfinding device, not a heading; the section heading below it is the `.h2`.
+A small veil-filled pill with a hairline border that hangs at the top of each sheet, aligned to the content column. Wayfinding only; see the not-canonized note.
 
 ### Isotype Stats Chart
-The yellow band under the hero: four columns, each with a drawn unit group above a heavy numeral and a bold label. Units are 44x112px ink-bordered bars filled red from the bottom, a podium whose third step fills cobalt, a 20-column crowd of figure pictograms, and 30px cobalt crates with dashed ghost crates for the remainder. Units grow in from zero (scaleY) when the band enters view; reduced motion collapses transitions. Dividers are 3px ink rules.
+The tyrian sheet under the hero: four columns, each with a drawn unit group above a Mincho numeral and label. Units are 46x112px ecru-outlined rounded bars filled cinnamon from the bottom, a podium whose third step fills cinnamon, a 20-column crowd of figure pictograms, and 30px crates with dashed ghost crates for the remainder. Units grow in from zero when the band enters view. A dotted text-2 strip of facts sits below.
 
 ### Bars and Rows
-Full-colour blocks (red, cobalt, yellow, white) of descending width with a 44px pictogram and a Spartan title; each row is a single flat field.
+Three About bars in tyrian, ecru and cinnamon (32px radius) each carry a 44px pictogram and a Mincho title. Education rows are veil-filled, hairline-bordered 32px rows with a rounded paper logo well.
 
 ### Experience Timeline
-A 6px rail with a yellow progress fill, square 28px stations with a 5px ink border, and cards that are white (latest, with a photo pair on the right) or ink-raised (older rows).
+A 3px rail with a cinnamon progress fill, round stations ringed in deep, and cards that are paper (latest, with a photo pair on the right) or veil rows (older).
 
 ### Project Cards and Galleries
-Cards are flat white (lead and standard) or ink (small). A full-bleed colour band (cobalt, red or ink with yellow text) carries the category, then the title, description, pills and an action. Galleries are horizontal scroll-snap tracks of 16:9 shots with 3px gaps, a yellow scrollbar on ink, drag-to-scroll, and an ink control strip whose buttons turn yellow on hover.
+Cards are a slightly lifted blue (#153d58, a local card colour) with a hairline border and 32px radius. A gallery of 16:9 shots (20px radius) flows as a seamless marquee that pauses on hover, focus or the pause button; with reduced motion it stays a manual scroll-snap strip with arrows. Edge fades match the card colour. Then a pill category tag, title, description, tech pills and a paper pill action. The lead card splits its text into two columns.
 
 ### Skill Tags and Lens
-Square tags in red, cobalt, yellow or ink, with a 4px ink bottom edge when interactive. Pressing a tag lights the matching projects with a 5px ring and dims the rest to 25% and greyscale; a fixed ink bar at the bottom reports the active filter.
+Pill tags in tyrian, cinnamon, ecru or paper-2 with hairline border; interactive tags carry a dotted underline. Pressing a tag rings matching cards with a 3px cinnamon outline and dims the rest to 28% greyscale; a fixed paper pill bar at the bottom reports the active filter and offers clear and jump actions.
 
 ### Jump-to Palette
-A white 640px box on a translucent ink scrim, with a 3px ink rule under the search field and a yellow selected row.
+A paper 640px box (32px radius) over a scrim, with a hairline under the search field, 14px-rounded rows and a cinnamon-wash selected row.
 
 ### Awards and Certificates
-Award cards are mist squares with a pictogram medal; on hover they turn yellow and lift 3px. Certificate chips are white with a 3px ink border and a coloured square dot. The gallery toggle is a full-width ink bar that turns cobalt; it reveals a three-column masonry of bordered certificate scans with staggered fade-up, opening into a full-screen lightbox with a yellow close button.
+Award cards are paper-2 with a hairline border, 24px radius and a pictogram medal in sienna, cinnamon, tyrian or ecru; hover lifts 3px to white. Certificate chips are paper-2 pills with a coloured dot. The gallery toggle is a full-width tyrian bar that lifts on hover; it reveals a three-column masonry of 18px-rounded certificate scans with a staggered fade-up, opening in a lightbox with a paper round close button.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** build every surface from solid fields in cobalt (#1f4fd8), signal red (#d62e1f), sun yellow (#ffc61a), ink (#14110f) and white.
-- **Do** keep corners square; use circles only for discs.
-- **Do** express quantities as counted pictogram units with a ghost unit for the remainder.
-- **Do** set the field's own focus colour and secondary text token when placing content on a new field.
-- **Do** use League Spartan 800 or 900 in uppercase for headings and Atkinson Hyperlegible for all running text.
-- **Do** disable transitions under `prefers-reduced-motion`.
+- **Do** build with the Wada 279 set only: tyrian (#12354e) with its deep (#0d2739) and lift (#194560) steps, cinnamon (#eea78c), ecru (#c2ae93), sienna (#bb7125) and paper (#f3ece2).
+- **Do** keep cinnamon as the single accent and use sienna ink (#8f541a) for small text on paper.
+- **Do** round every container: 14, 24, 32px, 40px sheet tops, 999px pills.
+- **Do** express quantities as counted pictogram units with a dashed ghost for the remainder.
+- **Do** set the sheet's own text, secondary text and focus colour when placing content on a new sheet.
+- **Do** use Shippori Mincho for headings and numerals and Zen Kaku Gothic New for running text.
+- **Do** keep motion compositor-only and make reveals remove themselves; disable animation under `prefers-reduced-motion`.
 
 ### Don't:
-- **Don't** add shadows, gradients, glows, blurs or rounded cards.
-- **Don't** use dark-neon portfolio tropes: aurora, grid backdrops, tickers, crosshairs, loaders or text scramble.
-- **Don't** use opacity to make secondary text; use the muted token for the field.
-- **Don't** introduce a new accent hue; the three primaries are the whole chromatic range.
+- **Don't** add shadows, glows, blurs or sharp-cornered cards.
+- **Don't** use dark-neon portfolio tropes: aurora, grid backdrops, crosshairs, loaders or text scramble.
+- **Don't** make secondary text with opacity; use the paired secondary token.
+- **Don't** introduce a new accent hue, or loud multi-colour fields.
 - **Don't** replace the pictogram units with generic stock icons.
 
-**Not canonized (defects the build carries):** the numbered section tabs and the small uppercase category and status labels (project tags, "Latest Experience" flag, hero status line) behave as eyebrow-style kickers and are not a rule for new surfaces; award medal tints `#a85a16` and `#b98100` sit outside the palette; the hollow outlined "contact-big" word relies on a 30% white stroke that is a low-contrast decorative flourish.
+**Not canonized (defects the build carries):** the section tabs and the small label pills (project tags, the Latest Experience flag, the hero status pill) behave as eyebrow-style kickers and are not a rule for new surfaces. Off-palette one-offs sit outside the tokens: the project card fill #153d58, the second-tag tint #d9c9b0, the award medal tints #d98a6b and #a8916f, white certificate backing, and the 22% ecru outlined "contact-big" word, which is a low-contrast decorative flourish.

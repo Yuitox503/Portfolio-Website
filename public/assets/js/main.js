@@ -62,7 +62,7 @@
     const fire = () => {
       chartEl.classList.add('in');
       if (reduced()) return;
-      [['.c-green', 3.88, ''], ['.c-purple', 3, 'rd'], ['.c-orange', 100, '+'], ['.c-blue', 6, '+']]
+      [['.c-1', 3.88, ''], ['.c-2', 3, 'rd'], ['.c-3', 100, '+'], ['.c-4', 6, '+']]
         .forEach(([sel, val, suf]) => { const el = $(sel, chartEl); if (el) countUp(el, val, suf, 1600); });
     };
 
@@ -94,7 +94,7 @@
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
       const R = 190;
-      ctx.fillStyle = 'rgba(255,255,255,0.22)';
+      ctx.fillStyle = 'rgba(194,174,147,0.22)';
       ctx.beginPath();
       const near = [];
       for (let y = GAP / 2; y < h + GAP; y += GAP) {
@@ -109,7 +109,7 @@
       }
       ctx.fill();
       if (near.length) {
-        ctx.fillStyle = '#ffc61a';
+        ctx.fillStyle = '#eea78c';
         ctx.beginPath();
         for (let i = 0; i < near.length; i += 3) {
           const n = near[i + 2];
@@ -310,7 +310,7 @@
       // mouse drag-to-scroll (touch and trackpads already scroll natively)
       let down = false, startX = 0, startLeft = 0, moved = false, pid = null;
       track.addEventListener('pointerdown', e => {
-        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        if (e.pointerType !== 'mouse' || e.button !== 0 || g.classList.contains('is-marquee')) return;
         down = true; moved = false; startX = e.clientX; startLeft = track.scrollLeft; pid = e.pointerId;
       });
       track.addEventListener('pointermove', e => {
@@ -340,6 +340,86 @@
         const img = $('img', shot);
         if (img) openLightbox(img.currentSrc || img.src, img.alt, shot);
       }, true);
+    });
+  })();
+
+
+  /* ═══════════════════ Flowing project strips (marquee) ═══════════════════
+     Compositor-only (transform). Pauses on hover/focus, with a visible pause
+     button, and while off screen. Reduced motion keeps the manual strip. */
+  (function marquee() {
+    const NS = 'http://www.w3.org/2000/svg';
+    const icon = (cls, d) => {
+      const s = document.createElementNS(NS, 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('class', 'ic ' + cls); s.setAttribute('aria-hidden', 'true');
+      const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); s.appendChild(p); return s;
+    };
+    const start = () => {
+      if (reduced()) return;
+      $$('[data-gallery]').forEach((g, idx) => {
+        const track = $('.gallery-track', g);
+        const shots = $$('.shot', track);
+        if (shots.length < 2 || g.classList.contains('is-marquee')) return;
+        const rail = document.createElement('div');
+        rail.className = 'rail-move' + (idx % 2 ? ' rev' : '');
+        shots.forEach(s => rail.appendChild(s));
+        shots.forEach(s => {
+          const c = s.cloneNode(true);
+          c.setAttribute('aria-hidden', 'true'); c.tabIndex = -1;
+          rail.appendChild(c);
+        });
+        track.appendChild(rail);
+        track.removeAttribute('tabindex');
+        track.scrollLeft = 0;
+        track.addEventListener('focusin', () => { track.scrollLeft = 0; });
+        track.addEventListener('scroll', () => { if (track.scrollLeft) track.scrollLeft = 0; }, { passive: true });
+        rail.style.setProperty('--dur', Math.max(28, shots.length * 9) + 's');
+        g.classList.add('is-marquee');
+
+        const ctl = $('.gallery-ctl', g);
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'g-pause'; btn.setAttribute('aria-label', 'Pause screenshots'); btn.setAttribute('aria-pressed', 'false');
+        btn.append(icon('i-pause', 'M7 5h3.5v14H7zM13.5 5h3.5v14h-3.5z'), icon('i-play', 'M7 4l13 8-13 8z'));
+        btn.addEventListener('click', () => {
+          const p = g.classList.toggle('paused');
+          btn.setAttribute('aria-pressed', String(p));
+          btn.setAttribute('aria-label', p ? 'Play screenshots' : 'Pause screenshots');
+        });
+        ctl.hidden = false; ctl.appendChild(btn);
+
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(es => g.classList.toggle('off', !es[0].isIntersecting), { rootMargin: '120px' }).observe(g);
+        }
+      });
+    };
+    if (document.readyState === 'complete') start(); else window.addEventListener('load', start);
+    reducedMQ.addEventListener('change', () => { if (reducedMQ.matches) $$('[data-gallery].is-marquee').forEach(g => g.classList.add('paused')); });
+  })();
+
+  /* ═══════════════════ Scroll reveals ═══════════════════
+     Content is visible by default; only elements below the fold get .r, and
+     the class is removed again once the entrance has played. */
+  (function reveals() {
+    if (reduced() || !('IntersectionObserver' in window)) return;
+    const groups = [
+      ['.about-text > *', 70], ['.bar', 110], ['.edu-row', 110], ['.exp', 0], ['.proj-grid > .proj', 90],
+      ['.proj-small > .proj', 100], ['.skills-grid > div', 120], ['.award-item', 70], ['.cert-item', 50],
+      ['.contact-inner > *', 90], ['.h2', 0]
+    ];
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        e.target.classList.add('r-in');
+        e.target.addEventListener('animationend', () => e.target.classList.remove('r', 'r-in'), { once: true });
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    groups.forEach(([sel, step]) => {
+      $$(sel).forEach((el, i) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return; // already on screen
+        el.classList.add('r');
+        el.style.setProperty('--d', Math.min(i, 5) * step + 'ms');
+        io.observe(el);
+      });
     });
   })();
 

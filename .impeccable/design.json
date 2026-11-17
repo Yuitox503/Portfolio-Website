@@ -4,25 +4,40 @@
   "title": "Design System: Ferdinand Taslim Portfolio",
   "extensions": {
     "colorMeta": {
-      "cobalt": { "role": "primary", "displayName": "Cobalt", "canonical": "#1f4fd8", "tonalRamp": ["#0b1d54", "#112c80", "#173ba8", "#1f4fd8", "#4d74e3", "#7f9bec", "#b4c5f4", "#e1e8fb"] },
-      "signal-red": { "role": "primary", "displayName": "Signal Red", "canonical": "#d62e1f", "tonalRamp": ["#4a0f0a", "#7a1a12", "#a8241a", "#d62e1f", "#e2594c", "#ec877d", "#f4b5af", "#fbe1de"] },
-      "sun-yellow": { "role": "primary", "displayName": "Sun Yellow", "canonical": "#ffc61a", "tonalRamp": ["#4d3a00", "#7d5f00", "#b38900", "#e0ac00", "#ffc61a", "#ffd761", "#ffe6a0", "#fff4d6"] },
-      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#14110f", "tonalRamp": ["#14110f", "#26211d", "#3b352f", "#4a4338", "#7a7367", "#a9a398", "#cfc9bf", "#ece9e3"] },
-      "white": { "role": "neutral", "displayName": "White", "canonical": "#ffffff", "tonalRamp": ["#ffffff"] },
-      "mist": { "role": "neutral", "displayName": "Mist", "canonical": "#eef1f8", "tonalRamp": ["#2f3650", "#4c5675", "#717b9c", "#98a1bf", "#bcc3da", "#d6dbea", "#eef1f8", "#f7f8fc"] }
+      "tyrian": { "role": "primary", "displayName": "Dark Tyrian Blue", "canonical": "#12354e", "tonalRamp": ["#071b2a", "#0d2739", "#12354e", "#194560", "#2e6485", "#5b8cac", "#9bbbd0", "#d8e5ee"] },
+      "cinnamon": { "role": "primary", "displayName": "Vinaceous Cinnamon", "canonical": "#eea78c", "tonalRamp": ["#5a2a18", "#8a4a31", "#bb6c50", "#d98a6b", "#eea78c", "#f3bea9", "#f8d6c8", "#fcece6"] },
+      "ecru": { "role": "secondary", "displayName": "Ecru", "canonical": "#c2ae93", "tonalRamp": ["#3d3427", "#5f5240", "#82705a", "#a28d73", "#c2ae93", "#d4c5b0", "#e5dacb", "#f3ece2"] },
+      "sienna": { "role": "tertiary", "displayName": "Raw Sienna", "canonical": "#bb7125", "tonalRamp": ["#3d2209", "#63390f", "#8f541a", "#bb7125", "#d08f4d", "#e0b07f", "#eed0b0", "#f8ebdb"] },
+      "deep": { "role": "neutral", "displayName": "Deep", "canonical": "#0d2739", "tonalRamp": ["#050f17", "#0a1c29", "#0d2739", "#12354e", "#194560", "#35607a", "#6f93a8", "#b5cad6"] },
+      "lift": { "role": "neutral", "displayName": "Lift", "canonical": "#194560", "tonalRamp": ["#0d2739", "#12354e", "#194560", "#235a7c", "#3c7799", "#6a9ab5", "#a3c0d1", "#dbe7ee"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#f3ece2", "tonalRamp": ["#3a342c", "#625a4e", "#8c8272", "#b5a995", "#d6cbb8", "#e8dfd0", "#f3ece2", "#fbf7f0"] },
+      "paper-2": { "role": "neutral", "displayName": "Paper 2", "canonical": "#fbf7f0", "tonalRamp": ["#fbf7f0"] },
+      "sienna-ink": { "role": "neutral", "displayName": "Sienna Ink", "canonical": "#8f541a", "tonalRamp": ["#8f541a"] },
+      "text": { "role": "neutral", "displayName": "Text", "canonical": "#f6efe6", "tonalRamp": ["#f6efe6"] },
+      "text-2": { "role": "neutral", "displayName": "Text 2", "canonical": "#d3c6b2", "tonalRamp": ["#d3c6b2"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#12354e", "tonalRamp": ["#12354e"] },
+      "ink-2": { "role": "neutral", "displayName": "Ink 2", "canonical": "#44596a", "tonalRamp": ["#44596a"] },
+      "line-d": { "role": "neutral", "displayName": "Hairline on dark", "canonical": "rgba(246, 239, 230, 0.14)", "tonalRamp": ["rgba(246, 239, 230, 0.14)"] },
+      "line-l": { "role": "neutral", "displayName": "Hairline on paper", "canonical": "rgba(18, 53, 78, 0.14)", "tonalRamp": ["rgba(18, 53, 78, 0.14)"] },
+      "veil-d": { "role": "neutral", "displayName": "Veil on dark", "canonical": "rgba(246, 239, 230, 0.06)", "tonalRamp": ["rgba(246, 239, 230, 0.06)"] },
+      "veil-l": { "role": "neutral", "displayName": "Veil on paper", "canonical": "rgba(18, 53, 78, 0.06)", "tonalRamp": ["rgba(18, 53, 78, 0.06)"] },
+      "cinnamon-wash": { "role": "neutral", "displayName": "Cinnamon wash", "canonical": "rgba(238, 167, 140, 0.45)", "tonalRamp": ["rgba(238, 167, 140, 0.45)"] },
+      "scrim": { "role": "neutral", "displayName": "Overlay scrim", "canonical": "rgba(8, 24, 36, 0.7)", "tonalRamp": ["rgba(8, 24, 36, 0.7)"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Stacked hero name, uppercase League Spartan 900." },
-      "headline": { "displayName": "Headline", "purpose": "Section headings, uppercase League Spartan 800." },
-      "title": { "displayName": "Title", "purpose": "Degree, role and project titles." },
-      "body": { "displayName": "Body", "purpose": "Atkinson Hyperlegible running text, 52 to 68ch." },
-      "label": { "displayName": "Label", "purpose": "Nav links and small block labels, tracked caps." }
+      "display": { "displayName": "Display", "purpose": "Stacked hero name in Shippori Mincho 800; second line in cinnamon." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings in Shippori Mincho 700 with one marked phrase." },
+      "title": { "displayName": "Title", "purpose": "Degree, role, project and award titles." },
+      "body": { "displayName": "Body", "purpose": "Zen Kaku Gothic New running text, 52 to 68ch." },
+      "label": { "displayName": "Label", "purpose": "Nav links, dates, tags and pills; sentence case, light tracking." }
     },
     "shadows": [],
     "motion": [
-      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Default easing for unit growth, hover movement and reveals." },
-      { "name": "state-swap", "value": ".2s linear colour swap", "purpose": "Background and colour change on buttons and links." },
-      { "name": "unit-grow", "value": ".9s cubic-bezier(.16, 1, .3, 1)", "purpose": "Chart units scale from zero when the stats band enters view." }
+      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Default easing for hovers, reveals, unit growth and the certificate gallery." },
+      { "name": "reveal", "value": ".95s var(--ease) both, 26px rise", "purpose": "Scroll reveals; the class is removed after the animation." },
+      { "name": "marquee", "value": "48s linear infinite, translate3d(-50%)", "purpose": "Compositor-only flowing project galleries; paused on hover, focus or by button." },
+      { "name": "drift", "value": "26s to 32s ease-in-out infinite alternate", "purpose": "Slow drifting hero circles." },
+      { "name": "unit-grow", "value": "1s var(--ease) scaleY from 0", "purpose": "Stats units grow when the band enters view." }
     ],
     "breakpoints": [
       { "name": "wide", "value": "1180px" },
@@ -33,100 +48,109 @@
   },
   "components": [
     {
-      "name": "Yellow Button",
+      "name": "Primary Button",
       "kind": "button",
-      "refersTo": "button-yellow",
-      "description": "Primary call to action on cobalt, ink and red fields.",
-      "html": "<a class=\"ds-btn-yellow\" href=\"#\">View Projects</a>",
-      "css": ".ds-btn-yellow { display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border:3px solid var(--yellow, #ffc61a); background:var(--yellow, #ffc61a); color:var(--ink, #14110f); font:700 .9375rem 'Atkinson Hyperlegible', system-ui, sans-serif; text-decoration:none; transition:background .2s, border-color .2s; } .ds-btn-yellow:hover { background:#fff; border-color:#fff; } .ds-btn-yellow:focus-visible { outline:3px solid #fff; outline-offset:3px; }"
+      "refersTo": "button-primary",
+      "description": "Cinnamon pill; the main call to action on dark sheets.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Download CV</a>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; justify-content:center; padding:14px 26px; border-radius:999px; border:1.5px solid transparent; background:var(--cinnamon, #eea78c); color:var(--tyrian, #12354e); font:700 .9375rem 'Zen Kaku Gothic New', system-ui, sans-serif; line-height:1.2; text-decoration:none; transition:background .3s cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { background:var(--paper, #f3ece2); } .ds-btn-primary:focus-visible { outline:3px solid var(--cinnamon, #eea78c); outline-offset:3px; }"
     },
     {
       "name": "Line Button",
       "kind": "button",
       "refersTo": "button-line",
-      "description": "Secondary action that takes the field's text colour as its outline.",
-      "html": "<a class=\"ds-btn-line\" href=\"#\">Download CV</a>",
-      "css": ".ds-btn-line { display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border:3px solid currentColor; color:#fff; background:transparent; font:700 .9375rem 'Atkinson Hyperlegible', system-ui, sans-serif; text-decoration:none; transition:background .2s, color .2s; } .ds-btn-line:hover { background:#fff; color:#14110f; } .ds-btn-line:focus-visible { outline:3px solid #ffc61a; outline-offset:3px; }"
+      "description": "Secondary pill with an ecru outline that takes the sheet's text colour.",
+      "html": "<a class=\"ds-btn-line\" href=\"#\">View projects</a>",
+      "css": ".ds-btn-line { display:inline-flex; align-items:center; justify-content:center; padding:14px 26px; border-radius:999px; border:1.5px solid var(--ecru, #c2ae93); color:var(--text, #f6efe6); background:transparent; font:700 .9375rem 'Zen Kaku Gothic New', system-ui, sans-serif; text-decoration:none; transition:background .3s cubic-bezier(.16,1,.3,1), color .3s; } .ds-btn-line:hover { background:var(--text, #f6efe6); color:var(--tyrian, #12354e); border-color:var(--text, #f6efe6); } .ds-btn-line:focus-visible { outline:3px solid var(--cinnamon, #eea78c); outline-offset:3px; }"
     },
     {
-      "name": "Ink Button",
+      "name": "Dark Button",
       "kind": "button",
-      "refersTo": "button-ink",
-      "description": "Primary action on white and yellow fields.",
-      "html": "<a class=\"ds-btn-ink\" href=\"#\">Live demo</a>",
-      "css": ".ds-btn-ink { display:inline-flex; align-items:center; justify-content:center; padding:14px 24px; border:3px solid #14110f; background:#14110f; color:#fff; font:700 .9375rem 'Atkinson Hyperlegible', system-ui, sans-serif; text-decoration:none; transition:background .2s, border-color .2s; } .ds-btn-ink:hover { background:#1f4fd8; border-color:#1f4fd8; } .ds-btn-ink:focus-visible { outline:3px solid #1f4fd8; outline-offset:3px; }"
+      "refersTo": "button-dark",
+      "description": "Tyrian pill for paper sheets; inverts to paper inside project cards.",
+      "html": "<a class=\"ds-btn-dark\" href=\"#\">Live demo</a>",
+      "css": ".ds-btn-dark { display:inline-flex; align-items:center; justify-content:center; padding:14px 26px; border-radius:999px; border:1.5px solid transparent; background:var(--tyrian, #12354e); color:var(--paper, #f3ece2); font:700 .9375rem 'Zen Kaku Gothic New', system-ui, sans-serif; text-decoration:none; transition:background .3s cubic-bezier(.16,1,.3,1); } .ds-btn-dark:hover { background:var(--lift, #194560); } .ds-btn-dark:focus-visible { outline:3px solid var(--tyrian, #12354e); outline-offset:3px; }"
     },
     {
-      "name": "Nav Bar",
+      "name": "Floating Nav",
       "kind": "nav",
       "refersTo": "nav-bar",
-      "description": "Fixed ink bar with tracked caps links; the active link is a yellow block.",
-      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-a\" href=\"#\">About</a><a class=\"ds-nav-a ds-active\" href=\"#\">Projects</a><a class=\"ds-nav-a\" href=\"#\">Contact</a></nav>",
-      "css": ".ds-nav { display:flex; gap:2px; height:64px; align-items:center; padding:0 24px; background:#14110f; } .ds-nav-a { padding:10px 13px; color:#fff; font:700 .8125rem 'League Spartan', Futura, sans-serif; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; transition:background .2s, color .2s; } .ds-nav-a:hover { background:rgba(255,255,255,.14); } .ds-nav-a:focus-visible { outline:3px solid #ffc61a; outline-offset:3px; } .ds-active { background:#ffc61a; color:#14110f; }"
+      "description": "Deep pill nav with a round brand mark, links, and a paper call to action; the active link is a cinnamon pill.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-brand\">F</span><a class=\"ds-nav-a\" href=\"#\">About</a><a class=\"ds-nav-a ds-active\" href=\"#\">Projects</a><a class=\"ds-nav-a\" href=\"#\">Skills</a><a class=\"ds-cta\" href=\"#\">Get in touch</a></nav>",
+      "css": ".ds-nav { display:flex; align-items:center; gap:2px; height:64px; padding:0 12px 0 14px; border-radius:999px; background:rgba(13,39,57,.96); border:1px solid var(--line-d, rgba(246,239,230,.14)); } .ds-brand { width:40px; height:40px; border-radius:50%; background:var(--paper, #f3ece2); color:var(--tyrian, #12354e); display:grid; place-items:center; font:700 1.1rem 'Shippori Mincho', Georgia, serif; margin-right:16px; } .ds-nav-a { padding:8px 14px; border-radius:999px; color:var(--text-2, #d3c6b2); font:500 .9375rem 'Zen Kaku Gothic New', system-ui, sans-serif; text-decoration:none; transition:background .25s, color .25s; } .ds-nav-a:hover { color:var(--text, #f6efe6); background:var(--veil-d, rgba(246,239,230,.06)); } .ds-nav-a:focus-visible { outline:3px solid var(--cinnamon, #eea78c); outline-offset:3px; } .ds-active { background:var(--cinnamon, #eea78c); color:var(--tyrian, #12354e); font-weight:700; } .ds-cta { margin-left:auto; padding:8px 16px; border-radius:999px; background:var(--paper, #f3ece2); color:var(--tyrian, #12354e); font:700 .875rem 'Zen Kaku Gothic New', system-ui, sans-serif; text-decoration:none; } .ds-cta:hover { background:var(--cinnamon, #eea78c); }"
     },
     {
       "name": "Skill Tag",
       "kind": "chip",
-      "refersTo": "skill-tag-red",
-      "description": "Interactive square tag with a 4px bottom edge; pressing it filters the projects.",
+      "refersTo": "skill-tag-cinnamon",
+      "description": "Pill tag that filters projects when pressed; tyrian, cinnamon, ecru and paper variants.",
       "html": "<button class=\"ds-tag\" aria-pressed=\"false\">Python</button>",
-      "css": ".ds-tag { padding:10px 16px; background:#d62e1f; color:#fff; border:0; border-bottom:4px solid #14110f; font:700 .9375rem 'Atkinson Hyperlegible', system-ui, sans-serif; cursor:pointer; transition:transform .2s cubic-bezier(.16,1,.3,1); } .ds-tag:hover { transform:translateY(-3px); } .ds-tag:focus-visible { outline:3px solid #1f4fd8; outline-offset:3px; } .ds-tag[aria-pressed=\"true\"] { outline:4px solid #14110f; outline-offset:3px; }"
+      "css": ".ds-tag { padding:8px 18px; border-radius:999px; border:0; background:var(--cinnamon, #eea78c); color:var(--tyrian, #12354e); font:500 .9375rem/1.3 'Zen Kaku Gothic New', system-ui, sans-serif; cursor:pointer; text-decoration:underline dotted; text-decoration-thickness:2px; text-underline-offset:.3em; transition:transform .3s cubic-bezier(.16,1,.3,1); } .ds-tag:hover { transform:translateY(-3px); } .ds-tag:focus-visible { outline:3px solid var(--tyrian, #12354e); outline-offset:3px; } .ds-tag[aria-pressed=\"true\"] { outline:3px solid var(--tyrian, #12354e); outline-offset:3px; }"
     },
     {
       "name": "Project Card",
       "kind": "card",
       "refersTo": "project-card",
-      "description": "Flat white card with a full-bleed colour band for the category and a square-cornered body.",
-      "html": "<article class=\"ds-card\"><div class=\"ds-card-band\">Predictive Modelling</div><div class=\"ds-card-body\"><h3 class=\"ds-card-title\">Final Year Project</h3><p>Model results across five datasets.</p><span class=\"ds-pill\">Python</span></div></article>",
-      "css": ".ds-card { background:#fff; color:#14110f; max-width:420px; } .ds-card-band { background:#1f4fd8; color:#fff; padding:9px 24px; font:700 .8125rem 'League Spartan', Futura, sans-serif; letter-spacing:.08em; text-transform:uppercase; } .ds-card-body { padding:20px 24px 24px; font-family:'Atkinson Hyperlegible', system-ui, sans-serif; } .ds-card-title { font:800 1.4rem/1.2 'League Spartan', Futura, sans-serif; margin-bottom:12px; } .ds-pill { display:inline-block; margin-top:12px; background:#eef1f8; color:#14110f; padding:4px 12px; font:700 .8125rem 'Atkinson Hyperlegible', sans-serif; }"
+      "description": "Lifted-blue rounded card with a pill category tag, Mincho title, tech pills and a paper action.",
+      "html": "<article class=\"ds-card\"><span class=\"ds-card-tag\">Predictive modelling</span><h3 class=\"ds-card-title\">Final Year Project</h3><p class=\"ds-card-desc\">Model results across five datasets.</p><span class=\"ds-pill\">Python</span><a class=\"ds-card-btn\" href=\"#\">Read more</a></article>",
+      "css": ".ds-card { display:flex; flex-direction:column; align-items:flex-start; max-width:420px; padding:28px 32px; background:#153d58; color:var(--text, #f6efe6); border:1px solid var(--line-d, rgba(246,239,230,.14)); border-radius:32px; } .ds-card-tag { margin-bottom:14px; padding:4px 14px; border-radius:999px; background:rgba(13,39,57,.45); color:var(--cinnamon, #eea78c); font:500 .8125rem 'Zen Kaku Gothic New', system-ui, sans-serif; } .ds-card-title { font:700 1.4rem/1.3 'Shippori Mincho', Georgia, serif; margin-bottom:12px; } .ds-card-desc { font:400 1rem/1.75 'Zen Kaku Gothic New', system-ui, sans-serif; color:var(--text-2, #d3c6b2); margin-bottom:18px; } .ds-pill { padding:4px 14px; border-radius:999px; background:var(--veil-d, rgba(246,239,230,.06)); color:var(--text-2, #d3c6b2); font:500 .8125rem 'Zen Kaku Gothic New', system-ui, sans-serif; margin-bottom:20px; } .ds-card-btn { padding:10px 20px; border-radius:999px; background:var(--paper, #f3ece2); color:var(--tyrian, #12354e); font:700 .875rem 'Zen Kaku Gothic New', system-ui, sans-serif; text-decoration:none; transition:background .3s; } .ds-card-btn:hover { background:var(--cinnamon, #eea78c); } .ds-card-btn:focus-visible { outline:3px solid var(--cinnamon, #eea78c); outline-offset:3px; }"
     },
     {
       "name": "Isotype Stat Column",
       "kind": "custom",
-      "refersTo": "colors.signal-red",
-      "description": "Drawn units above a heavy numeral; the unfilled remainder is a ghost unit.",
+      "refersTo": "colors.cinnamon",
+      "description": "Drawn units above a Mincho numeral; ecru-outlined bars fill cinnamon from the bottom.",
       "html": "<div class=\"ds-stat\"><div class=\"ds-units\"><i class=\"ds-unit\"><b style=\"height:100%\"></b></i><i class=\"ds-unit\"><b style=\"height:100%\"></b></i><i class=\"ds-unit\"><b style=\"height:88%\"></b></i></div><div class=\"ds-num\">3.8</div><div class=\"ds-label\">CGPA, drawn to scale</div></div>",
-      "css": ".ds-stat { background:#ffc61a; color:#14110f; padding:32px; width:240px; } .ds-units { display:flex; align-items:flex-end; gap:8px; margin-bottom:14px; } .ds-unit { position:relative; display:block; width:44px; height:112px; border:3px solid #14110f; overflow:hidden; } .ds-unit b { position:absolute; left:0; right:0; bottom:0; background:#d62e1f; } .ds-num { font:800 3.25rem/1 'League Spartan', Futura, sans-serif; font-variant-numeric:tabular-nums; } .ds-label { font:700 1rem/1.35 'Atkinson Hyperlegible', system-ui, sans-serif; max-width:22ch; }"
+      "css": ".ds-stat { background:var(--tyrian, #12354e); color:var(--text, #f6efe6); padding:32px; width:260px; border-radius:32px; } .ds-units { display:flex; align-items:flex-end; gap:8px; margin-bottom:16px; } .ds-unit { position:relative; display:block; width:46px; height:112px; border:1.5px solid var(--ecru, #c2ae93); border-radius:16px; overflow:hidden; } .ds-unit b { position:absolute; left:0; right:0; bottom:0; background:var(--cinnamon, #eea78c); } .ds-num { font:700 3.25rem/1.05 'Shippori Mincho', Georgia, serif; font-variant-numeric:tabular-nums; } .ds-label { font:500 1rem/1.45 'Zen Kaku Gothic New', system-ui, sans-serif; max-width:22ch; color:var(--text-2, #d3c6b2); }"
+    },
+    {
+      "name": "Heading with Wavy Mark",
+      "kind": "custom",
+      "refersTo": "typography.headline",
+      "description": "Section heading with one phrase underlined in a cinnamon wave.",
+      "html": "<h2 class=\"ds-h2\">Selected <span class=\"ds-mark\">work</span></h2>",
+      "css": ".ds-h2 { font:700 clamp(2rem,4.4vw,3.4rem)/1.12 'Shippori Mincho', Georgia, serif; color:var(--text, #f6efe6); background:var(--deep, #0d2739); padding:24px; border-radius:32px; } .ds-mark { text-decoration:underline wavy; text-decoration-color:var(--cinnamon, #eea78c); text-decoration-thickness:2px; text-underline-offset:.22em; text-decoration-skip-ink:none; }"
     },
     {
       "name": "Award Card",
       "kind": "card",
       "refersTo": "award-card",
-      "description": "Mist square with a pictogram medal; turns yellow on hover.",
+      "description": "Paper-2 card with a hairline border and a pictogram medal; lifts to white on hover.",
       "html": "<div class=\"ds-award\"><span class=\"ds-award-mark\"></span><div><div class=\"ds-award-title\">Dean's List</div><div class=\"ds-award-desc\">Awarded for academic excellence.</div></div></div>",
-      "css": ".ds-award { display:flex; gap:20px; align-items:flex-start; background:#eef1f8; color:#14110f; padding:26px; max-width:420px; transition:transform .25s cubic-bezier(.16,1,.3,1), background .2s; } .ds-award:hover { transform:translateY(-3px); background:#ffc61a; } .ds-award-mark { width:40px; height:50px; flex-shrink:0; background:#1f4fd8; border-radius:50% 50% 0 0; } .ds-award-title { font:800 1.0625rem/1.3 'League Spartan', Futura, sans-serif; margin-bottom:8px; } .ds-award-desc { font:400 .9375rem 'Atkinson Hyperlegible', sans-serif; color:#4a4338; } .ds-award:hover .ds-award-desc { color:#14110f; }"
+      "css": ".ds-award { display:flex; gap:20px; align-items:flex-start; background:var(--paper-2, #fbf7f0); color:var(--ink, #12354e); border:1px solid var(--line-l, rgba(18,53,78,.14)); border-radius:24px; padding:26px; max-width:420px; transition:transform .35s cubic-bezier(.16,1,.3,1), background .3s; } .ds-award:hover { transform:translateY(-3px); background:#fff; } .ds-award-mark { width:38px; height:48px; flex-shrink:0; background:var(--sienna, #bb7125); border-radius:50% 50% 12px 12px; } .ds-award-title { font:700 1.0625rem/1.35 'Shippori Mincho', Georgia, serif; margin-bottom:8px; } .ds-award-desc { font:400 .9375rem/1.7 'Zen Kaku Gothic New', system-ui, sans-serif; color:var(--ink-2, #44596a); }"
     }
   ],
   "narrative": {
-    "northStar": "The Isotype Wall Chart",
-    "overview": "The page is a wall of flat enamel colour fields, each section a full-bleed panel of cobalt, red, yellow, ink or white. Facts about Ferdinand are drawn as counted units (figures, crates, stacked bars, a podium) with ghost units for the unfilled remainder, so a number reads as a quantity before it reads as a numeral. The world refuses the dark-neon portfolio default: there are no shadows, no gradients, no glows and no rounded cards.",
+    "northStar": "The Stacked Paper Sheets",
+    "overview": "The page is a deck of soft sheets laid over one another. Each section is a full-width sheet with rounded 40px shoulders that rises over the one before it, alternating deep blue, tyrian, lifted blue and warm paper. The palette is a single Sanzo Wada combination (no. 279 in A Dictionary of Color Combinations): dark tyrian blue carries the page, vinaceous cinnamon is the one accent, ecru and raw sienna play quiet supporting roles. The mood is calm, tonal and tactile rather than loud; the world refuses multi-colour fields, hard blocks and the dark-neon portfolio default.\n\nThe Isotype idea survives only in the stats band, where facts are drawn as counted pictogram units with dashed ghost units for the unfilled remainder, so a number reads as a quantity before it reads as a numeral. Everywhere else form is soft: pill buttons and tags, 24 to 32px card radii, a floating pill nav, and a wavy cinnamon underline that marks the key word of a heading. Everything is flat colour with no shadows; depth comes from stacking, tone and overlap.\n\nDensity is generous. Wide gutters, a Mincho display voice over a clean Kaku Gothic text face, and motion limited to reveals that remove themselves, slow drifting circles and compositor-only marquee galleries.",
     "keyCharacteristics": [
-      "Five flat fields (cobalt, signal red, sun yellow, ink, white) with square corners and zero shadows.",
-      "Heavy League Spartan caps for display; Atkinson Hyperlegible for everything read at length.",
-      "One pictogram sprite in a single weight (figure, sheet, crate, podium, medal) used as counted units.",
-      "A segmented section-progress rail across the top replaces the browser scroll bar.",
-      "Circle discs and quarter-discs are the only curves; everything else is a rectangle."
+      "Stacked rounded sheets (40px top radius, negative margin overlap) in deep, tyrian, lift and paper.",
+      "Cinnamon as the single accent; ecru for quiet lines and fills; sienna only as small marks.",
+      "Shippori Mincho for display and titles, Zen Kaku Gothic New for all reading text.",
+      "A floating pill nav and pill buttons, tags and chips; no sharp-cornered containers.",
+      "One pictogram sprite in a single stroke weight with round joins, used as counted units.",
+      "Project galleries flow as a looping marquee that pauses on hover, focus or by button."
     ],
     "rules": [
-      { "name": "The Field Pairing Rule", "body": "Every field sets its own text colour and focus colour: white text on cobalt, red and ink (focus yellow on cobalt and ink, white on red); ink text on yellow and white (focus cobalt). Text never moves to a new field without taking that field's pairing.", "section": "colors" },
-      { "name": "The Flat Enamel Rule", "body": "Colour is applied as solid blocks only. Depth is never simulated with shadow, blur or gradient.", "section": "colors" },
-      { "name": "The Heavy Caps Rule", "body": "Display and headline text is always uppercase League Spartan at weight 800 or 900. Mixed-case display type does not appear.", "section": "typography" },
-      { "name": "The Readable Text Rule", "body": "Anything longer than a label is Atkinson Hyperlegible at 1rem or larger; secondary copy uses the paired muted token, never opacity.", "section": "typography" },
-      { "name": "The No Shadow Rule", "body": "Nothing casts a shadow. Separation comes from a contrasting field, a 3px ink rule or a dashed outline.", "section": "elevation" }
+      { "name": "The One Warm Voice Rule", "body": "Cinnamon is the only accent. Ecru and sienna support it in small amounts; no other hue is introduced.", "section": "colors" },
+      { "name": "The Sheet Pairing Rule", "body": "Each sheet sets its own text colour and focus colour: text and cinnamon focus on deep, tyrian and lift; ink and tyrian focus on paper. Content that moves to a new sheet takes that sheet's pairing and its secondary token, never opacity.", "section": "colors" },
+      { "name": "The Mincho Voice Rule", "body": "Headings, titles, names and numerals are Shippori Mincho at 700 to 800; everything read as a sentence is Zen Kaku Gothic New at 1rem or larger.", "section": "typography" },
+      { "name": "The No Shadow Rule", "body": "Nothing casts a shadow. Separation comes from tone, a hairline, or overlap.", "section": "elevation" }
     ],
     "dos": [
-      "Do build every surface from solid fields in cobalt (#1f4fd8), signal red (#d62e1f), sun yellow (#ffc61a), ink (#14110f) and white.",
-      "Do keep corners square; use circles only for discs.",
-      "Do express quantities as counted pictogram units with a ghost unit for the remainder.",
-      "Do set the field's own focus colour and secondary text token when placing content on a new field.",
-      "Do use League Spartan 800 or 900 in uppercase for headings and Atkinson Hyperlegible for all running text.",
-      "Do disable transitions under `prefers-reduced-motion`."
+      "Do build with the Wada 279 set only: tyrian (#12354e) with its deep (#0d2739) and lift (#194560) steps, cinnamon (#eea78c), ecru (#c2ae93), sienna (#bb7125) and paper (#f3ece2).",
+      "Do keep cinnamon as the single accent and use sienna ink (#8f541a) for small text on paper.",
+      "Do round every container: 14, 24, 32px, 40px sheet tops, 999px pills.",
+      "Do express quantities as counted pictogram units with a dashed ghost for the remainder.",
+      "Do set the sheet's own text, secondary text and focus colour when placing content on a new sheet.",
+      "Do use Shippori Mincho for headings and numerals and Zen Kaku Gothic New for running text.",
+      "Do keep motion compositor-only and make reveals remove themselves; disable animation under `prefers-reduced-motion`."
     ],
     "donts": [
-      "Don't add shadows, gradients, glows, blurs or rounded cards.",
-      "Don't use dark-neon portfolio tropes: aurora, grid backdrops, tickers, crosshairs, loaders or text scramble.",
-      "Don't use opacity to make secondary text; use the muted token for the field.",
-      "Don't introduce a new accent hue; the three primaries are the whole chromatic range.",
+      "Don't add shadows, glows, blurs or sharp-cornered cards.",
+      "Don't use dark-neon portfolio tropes: aurora, grid backdrops, crosshairs, loaders or text scramble.",
+      "Don't make secondary text with opacity; use the paired secondary token.",
+      "Don't introduce a new accent hue, or loud multi-colour fields.",
       "Don't replace the pictogram units with generic stock icons."
     ]
   }
