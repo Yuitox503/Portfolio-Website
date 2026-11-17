@@ -90,9 +90,11 @@ a { text-underline-offset: .22em; text-decoration-thickness: 1.5px; }
 /* ── Nav: a floating pill ───────────────────────────────────── */
 .nav { position: fixed; z-index: 300; top: 14px; left: var(--gutter); right: var(--gutter); height: var(--navh); max-width: var(--maxw); margin-inline: auto; background: rgba(13,39,57,.96); border: 1px solid var(--line-d); border-radius: 999px; color: var(--text); --focus: var(--cinnamon); }
 .nav-in { height: 100%; padding-inline: 14px 12px; display: flex; align-items: center; gap: 18px; }
-.brand { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: var(--paper); justify-content: center; }
-.brand img { height: 30px; width: 30px; object-fit: contain; }
-.brand-fallback { font: 700 1.1rem var(--font-display); color: var(--tyrian); }
+.brand { display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; transition: transform .4s var(--ease); }
+.brand:hover { transform: rotate(-8deg) scale(1.06); }
+.brand img { height: 40px; width: 40px; object-fit: contain; }
+.brand-fallback { font: 700 1.2rem var(--font-display); color: var(--text); }
+.brand-fallback span { color: var(--cinnamon); }
 .nav-panel { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; }
 .nav-links { display: flex; gap: 2px; margin-inline: auto; }
 .nav-links a { font: 500 .9375rem var(--font-text); text-decoration: none; padding: 8px 14px; border-radius: 999px; color: var(--text-2); transition: background .25s, color .25s; }

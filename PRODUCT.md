@@ -17,7 +17,7 @@ Secondary: technical peers (data leads, engineers) who click into projects and j
 
 ## Product Purpose
 
-A personal portfolio for Ferdinand Taslim (APU / De Montfort dual-degree CS student, Data Analytics specialism, based in Kuala Lumpur, from Pontianak, Indonesia). It exists to get him interviews and offers for full-time data analytics work from September 2026 onwards, by showing real experience, real projects, real credentials, and technical ability. Success: a visitor downloads the CV or sends an email.
+A personal portfolio for Ferdinand Taslim (APU / De Montfort dual-degree CS student, Data Analytics specialism, based in Indonesia (originally from Pontianak)). It exists to get him interviews and offers for full-time data analytics work from September 2026 onwards, by showing real experience, real projects, real credentials, and technical ability. Success: a visitor downloads the CV or sends an email.
 
 ## Positioning
 
