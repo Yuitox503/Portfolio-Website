@@ -396,6 +396,11 @@
   .nav-links a:hover,.nav-links a.active{color:var(--bg);background:var(--green);}
   .nav-cta{border:1px solid var(--border-strong);color:var(--text2);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 22px;border-radius:100px;cursor:none;transition:all .2s;text-decoration:none;}
   .nav-cta:hover{background:var(--green);color:var(--bg);border-color:var(--green);}
+  .nav-actions{display:flex;align-items:center;gap:8px;}
+  .nav-tracker{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);color:var(--muted);background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:100px;cursor:none;transition:all .2s;text-decoration:none;}
+  .nav-tracker svg{width:14px;height:14px;flex-shrink:0;}
+  .nav-tracker:hover{color:var(--text);border-color:var(--purple);}
+  @media(max-width:520px){ .nav-tracker span{display:none;} .nav-tracker{padding:8px 10px;} .nav-cta{padding:8px 16px;} }
 
   /* HERO */
   #home{min-height:100vh;display:grid;grid-template-columns:55% 45%;position:relative;overflow:hidden;}
@@ -1139,7 +1144,13 @@
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </div>
-  <a href="#" id="nav-cta-email" class="nav-cta">Get in touch →</a>
+  <div class="nav-actions">
+    <a href="/tracker" class="nav-tracker" rel="nofollow" aria-label="Tracker" title="Tracker">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      <span>Tracker</span>
+    </a>
+    <a href="#" id="nav-cta-email" class="nav-cta">Get in touch →</a>
+  </div>
 </nav>
 
 <!-- HERO -->
