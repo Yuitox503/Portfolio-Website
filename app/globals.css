@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Palette borrowed from the portfolio (public/index.html :root). */
+@theme {
+  --color-bg: #09090f;
+  --color-surface: #111118;
+  --color-surface2: #18181f;
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-line-strong: rgba(255, 255, 255, 0.15);
+  --color-accent: #3dffa0;
+  --color-purple: #a78bff;
+  --color-orange: #ff8c42;
+  --color-danger: #ff6b6b;
+  --color-text: #f0f2f8;
+  --color-text2: #c4c8d8;
+  --color-muted: #8890a8;
+  --color-dim: #44495a;
+  --font-display: var(--font-syne), system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
