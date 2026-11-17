@@ -42,10 +42,12 @@ at the right place.
 **SQL Editor → New query**:
 
 1. Paste all of `supabase/migrations/20261117000000_tracker.sql` → **Run**.
-2. Open `supabase/seed.sql` and change `you@example.com` to the email from step 3.
+2. Paste all of `supabase/migrations/20261118000000_weekly_reviews.sql` → **Run**
+   (adds the weekly reviews table; run it even if you already ran step 1 earlier).
+3. Open `supabase/seed.sql` and change `you@example.com` to the email from step 3.
    Paste it into a new query → **Run**. It's safe to run twice (it skips if categories exist).
 
-Check **Table Editor**: you should see 4 tables (each marked "RLS enabled") and 6 rows in `categories`.
+Check **Table Editor**: you should see 5 tables (each marked "RLS enabled") and 6 rows in `categories`.
 
 If you use the Supabase CLI instead: `supabase link` then `supabase db push`.
 
@@ -100,4 +102,11 @@ Redeploy after adding them.
   Monday 00:00 → Sunday 23:59 in that zone. Change it in that one place.
 - **Daily checks:** `DAILY_CHECKS` in `lib/config.ts`. If you add a key, also add it
   to the `check_key` check constraint in the database.
-- **Categories:** edit them in the Supabase Table Editor (`is_active = false` hides one).
+- **Categories:** add, rename, re-target, reorder or archive them in the tracker's
+  **Settings** tab. Archiving hides a category but keeps its history.
+- **Fixing mistakes:** the **Log** tab lets you edit, add or delete any time entry or
+  count log for any week; daily rituals can be ticked for any past day on the Week tab;
+  reviews can be edited or deleted any time.
+- **Weekly score:** targets hit out of total. **Overall %** is the average of each
+  category's progress, capped at 100% per category (so overshooting one target can't
+  hide a missed one).
