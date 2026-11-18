@@ -9,7 +9,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
     <>
       <RefreshOnFocus />
       <Nav />
-      <div className="mx-auto max-w-2xl px-4 pb-32 sm:px-6 sm:pb-16">{children}</div>
+      <div className="mx-auto max-w-5xl px-4 pb-32 sm:px-6 sm:pb-16">{children}</div>
     </>
   );
 }

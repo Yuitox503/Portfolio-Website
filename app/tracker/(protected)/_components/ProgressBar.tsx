@@ -6,7 +6,7 @@ export function ProgressBar({ ratio, hit, color, label, thin }: Props) {
   const pct = Math.round(Math.max(0, Math.min(1, ratio)) * 100);
   return (
     <div
-      className={`w-full overflow-hidden rounded-full bg-white/[0.06] ${thin ? "h-1.5" : "h-2"}`}
+      className={`w-full overflow-hidden rounded-full bg-surface2 ${thin ? "h-1.5" : "h-2"}`}
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}

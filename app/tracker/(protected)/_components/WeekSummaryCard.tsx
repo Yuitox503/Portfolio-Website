@@ -1,37 +1,48 @@
 import type { WeekSummary } from "@/lib/progress";
 import { weekMood } from "@/lib/progress";
-import { ProgressRing } from "./ProgressRing";
+import { FALLBACK_COLOR, HIT_COLOR } from "@/lib/ui";
 
 type Props = { summary: WeekSummary; footnote?: React.ReactNode; children?: React.ReactNode };
 
-/** Overall week progress ring + score. */
+/** Overall week percent, targets hit, and one meter segment per target. */
 export function WeekSummaryCard({ summary, footnote, children }: Props) {
-  const { percent, score, total } = summary;
+  const { percent, score, total, progress } = summary;
+  const allHit = total > 0 && score === total;
   return (
-    <section className="card relative overflow-hidden p-5 sm:p-6">
-      <div
-        className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full opacity-40 blur-3xl"
-        style={{ background: percent >= 100 ? "rgba(158,230,184,0.35)" : "rgba(242,184,128,0.25)" }}
-      />
-      <div className="relative flex items-center gap-5">
-        <ProgressRing percent={percent} label={`Week ${percent}% complete`}>
-          <span className="font-serif text-[40px] leading-none tabular-nums">
+    <section className="card p-5 sm:p-6" aria-label="Week summary">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <p className="num text-[56px] font-semibold leading-none tracking-tight">
             {percent}
-            <span className="text-xl text-muted">%</span>
-          </span>
-          <span className="eyebrow mt-1">overall</span>
-        </ProgressRing>
-        <div className="min-w-0 flex-1">
-          <p className="eyebrow">Weekly score</p>
-          <p className="mt-1 font-serif text-5xl leading-none tabular-nums">
-            <span className={total > 0 && score === total ? "text-accent" : "text-text"}>{score}</span>
+            <span className="ml-0.5 text-2xl font-medium text-muted">%</span>
+          </p>
+          <p className="mt-2 text-sm text-muted">overall</p>
+        </div>
+        <div className="text-right">
+          <p className="num text-3xl font-semibold leading-none">
+            <span className={allHit ? "text-hit" : "text-text"}>{score}</span>
             <span className="text-dim"> / {total}</span>
           </p>
-          <p className="mt-1.5 text-sm text-text2">targets hit</p>
-          <p className="mt-3 font-serif text-lg italic text-amber">{weekMood(percent)}</p>
+          <p className="mt-2 text-sm text-muted">targets hit</p>
         </div>
       </div>
-      {footnote && <div className="relative mt-4 border-t border-line pt-4 text-sm text-muted">{footnote}</div>}
+
+      {/* One segment per target, filled to its completion; pale yellow once hit. */}
+      <div className="mt-5 flex gap-1.5" role="img" aria-label={`Week ${percent}% complete`}>
+        {(progress.length ? progress : [null]).map((c, i) => (
+          <span key={c?.id ?? i} className="h-2 flex-1 overflow-hidden rounded-full bg-surface2">
+            {c && (
+              <span
+                className="block h-full rounded-full transition-[width] duration-700 ease-soft"
+                style={{ width: `${Math.round(c.ratio * 100)}%`, background: c.hit ? HIT_COLOR : FALLBACK_COLOR }}
+              />
+            )}
+          </span>
+        ))}
+      </div>
+      <p className="mt-3 text-sm font-medium text-text2">{weekMood(percent)}</p>
+
+      {footnote && <div className="mt-4 border-t border-line pt-4 text-sm text-muted">{footnote}</div>}
       {children}
     </section>
   );

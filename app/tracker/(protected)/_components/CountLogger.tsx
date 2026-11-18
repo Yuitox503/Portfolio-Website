@@ -2,7 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 import { logCount } from "../actions";
-import { PencilIcon } from "./icons";
+import { CheckIcon, PencilIcon } from "./icons";
 
 type Props = { categoryId: string; categoryName: string; color: string; notePlaceholder?: string };
 
@@ -42,13 +42,13 @@ export function CountLogger({ categoryId, categoryName, color, notePlaceholder }
           placeholder={notePlaceholder ?? "Note (optional)"}
           maxLength={500}
           aria-label={`Note for ${categoryName}`}
-          className="field !rounded-full !py-2.5"
+          className="field !py-2.5"
         />
       ) : (
         <button
           type="button"
           onClick={() => setShowNote(true)}
-          className="mr-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm text-muted transition hover:text-text2"
+          className="mr-auto inline-flex min-h-10 items-center gap-1.5 rounded-full px-3 py-2 text-sm text-muted transition hover:text-text2"
         >
           <PencilIcon width={15} height={15} /> Add note
         </button>
@@ -57,10 +57,10 @@ export function CountLogger({ categoryId, categoryName, color, notePlaceholder }
         type="submit"
         disabled={pending}
         aria-label={`Log one ${categoryName}`}
-        className="relative flex h-11 min-w-16 shrink-0 items-center justify-center rounded-full px-4 font-serif text-xl text-bg transition active:scale-95 disabled:opacity-60"
+        className="relative flex h-11 min-w-16 shrink-0 items-center justify-center rounded-full px-4 text-lg font-semibold text-bg transition active:scale-95 disabled:opacity-60"
         style={{ background: color }}
       >
-        {flash ? "✓" : "+1"}
+        {flash ? <CheckIcon width={20} height={20} /> : "+1"}
       </button>
       {error && <p className="text-xs text-danger">{error}</p>}
     </form>

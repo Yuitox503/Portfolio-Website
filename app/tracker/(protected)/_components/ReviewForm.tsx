@@ -41,12 +41,12 @@ export function ReviewForm({ week, review }: { week: string; review: WeeklyRevie
               onClick={() => setRating(n === rating ? 0 : n)}
               aria-label={`${n} of 5 – ${RATING_WORDS[n]}`}
               aria-pressed={n <= rating}
-              className={`flex size-11 items-center justify-center rounded-full transition active:scale-90 ${n <= rating ? "text-amber" : "text-dim"}`}
+              className={`flex size-11 items-center justify-center rounded-full transition active:scale-90 ${n <= rating ? "text-primary" : "text-dim"}`}
             >
               <StarIcon width={26} height={26} fill={n <= rating ? "currentColor" : "none"} />
             </button>
           ))}
-          <span className="ml-2 font-serif text-lg italic text-text2">{RATING_WORDS[rating]}</span>
+          <span className="ml-2 text-sm font-medium text-text2">{RATING_WORDS[rating]}</span>
         </div>
       </fieldset>
 
@@ -68,7 +68,7 @@ export function ReviewForm({ week, review }: { week: string; review: WeeklyRevie
         <button type="submit" disabled={pending} className="btn-primary">
           {pending ? "Saving…" : review ? "Update review" : "Save review"}
         </button>
-        {status && <span className={`text-sm ${status.ok ? "text-accent" : "text-danger"}`}>{status.text}</span>}
+        {status && <span className={`text-sm ${status.ok ? "text-hit" : "text-danger"}`}>{status.text}</span>}
         {review && (
           <button
             type="button"

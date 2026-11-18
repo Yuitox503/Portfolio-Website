@@ -23,7 +23,7 @@ export function AddPanel({ kind, label, categories, onSubmit }: Props) {
         aria-expanded={open}
         className="flex w-full items-center gap-3 px-4 py-3.5 text-left text-text2"
       >
-        <span className="flex size-7 items-center justify-center rounded-full bg-amber/15 text-amber">
+        <span className="flex size-7 items-center justify-center rounded-full bg-primary/15 text-primary">
           <PlusIcon width={16} height={16} className={`transition ${open ? "rotate-45" : ""}`} />
         </span>
         {label}

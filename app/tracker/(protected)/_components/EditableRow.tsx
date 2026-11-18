@@ -45,7 +45,7 @@ export function EditableRow({ kind, color, title, badge, subtitle, categories, d
       <div className="min-w-0 flex-1">
         <p className="truncate text-[15px]">
           {title}
-          {badge && <span className="ml-2 text-[11px] font-semibold uppercase tracking-wider text-accent">{badge}</span>}
+          {badge && <span className="ml-2 text-[11px] font-semibold uppercase tracking-wider text-hit">{badge}</span>}
         </p>
         <p className="truncate text-sm text-muted">{subtitle}</p>
       </div>
@@ -53,7 +53,7 @@ export function EditableRow({ kind, color, title, badge, subtitle, categories, d
         type="button"
         onClick={() => setEditing(true)}
         aria-label={`Edit ${title}`}
-        className="flex size-9 items-center justify-center rounded-full text-muted transition hover:text-text2 active:bg-surface2"
+        className="icon-btn"
       >
         <PencilIcon width={16} height={16} />
       </button>

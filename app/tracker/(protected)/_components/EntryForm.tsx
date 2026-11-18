@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { ActionResult } from "../actions";
+import { CheckIcon } from "./icons";
 
 type Option = { id: string; name: string };
 
@@ -88,7 +89,7 @@ export function EntryForm({ kind, categories, defaults, allowOpenEnd, submitLabe
       {error && <p className="text-sm text-danger">{error}</p>}
       <div className="flex gap-2 pt-1">
         <button type="submit" disabled={pending} className="btn-primary">
-          {pending ? "Saving…" : saved ? "Added ✓" : submitLabel}
+          {pending ? "Saving…" : saved ? (<><CheckIcon width={18} height={18} /> Added</>) : submitLabel}
         </button>
         {onDone && defaults && (
           <button type="button" onClick={onDone} className="btn-ghost">

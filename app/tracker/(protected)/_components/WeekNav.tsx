@@ -15,7 +15,7 @@ export function WeekNav({ basePath, week, currentWeek, pathStyle }: Props) {
     pathStyle ? `${basePath}/${w}` : w === currentWeek ? basePath : `${basePath}?week=${w}`;
   const isCurrent = week === currentWeek;
   const btn =
-    "flex size-10 shrink-0 items-center justify-center rounded-full text-text2 ring-1 ring-line transition active:bg-surface2";
+    "flex size-11 shrink-0 items-center justify-center rounded-full text-text2 ring-1 ring-line-strong transition active:bg-surface2";
 
   return (
     <nav className="flex items-center gap-3" aria-label="Choose week">
@@ -23,11 +23,11 @@ export function WeekNav({ basePath, week, currentWeek, pathStyle }: Props) {
         <ChevronLeft />
       </Link>
       <div className="min-w-0 flex-1 text-center">
-        <p className="truncate text-[15px] font-medium text-text">{formatWeekLabel(week)}</p>
+        <p className="truncate text-[15px] font-semibold text-text">{formatWeekLabel(week)}</p>
         {isCurrent ? (
-          <p className="eyebrow mt-0.5 !text-amber">This week</p>
+          <p className="mt-0.5 text-xs font-semibold text-primary">This week</p>
         ) : (
-          <Link href={href(currentWeek)} className="eyebrow mt-0.5 inline-block underline decoration-dim underline-offset-4">
+          <Link href={href(currentWeek)} className="mt-0.5 inline-block text-xs font-medium text-muted underline decoration-dim underline-offset-4">
             Jump to this week
           </Link>
         )}

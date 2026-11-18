@@ -48,7 +48,7 @@ export function StartStopButton({ categoryId, categoryName, color, running }: Pr
         className="flex size-12 items-center justify-center rounded-full transition active:scale-95 disabled:opacity-50"
         style={
           isThisRunning
-            ? { background: "var(--color-danger)", color: "var(--color-bg)" }
+            ? { background: "var(--color-stop)", color: "var(--color-bg)" }
             : { background: `${color}1f`, color, boxShadow: `inset 0 0 0 1px ${color}55` }
         }
       >

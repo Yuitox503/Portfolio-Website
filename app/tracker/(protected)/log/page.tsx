@@ -4,7 +4,7 @@ import { EditableRow } from "../_components/EditableRow";
 import { WeekNav } from "../_components/WeekNav";
 import { formatDateTime, formatDuration, formatTime, toLocalInput } from "@/lib/time";
 import { getAllCategories, getWeekCountLogs, getWeekEntries } from "@/lib/tracker";
-import { colorMap } from "@/lib/ui";
+import { colorMap, UNKNOWN_COLOR } from "@/lib/ui";
 import { resolveWeek } from "@/lib/week-param";
 
 export const metadata = { title: "Log · Tracker" };
@@ -30,10 +30,9 @@ export default async function LogPage({ searchParams }: PageProps<"/tracker/log"
   );
 
   return (
-    <main>
+    <main className="mx-auto max-w-2xl">
       <header className="pb-5 pt-7 sm:pt-8">
-        <p className="eyebrow">Everything editable</p>
-        <h1 className="mt-1.5 font-serif text-[40px] leading-[1.05] sm:text-5xl">Log</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-[44px] sm:leading-[1.1]">Log</h1>
         <p className="mt-2 text-sm text-text2">Fix a forgotten timer, back-date a log, or delete a mistake.</p>
       </header>
 
@@ -41,7 +40,7 @@ export default async function LogPage({ searchParams }: PageProps<"/tracker/log"
 
       <section className="mt-8">
         <div className="mb-3 flex items-baseline justify-between">
-          <h2 className="eyebrow">Time</h2>
+          <h2 className="section-title">Time</h2>
           <p className="text-sm tabular-nums text-muted">{formatDuration(totalMs)} total</p>
         </div>
         <div className="space-y-3">
@@ -58,7 +57,7 @@ export default async function LogPage({ searchParams }: PageProps<"/tracker/log"
                   <EditableRow
                     key={e.id}
                     kind="time"
-                    color={colors.get(e.category_id) ?? "#9a8f83"}
+                    color={colors.get(e.category_id) ?? UNKNOWN_COLOR}
                     title={name}
                     badge={end ? undefined : "running"}
                     subtitle={`${formatDateTime(start)} – ${end ? formatTime(end) : "now"} · ${formatDuration(
@@ -84,7 +83,7 @@ export default async function LogPage({ searchParams }: PageProps<"/tracker/log"
 
       <section className="mt-10">
         <div className="mb-3 flex items-baseline justify-between">
-          <h2 className="eyebrow">Counts</h2>
+          <h2 className="section-title">Counts</h2>
           <p className="text-sm tabular-nums text-muted">{logs.length} logged</p>
         </div>
         <div className="space-y-3">
@@ -99,7 +98,7 @@ export default async function LogPage({ searchParams }: PageProps<"/tracker/log"
                   <EditableRow
                     key={l.id}
                     kind="count"
-                    color={colors.get(l.category_id) ?? "#9a8f83"}
+                    color={colors.get(l.category_id) ?? UNKNOWN_COLOR}
                     title={names.get(l.category_id) ?? "Unknown"}
                     subtitle={`${formatDateTime(at)}${l.note ? ` · ${l.note}` : ""}`}
                     categories={countOptions}

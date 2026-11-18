@@ -1,8 +1,12 @@
 import { TIMEZONE } from "./config";
 import { zonedParts } from "./time";
 
-/** Soft category colours, assigned by display order. Mint is reserved for "target hit". */
-const CATEGORY_COLORS = ["#f2b880", "#bba8f0", "#8fc8ec", "#ec9f8f", "#ecd27e", "#e8a8d0"];
+/**
+ * Category colours, assigned by display order. Tints around Wada no. 325 (ochre, apricot, sage,
+ * teal, khaki, rosewood). Naples yellow is reserved for "target hit" and Eugenia red for stop /
+ * destructive, so a category colour never reads as a state.
+ */
+const CATEGORY_COLORS = ["#e2b540", "#8cc0ae", "#f0956f", "#4fa39a", "#b9a37b", "#c9777d"];
 
 export function categoryColor(index: number) {
   return CATEGORY_COLORS[((index % CATEGORY_COLORS.length) + CATEGORY_COLORS.length) % CATEGORY_COLORS.length];
@@ -13,7 +17,10 @@ export function colorMap(categories: { id: string }[]) {
   return new Map(categories.map((c, i) => [c.id, categoryColor(i)]));
 }
 
-export const HIT_COLOR = "#9ee6b8";
+export const HIT_COLOR = "#fbe6a0";
+/** Used when a category can't be found (deleted or unknown). */
+export const FALLBACK_COLOR = "#e2b540";
+export const UNKNOWN_COLOR = "#8a9784";
 
 export function greeting(now: Date, tz = TIMEZONE) {
   const h = zonedParts(now, tz).hour;

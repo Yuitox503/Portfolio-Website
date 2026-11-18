@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { ChevronRight, StarIcon } from "../_components/icons";
-import { ProgressRing } from "../_components/ProgressRing";
+import { ProgressBar } from "../_components/ProgressBar";
 import { computeHistory, weekMood } from "@/lib/progress";
 import { formatWeekLabel } from "@/lib/time";
 import { getHistoryData } from "@/lib/tracker";
-import { HIT_COLOR } from "@/lib/ui";
+import { FALLBACK_COLOR, HIT_COLOR } from "@/lib/ui";
 import { resolveWeek } from "@/lib/week-param";
 
 export const metadata = { title: "Reviews · Tracker" };
@@ -23,24 +23,23 @@ export default async function ReviewsPage() {
   const best = past.reduce<(typeof past)[number] | null>((b, w) => (!b || w.percent > b.percent ? w : b), null);
 
   return (
-    <main>
+    <main className="mx-auto max-w-2xl">
       <header className="pb-5 pt-7 sm:pt-8">
-        <p className="eyebrow">Week by week</p>
-        <h1 className="mt-1.5 font-serif text-[40px] leading-[1.05] sm:text-5xl">Reviews</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-[44px] sm:leading-[1.1]">Reviews</h1>
         <p className="mt-2 text-sm text-text2">Look back, be kind, adjust.</p>
       </header>
 
       <section className="card p-5" aria-label="Recent weeks">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="eyebrow">Last 4 weeks</p>
-            <p className="mt-1 font-serif text-4xl tabular-nums">{avg === null ? "—" : `${avg}%`}</p>
+            <p className="text-sm font-semibold text-text2">Last 4 weeks</p>
+            <p className="num mt-1 text-4xl font-semibold tracking-tight">{avg === null ? "—" : `${avg}%`}</p>
             <p className="text-sm text-muted">average completion</p>
           </div>
           {best && (
             <div className="text-right">
-              <p className="eyebrow">Best week</p>
-              <p className="mt-1 font-serif text-2xl tabular-nums text-accent">{best.percent}%</p>
+              <p className="text-sm font-semibold text-text2">Best week</p>
+              <p className="num mt-1 text-2xl font-semibold text-hit">{best.percent}%</p>
               <p className="text-sm text-muted">{formatWeekLabel(best.week)}</p>
             </div>
           )}
@@ -55,7 +54,7 @@ export default async function ReviewsPage() {
                 className="block rounded-md transition hover:opacity-80"
                 style={{
                   height: `${Math.max(6, w.percent)}%`,
-                  background: w.percent >= 100 ? HIT_COLOR : w.week === currentWeek ? "rgba(242,184,128,0.45)" : "#f2b880",
+                  background: w.percent >= 100 ? HIT_COLOR : w.week === currentWeek ? `${FALLBACK_COLOR}73` : FALLBACK_COLOR,
                 }}
               />
             </li>
@@ -70,24 +69,27 @@ export default async function ReviewsPage() {
           return (
             <li key={w.week}>
               <Link href={`/tracker/reviews/${w.week}`} className="card flex items-center gap-4 p-4 transition active:bg-surface2">
-                <ProgressRing percent={w.percent} size={58} stroke={6}>
-                  <span className="text-[13px] font-semibold tabular-nums">{w.percent}%</span>
-                </ProgressRing>
+                <div className="w-14 shrink-0">
+                  <p className="num text-lg font-semibold leading-none">{w.percent}%</p>
+                  <div className="mt-2">
+                    <ProgressBar ratio={w.percent / 100} hit={w.percent >= 100} color={FALLBACK_COLOR} thin label={`${formatWeekLabel(w.week)} completion`} />
+                  </div>
+                </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-medium">
                     {formatWeekLabel(w.week)}
-                    {isCurrent && <span className="eyebrow ml-2 !text-amber">now</span>}
+                    {isCurrent && <span className="ml-2 text-xs font-semibold text-primary">now</span>}
                   </p>
                   <p className="mt-0.5 text-sm text-muted">
                     <span className="tabular-nums text-text2">
                       {w.score}/{w.total}
                     </span>{" "}
-                    targets · <span className="font-serif italic">{weekMood(w.percent)}</span>
+                    targets · <span className="font-medium text-text2">{weekMood(w.percent)}</span>
                   </p>
                   {review ? (
                     <p className="mt-1 flex items-center gap-1.5 truncate text-sm text-text2">
                       {review.rating ? (
-                        <span className="flex shrink-0 text-amber" aria-label={`${review.rating} of 5`}>
+                        <span className="flex shrink-0 text-primary" aria-label={`${review.rating} of 5`}>
                           {Array.from({ length: review.rating }, (_, i) => (
                             <StarIcon key={i} width={13} height={13} fill="currentColor" />
                           ))}
@@ -96,7 +98,7 @@ export default async function ReviewsPage() {
                       <span className="truncate">{review.went_well ?? review.next_focus ?? "Reviewed"}</span>
                     </p>
                   ) : (
-                    !isCurrent && <p className="mt-1 text-sm text-amber/80">Not reviewed yet</p>
+                    !isCurrent && <p className="mt-1 text-sm text-primary">Not reviewed yet</p>
                   )}
                 </div>
                 <ChevronRight className="shrink-0 text-dim" />

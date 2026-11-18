@@ -2,7 +2,7 @@ import { signOut } from "../../actions";
 import { CategoryEditor, NewCategoryForm } from "../_components/CategoryEditor";
 import { DAILY_CHECKS, TIMEZONE } from "@/lib/config";
 import { getAllCategories } from "@/lib/tracker";
-import { colorMap } from "@/lib/ui";
+import { colorMap, FALLBACK_COLOR } from "@/lib/ui";
 
 export const metadata = { title: "Settings · Tracker" };
 
@@ -11,20 +11,19 @@ export default async function SettingsPage() {
   const colors = colorMap(categories);
 
   return (
-    <main>
+    <main className="mx-auto max-w-2xl">
       <header className="pb-5 pt-7 sm:pt-8">
-        <p className="eyebrow">Make it yours</p>
-        <h1 className="mt-1.5 font-serif text-[40px] leading-[1.05] sm:text-5xl">Settings</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-[44px] sm:leading-[1.1]">Settings</h1>
       </header>
 
       <section>
-        <h2 className="eyebrow mb-3">Categories &amp; targets</h2>
+        <h2 className="section-title mb-3">Categories &amp; targets</h2>
         <ul className="card divide-y divide-line overflow-hidden">
           {categories.map((c, i) => (
             <CategoryEditor
               key={c.id}
               category={c}
-              color={colors.get(c.id) ?? "#f2b880"}
+              color={colors.get(c.id) ?? FALLBACK_COLOR}
               isFirst={i === 0}
               isLast={i === categories.length - 1}
             />
@@ -36,12 +35,12 @@ export default async function SettingsPage() {
       </section>
 
       <section className="card mt-6 p-5">
-        <h2 className="mb-4 font-serif text-2xl">New category</h2>
+        <h2 className="mb-4 text-xl font-semibold">New category</h2>
         <NewCategoryForm />
       </section>
 
       <section className="mt-8">
-        <h2 className="eyebrow mb-3">About</h2>
+        <h2 className="section-title mb-3">About</h2>
         <dl className="card divide-y divide-line text-sm">
           <div className="flex justify-between gap-4 px-4 py-3">
             <dt className="text-muted">Week</dt>

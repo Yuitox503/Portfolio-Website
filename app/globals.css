@@ -1,31 +1,30 @@
 @import "tailwindcss";
 
 /*
- * Tracker theme: warm, low-glare dark. Cream text on charcoal, soft category
- * colours, mint when a target is hit (a softer cousin of the portfolio green).
+ * Tracker theme: a calm night ledger.
+ * Palette: Sanzo Wada, "A Dictionary of Color Combinations", no. 325
+ *   Deep Slate Green #112f2c, Naples Yellow #fbe6a0,
+ *   Yellow Ocher #e2b540, Eugenia Red #da525d.
+ * Ochre = what you can act on / in progress. Naples = target hit.
+ * Eugenia = stop and destructive. Grounds are tints of the green.
  */
 @theme {
-  --color-bg: #13110f;
-  --color-surface: #1c1916;
-  --color-surface2: #25211d;
-  --color-raised: #2f2a25;
-  --color-line: rgba(255, 236, 214, 0.07);
-  --color-line-strong: rgba(255, 236, 214, 0.14);
-  --color-text: #f5eee6;
-  --color-text2: #d4cabe;
-  --color-muted: #9a8f83;
-  --color-dim: #615950;
-  --color-accent: #9ee6b8;
-  --color-amber: #f2b880;
-  --color-lavender: #bba8f0;
-  --color-sky: #8fc8ec;
-  --color-rose: #ec9f8f;
-  --color-gold: #ecd27e;
-  --color-pink: #e8a8d0;
-  --color-danger: #ef8f80;
+  --color-bg: #0b1f1d;
+  --color-surface: #112f2c;
+  --color-surface2: #17403b;
+  --color-raised: #1d4a44;
+  --color-line: rgba(251, 230, 160, 0.1);
+  --color-line-strong: rgba(251, 230, 160, 0.22);
+  --color-text: #f6f0d8;
+  --color-text2: #d8d2b5;
+  --color-muted: #a9b09a;
+  --color-dim: #8a9784;
+  --color-primary: #e2b540;
+  --color-hit: #fbe6a0;
+  --color-danger: #f2868c;
+  --color-stop: #da525d;
 
-  --font-serif: var(--font-instrument), Georgia, serif;
-  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -37,54 +36,58 @@ html {
 
 body {
   background-color: var(--color-bg);
-  background-image:
-    radial-gradient(120% 60% at 50% -10%, rgba(242, 184, 128, 0.09), transparent 60%),
-    radial-gradient(80% 50% at 100% 0%, rgba(187, 168, 240, 0.06), transparent 60%);
-  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Fine paper grain for a softer, cosier surface. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+::selection {
+  background: var(--color-primary);
+  color: var(--color-bg);
 }
 
-::selection {
-  background: rgba(242, 184, 128, 0.3);
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 /* Native date/time pickers: match the dark theme. */
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.85) sepia(0.2);
+  filter: invert(0.88);
   opacity: 0.7;
+}
+
+/* Tabular figures wherever numbers line up. */
+.num {
+  font-variant-numeric: tabular-nums;
 }
 
 @layer components {
   .card {
-    @apply rounded-3xl bg-surface/90 ring-1 ring-line;
+    @apply rounded-[20px] bg-surface ring-1 ring-line;
   }
   .field {
-    @apply w-full rounded-2xl bg-surface2 px-4 py-3 text-base text-text ring-1 ring-line outline-none transition placeholder:text-dim focus:ring-amber/60;
+    @apply w-full rounded-xl bg-surface2 px-4 py-3 text-base text-text ring-1 ring-line outline-none transition placeholder:text-muted focus:ring-2 focus:ring-primary;
   }
   .label {
-    @apply mb-1.5 block text-[13px] font-medium tracking-wide text-muted;
+    @apply mb-1.5 block text-[13px] font-medium text-muted;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-amber px-5 py-3 font-semibold text-bg transition active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-bg transition active:scale-[0.98] disabled:opacity-50;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3 text-text2 ring-1 ring-line transition active:bg-surface2 disabled:opacity-50;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-3 text-text2 ring-1 ring-line-strong transition active:bg-surface2 disabled:opacity-50;
   }
-  .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-muted;
+  /* Section label on a page: quiet, sentence case. */
+  .section-title {
+    @apply text-[15px] font-semibold text-text2;
+  }
+  .meta {
+    @apply text-xs font-medium text-muted;
+  }
+  /* Icon-only round buttons: 40px target. */
+  .icon-btn {
+    @apply flex size-10 items-center justify-center rounded-full text-muted transition hover:text-text active:bg-surface2 disabled:opacity-25;
   }
 }
 

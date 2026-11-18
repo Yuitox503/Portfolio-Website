@@ -21,8 +21,7 @@ export function CategoryEditor({ category: c, color, isFirst, isLast }: Props) {
       } else setError(res.error ?? "Something went wrong.");
     });
 
-  const iconBtn =
-    "flex size-9 items-center justify-center rounded-full text-muted transition hover:text-text2 active:bg-surface2 disabled:opacity-25";
+  const iconBtn = "icon-btn";
 
   return (
     <li className={`py-3 pl-4 pr-2 ${c.is_active ? "" : "opacity-60"}`}>
@@ -94,7 +93,7 @@ export function CategoryEditor({ category: c, color, isFirst, isLast }: Props) {
               if (c.is_active && !window.confirm(`Archive "${c.name}"? It disappears from the week, but its history is kept.`)) return;
               run(() => setCategoryActive(c.id, !c.is_active));
             }}
-            className="rounded-lg px-2.5 py-1.5 text-sm text-muted hover:text-text2"
+            className="min-h-10 rounded-lg px-3 text-sm font-medium text-muted transition hover:text-text2 disabled:opacity-50"
           >
             {c.is_active ? "Archive" : "Restore"}
           </button>
@@ -128,7 +127,7 @@ export function NewCategoryForm() {
         });
       }}
     >
-      <div className="grid grid-cols-2 gap-2 rounded-2xl bg-surface2 p-1 ring-1 ring-line" role="radiogroup" aria-label="Type">
+      <div className="grid grid-cols-2 gap-1 rounded-xl bg-surface2 p-1 ring-1 ring-line" role="radiogroup" aria-label="Type">
         {(["hours", "count"] as const).map((t) => (
           <button
             key={t}
@@ -136,7 +135,7 @@ export function NewCategoryForm() {
             role="radio"
             aria-checked={type === t}
             onClick={() => setType(t)}
-            className={`rounded-xl py-2 text-sm transition ${type === t ? "bg-raised text-text ring-1 ring-line-strong" : "text-muted"}`}
+            className={`rounded-lg py-2.5 text-sm font-medium transition ${type === t ? "bg-raised text-text ring-1 ring-line-strong" : "text-muted"}`}
           >
             {t === "hours" ? "Timed (hours)" : "Counted (+1)"}
           </button>

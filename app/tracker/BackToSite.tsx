@@ -15,7 +15,7 @@ export function BackToSite({ label = "Main site", className = "", showLogo = tru
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M15 18l-6-6 6-6" />
       </svg>
-      {showLogo && <img src="/assets/images/logo.png" alt="" width={20} height={20} className="size-5 object-contain" />}
+      {showLogo && <img src="/assets/images/logo-nav.png" alt="" width={20} height={20} className="size-5 object-contain" />}
       {label && <span>{label}</span>}
     </a>
   );

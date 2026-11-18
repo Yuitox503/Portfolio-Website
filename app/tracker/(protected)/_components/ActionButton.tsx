@@ -24,7 +24,7 @@ export function ActionButton({ action, label, confirmText, className }: Props) {
           if (!res.ok) window.alert(res.error);
         });
       }}
-      className={className ?? "rounded-lg px-2.5 py-1.5 text-sm text-muted hover:text-danger disabled:opacity-50"}
+      className={className ?? "min-h-10 rounded-lg px-3 text-sm font-medium text-muted transition hover:text-danger disabled:opacity-50"}
     >
       {pending ? "…" : label}
     </button>
